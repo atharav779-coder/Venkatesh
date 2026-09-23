@@ -84,6 +84,36 @@
       border-radius: 2px; transition: all .3s;
     }
 
+    
+    .search-container {
+      margin-left: 1rem;
+      position: relative;
+    }
+    #searchInput {
+      background: rgba(0,212,255,0.05);
+      border: 1px solid rgba(0,212,255,0.2);
+      border-radius: 20px;
+      padding: 0.4rem 1rem;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      width: 200px;
+      transition: all 0.3s;
+    }
+    #searchInput:focus {
+      outline: none;
+      background: rgba(0,212,255,0.1);
+      border-color: #00d4ff;
+      box-shadow: 0 0 10px rgba(0,212,255,0.3);
+      width: 250px;
+    }
+    #searchInput::placeholder {
+      color: rgba(255,255,255,0.4);
+    }
+    @media (max-width: 900px) {
+      .search-container { display: none; }
+    }
+
     /* ===== HERO ===== */
     .hero {
       position: relative; z-index: 1;
@@ -423,6 +453,7 @@
 <nav id="navbar">
   <div class="nav-inner">
     <a href="#" class="logo">SKY<span>VAULT</span></a>
+    
     <div class="nav-links" id="navLinks">
       <a href="#commercial">Commercial</a>
       <a href="#fighter-jets">Fighter Jets</a>
@@ -433,6 +464,10 @@
       <a href="#helicopters">Helicopters</a>
       <a href="#seaplanes">Seaplanes</a>
     </div>
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Search aircraft..." autocomplete="off">
+    </div>
+
     <button class="hamburger" id="hamburger" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
@@ -1047,6 +1082,31 @@ window.addEventListener('scroll', () => {
   });
   catLinks.forEach(a => {
     a.classList.toggle('active', a.getAttribute('href') === `#${current}`);
+  });
+});
+
+
+// ============ SEARCH FUNCTIONALITY ============
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', (e) => {
+  const term = e.target.value.toLowerCase();
+  const allCards = document.querySelectorAll('.flashcard');
+  const sections = document.querySelectorAll('.section');
+  
+  allCards.forEach(card => {
+    const text = card.innerText.toLowerCase();
+    if (text.includes(term)) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+
+  // Hide sections if all cards inside are hidden
+  sections.forEach(sec => {
+    const cards = sec.querySelectorAll('.flashcard');
+    const hasVisible = Array.from(cards).some(c => c.style.display !== 'none');
+    sec.style.display = (hasVisible || term === '') ? 'block' : 'none';
   });
 });
 
