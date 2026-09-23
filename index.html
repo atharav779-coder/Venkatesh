@@ -1272,13 +1272,13 @@ function createCard(plane) {
   const btnContainer = document.createElement('div');
   btnContainer.className = 'card-buttons';
   btnContainer.innerHTML = `
-    <button class="info-btn" onclick="event.stopPropagation(); openModal('${plane.name}', 'cabin')">
+    <button class="info-btn" onclick="event.stopPropagation(); openModal('${plane.name}', 'cabin', '${plane.img}')">
       <span class="btn-icon">🛩️</span>Cabin & Pax Experience
     </button>
-    <button class="info-btn" onclick="event.stopPropagation(); openModal('${plane.name}', 'airframe')">
+    <button class="info-btn" onclick="event.stopPropagation(); openModal('${plane.name}', 'airframe', '${plane.img}')">
       <span class="btn-icon">⚙️</span>Airframe & Engine
     </button>
-    <button class="info-btn" onclick="event.stopPropagation(); openModal('${plane.name}', 'performance')">
+    <button class="info-btn" onclick="event.stopPropagation(); openModal('${plane.name}', 'performance', '${plane.img}')">
       <span class="btn-icon">📊</span>Performance & Load
     </button>
   `;
@@ -2635,7 +2635,7 @@ const detailData = {
   }
 };
 
-function openModal(planeName, tab) {
+function openModal(planeName, tab, imgSrc) {
   const data = detailData[planeName];
   if (!data) {
     document.getElementById('modalContent').innerHTML = '<p style="color:#8a9bb8;">Detailed data coming soon for ' + planeName + '</p>';
@@ -2666,6 +2666,7 @@ function openModal(planeName, tab) {
   `).join('');
 
   document.getElementById('modalContent').innerHTML = `
+    <img src="${imgSrc}" alt="${planeName}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem; border: 1px solid rgba(0,212,255,0.3); box-shadow: 0 4px 15px rgba(0,0,0,0.5);" />
     <div class="modal-title">${tabIcon} ${planeName}</div>
     <div class="modal-subtitle">${tabTitle}</div>
     <div class="modal-grid">${gridHTML}</div>
