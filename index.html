@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkyVault — The Ultimate Aircraft Encyclopedia</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0e17;
+      color: #e0e6f0;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ===== ANIMATED BACKGROUND ===== */
+    .bg-stars {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(1.5px 1.5px at 20% 30%, rgba(255,255,255,.5) 50%, transparent 100%),
+        radial-gradient(1px 1px at 40% 70%, rgba(255,255,255,.3) 50%, transparent 100%),
+        radial-gradient(1.2px 1.2px at 60% 20%, rgba(255,255,255,.4) 50%, transparent 100%),
+        radial-gradient(1px 1px at 80% 50%, rgba(255,255,255,.25) 50%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 10% 80%, rgba(255,255,255,.35) 50%, transparent 100%),
+        radial-gradient(1px 1px at 90% 10%, rgba(255,255,255,.3) 50%, transparent 100%);
+      animation: twinkle 8s ease-in-out infinite alternate;
+    }
+    @keyframes twinkle { 0% { opacity: .6; } 100% { opacity: 1; } }
+
+    .bg-gradient {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse at 20% 0%, rgba(15,82,186,.2) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 100%, rgba(100,0,200,.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(0,40,80,.15) 0%, transparent 70%);
+    }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(10, 14, 23, .82);
+      backdrop-filter: blur(20px) saturate(1.6);
+      -webkit-backdrop-filter: blur(20px) saturate(1.6);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      transition: box-shadow .3s;
+    }
+    nav.scrolled { box-shadow: 0 4px 30px rgba(0,0,0,.5); }
+    .nav-inner {
+      max-width: 1400px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 72px;
+    }
+    .logo {
+      font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 1.5rem;
+      background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      letter-spacing: 3px; text-decoration: none;
+    }
+    .logo span { font-weight: 400; opacity: .7; }
+    .nav-links { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+    .nav-links a {
+      color: #8892a8; text-decoration: none; font-size: .82rem; font-weight: 500;
+      padding: .45rem .85rem; border-radius: 8px; transition: all .25s;
+      font-family: 'Rajdhani', sans-serif; text-transform: uppercase; letter-spacing: 1px;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: #00d4ff; background: rgba(0,212,255,.08);
+    }
+    .hamburger {
+      display: none; background: none; border: none; cursor: pointer;
+      flex-direction: column; gap: 5px; padding: 6px;
+    }
+    .hamburger span {
+      display: block; width: 26px; height: 2px; background: #8892a8;
+      border-radius: 2px; transition: all .3s;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative; z-index: 1;
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center;
+      padding: 2rem;
+      background:
+        linear-gradient(180deg, transparent 60%, #0a0e17 100%),
+        radial-gradient(ellipse at 50% 30%, rgba(0,120,255,.12) 0%, transparent 60%);
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(0,212,255,.08); border: 1px solid rgba(0,212,255,.2);
+      padding: .4rem 1.2rem; border-radius: 100px; font-size: .78rem;
+      color: #00d4ff; font-weight: 500; margin-bottom: 1.5rem;
+      letter-spacing: 2px; text-transform: uppercase;
+      font-family: 'Rajdhani', sans-serif;
+    }
+    .hero-badge::before { content: '✈'; font-size: 1rem; }
+    .hero h1 {
+      font-family: 'Orbitron', sans-serif; font-size: clamp(2.5rem, 7vw, 5.5rem);
+      font-weight: 900; line-height: 1.1; margin-bottom: 1.2rem;
+      background: linear-gradient(135deg, #ffffff 0%, #a0c4ff 40%, #00d4ff 70%, #7b2ff7 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: clamp(1rem, 2vw, 1.25rem); color: #7a8599;
+      max-width: 650px; margin-bottom: 2.5rem;
+    }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: .6rem;
+      background: linear-gradient(135deg, #0f52ba, #7b2ff7);
+      color: #fff; text-decoration: none; padding: .9rem 2.2rem;
+      border-radius: 12px; font-weight: 600; font-size: 1rem;
+      transition: transform .2s, box-shadow .3s;
+      box-shadow: 0 4px 25px rgba(15,82,186,.4);
+    }
+    .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 35px rgba(15,82,186,.55); }
+    .hero-cta::after { content: '↓'; font-size: 1.2rem; }
+    .scroll-indicator {
+      position: absolute; bottom: 2rem;
+      animation: bounce 2s infinite;
+    }
+    .scroll-indicator span {
+      display: block; width: 28px; height: 28px;
+      border-right: 2px solid rgba(0,212,255,.4);
+      border-bottom: 2px solid rgba(0,212,255,.4);
+      transform: rotate(45deg);
+    }
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(12px); }
+      60% { transform: translateY(6px); }
+    }
+
+    /* ===== SECTIONS ===== */
+    .section {
+      position: relative; z-index: 1;
+      padding: 5rem 2rem;
+      max-width: 1400px; margin: 0 auto;
+    }
+    .section-header {
+      text-align: center; margin-bottom: 3.5rem;
+    }
+    .section-header .tag {
+      display: inline-block;
+      font-family: 'Rajdhani', sans-serif; font-size: .85rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 3px;
+      color: #00d4ff; margin-bottom: .6rem;
+    }
+    .section-header h2 {
+      font-family: 'Orbitron', sans-serif; font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700; margin-bottom: .8rem;
+      background: linear-gradient(90deg, #fff, #a0c4ff);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .section-header p {
+      color: #6b7a94; font-size: 1rem; max-width: 600px; margin: 0 auto;
+    }
+    .divider {
+      width: 60px; height: 3px; margin: 1.2rem auto 0;
+      background: linear-gradient(90deg, #00d4ff, #7b2ff7);
+      border-radius: 100px;
+    }
+
+    /* ===== CARD GRID ===== */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    /* ===== FLASHCARD ===== */
+    .flashcard {
+      perspective: 1200px;
+      height: 460px;
+      cursor: pointer;
+    }
+    .flashcard-inner {
+      position: relative; width: 100%; height: 100%;
+      transition: transform .7s cubic-bezier(.4,.2,.2,1);
+      transform-style: preserve-3d;
+    }
+    .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+
+    .flashcard-front, .flashcard-back {
+      position: absolute; inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 20px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,.07);
+    }
+
+    /* FRONT */
+    .flashcard-front {
+      background: linear-gradient(160deg, rgba(20,28,50,.95), rgba(12,16,28,.98));
+      display: flex; flex-direction: column;
+    }
+    .card-img-wrap {
+      position: relative; height: 200px; overflow: hidden;
+      background: linear-gradient(135deg, #0d1a2e, #1a1040);
+    }
+    .card-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .5s;
+    }
+    .flashcard:hover .card-img-wrap img { transform: scale(1.08); }
+    .card-category {
+      position: absolute; top: 12px; left: 12px;
+      background: rgba(0,0,0,.55); backdrop-filter: blur(8px);
+      padding: .25rem .75rem; border-radius: 100px;
+      font-size: .7rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 1.5px; color: #00d4ff;
+      font-family: 'Rajdhani', sans-serif;
+    }
+    .card-body { padding: 1.3rem 1.5rem; flex: 1; display: flex; flex-direction: column; }
+    .card-body h3 {
+      font-family: 'Orbitron', sans-serif; font-size: 1.1rem; font-weight: 700;
+      margin-bottom: .4rem; color: #fff;
+    }
+    .card-body .origin {
+      font-size: .78rem; color: #5a6a84; margin-bottom: .8rem;
+      font-family: 'Rajdhani', sans-serif; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+    .card-stats {
+      display: grid; grid-template-columns: 1fr 1fr; gap: .5rem .8rem;
+      margin-top: auto;
+    }
+    .card-stats .stat {
+      display: flex; flex-direction: column;
+    }
+    .card-stats .stat-label {
+      font-size: .65rem; color: #4a5a74; text-transform: uppercase;
+      letter-spacing: 1px; font-weight: 600;
+      font-family: 'Rajdhani', sans-serif;
+    }
+    .card-stats .stat-value {
+      font-size: .9rem; font-weight: 600; color: #c0cadb;
+    }
+    .flip-hint {
+      position: absolute; bottom: 12px; right: 14px;
+      font-size: .68rem; color: #3a4a64;
+      font-family: 'Rajdhani', sans-serif; letter-spacing: 1px;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .flip-hint::after { content: '↻'; font-size: .9rem; }
+
+    /* BACK */
+    .flashcard-back {
+      transform: rotateY(180deg);
+      background: linear-gradient(160deg, rgba(15,25,50,.97), rgba(10,12,24,.99));
+      padding: 1.5rem;
+      display: flex; flex-direction: column;
+      overflow-y: auto;
+    }
+    .flashcard-back::-webkit-scrollbar { width: 4px; }
+    .flashcard-back::-webkit-scrollbar-thumb { background: rgba(0,212,255,.25); border-radius: 10px; }
+    .flashcard-back h3 {
+      font-family: 'Orbitron', sans-serif; font-size: 1rem; font-weight: 700;
+      color: #00d4ff; margin-bottom: .3rem;
+    }
+    .flashcard-back .subtitle {
+      font-size: .75rem; color: #5a6a84; margin-bottom: 1rem;
+      font-family: 'Rajdhani', sans-serif; text-transform: uppercase; letter-spacing: 1.5px;
+    }
+    .spec-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: .6rem;
+      margin-bottom: 1rem;
+    }
+    .spec-item {
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 10px; padding: .6rem .8rem;
+    }
+    .spec-item .spec-label {
+      font-size: .6rem; color: #4a5a74; text-transform: uppercase;
+      letter-spacing: 1px; font-weight: 600;
+      font-family: 'Rajdhani', sans-serif;
+    }
+    .spec-item .spec-val {
+      font-size: .82rem; font-weight: 600; color: #d0d8e8; margin-top: 2px;
+    }
+    .back-desc {
+      font-size: .82rem; color: #6b7a94; line-height: 1.5;
+      border-top: 1px solid rgba(255,255,255,.05);
+      padding-top: .8rem; margin-top: auto;
+    }
+    .flip-back-hint {
+      text-align: center; margin-top: .8rem;
+      font-size: .68rem; color: #3a4a64;
+      font-family: 'Rajdhani', sans-serif; letter-spacing: 1px;
+    }
+
+    /* ===== CATEGORY NAV (STICKY) ===== */
+    .cat-nav {
+      position: sticky; top: 72px; z-index: 500;
+      background: rgba(10,14,23,.9);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,.04);
+      padding: 1rem 2rem;
+      display: flex; justify-content: center; flex-wrap: wrap; gap: .5rem;
+    }
+    .cat-nav a {
+      color: #5a6a84; text-decoration: none;
+      font-family: 'Rajdhani', sans-serif; font-weight: 600;
+      font-size: .82rem; text-transform: uppercase; letter-spacing: 1.5px;
+      padding: .45rem 1.1rem; border-radius: 100px;
+      border: 1px solid transparent;
+      transition: all .25s;
+    }
+    .cat-nav a:hover, .cat-nav a.active {
+      color: #00d4ff; border-color: rgba(0,212,255,.25);
+      background: rgba(0,212,255,.06);
+    }
+
+    /* ===== STATS BAR ===== */
+    .stats-bar {
+      position: relative; z-index: 1;
+      display: flex; justify-content: center; flex-wrap: wrap; gap: 2rem;
+      padding: 3rem 2rem;
+      border-top: 1px solid rgba(255,255,255,.04);
+      border-bottom: 1px solid rgba(255,255,255,.04);
+      background: rgba(0,212,255,.015);
+    }
+    .stats-bar .stat-box { text-align: center; }
+    .stats-bar .stat-num {
+      font-family: 'Orbitron', sans-serif; font-size: 2.2rem; font-weight: 900;
+      background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .stats-bar .stat-txt {
+      font-size: .78rem; color: #5a6a84; text-transform: uppercase;
+      letter-spacing: 2px; font-family: 'Rajdhani', sans-serif; font-weight: 600;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      position: relative; z-index: 1;
+      text-align: center; padding: 3rem 2rem;
+      border-top: 1px solid rgba(255,255,255,.04);
+    }
+    footer .logo-foot {
+      font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 1.3rem;
+      background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      letter-spacing: 3px; margin-bottom: .5rem;
+    }
+    footer p { color: #3a4a64; font-size: .8rem; }
+
+    /* ===== SCROLL REVEAL ===== */
+    .reveal {
+      opacity: 0; transform: translateY(40px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .nav-links.open {
+        display: flex; flex-direction: column;
+        position: absolute; top: 72px; left: 0; right: 0;
+        background: rgba(10,14,23,.96);
+        backdrop-filter: blur(20px);
+        padding: 1rem 2rem 2rem;
+        border-bottom: 1px solid rgba(255,255,255,.06);
+      }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .cat-nav { gap: .3rem; padding: .8rem 1rem; }
+      .cat-nav a { font-size: .72rem; padding: .35rem .7rem; }
+      .section { padding: 3rem 1rem; }
+      .flashcard { height: 480px; }
+      .spec-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Background layers -->
+<div class="bg-stars"></div>
+<div class="bg-gradient"></div>
+
+<!-- ===== NAVBAR ===== -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="logo">SKY<span>VAULT</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="#commercial">Commercial</a>
+      <a href="#fighter-jets">Fighter Jets</a>
+      <a href="#private-jets">Private Jets</a>
+      <a href="#cargo">Cargo</a>
+      <a href="#military">Military</a>
+      <a href="#trainers">Trainers</a>
+      <a href="#helicopters">Helicopters</a>
+      <a href="#seaplanes">Seaplanes</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-badge">Aircraft Encyclopedia</div>
+  <h1>Every Aircraft.<br>Every Detail.</h1>
+  <p>From legendary fighter jets to colossal commercial airliners — explore the most comprehensive aircraft collection on the web with detailed specifications for every single plane.</p>
+  <a href="#commercial" class="hero-cta">Start Exploring</a>
+  <div class="scroll-indicator"><span></span></div>
+</section>
+
+<!-- ===== STATS BAR ===== -->
+<div class="stats-bar">
+  <div class="stat-box"><div class="stat-num">50+</div><div class="stat-txt">Aircraft Featured</div></div>
+  <div class="stat-box"><div class="stat-num">8</div><div class="stat-txt">Categories</div></div>
+  <div class="stat-box"><div class="stat-num">500+</div><div class="stat-txt">Specifications</div></div>
+  <div class="stat-box"><div class="stat-num">100+</div><div class="stat-txt">Years of Aviation</div></div>
+</div>
+
+<!-- ===== CATEGORY NAV ===== -->
+<div class="cat-nav" id="catNav">
+  <a href="#commercial" class="active">Commercial</a>
+  <a href="#fighter-jets">Fighter Jets</a>
+  <a href="#private-jets">Private Jets</a>
+  <a href="#cargo">Cargo</a>
+  <a href="#military">Military Transport</a>
+  <a href="#trainers">Trainers</a>
+  <a href="#helicopters">Helicopters</a>
+  <a href="#seaplanes">Seaplanes</a>
+</div>
+
+<!-- ==================================================================
+     SECTION 1 — COMMERCIAL AIRLINERS
+     ================================================================== -->
+<section class="section" id="commercial">
+  <div class="section-header reveal">
+    <div class="tag">Commercial Aviation</div>
+    <h2>Commercial Airliners</h2>
+    <p>The workhorses of global air travel — moving billions of passengers across continents every year.</p>
+    <div class="divider"></div>
+  </div>
+  <div class="card-grid" id="grid-commercial"></div>
+</section>
+
+<!-- ==================================================================
+     SECTION 2 — FIGHTER JETS
+     ================================================================== -->
+<section class="section" id="fighter-jets">
+  <div class="section-header reveal">
+    <div class="tag">Military Combat</div>
+    <h2>Fighter Jets</h2>
+    <p>The fastest, most agile, and deadliest aircraft ever built — engineered for air superiority and precision strikes.</p>
+    <div class="divider"></div>
+  </div>
+  <div class="card-grid" id="grid-fighter-jets"></div>
+</section>
+
+<!-- ==================================================================
+     SECTION 3 — PRIVATE / BUSINESS JETS
+     ================================================================== -->
+<section class="section" id="private-jets">
+  <div class="section-header reveal">
+    <div class="tag">Executive Aviation</div>
+    <h2>Private & Business Jets</h2>
+    <p>Luxury meets performance — ultra-long-range jets designed for the world's elite travelers.</p>
+    <div class="divider"></div>
+  </div>
+  <div class="card-grid" id="grid-private-jets"></div>
+</section>
+
+<!-- ==================================================================
+     SECTION 4 — CARGO AIRCRAFT
+     ================================================================== -->
+<section class="section" id="cargo">
+  <div class="section-header reveal">
+    <div class="tag">Freight & Logistics</div>
+    <h2>Cargo Aircraft</h2>
+    <p>Massive flying warehouses built to carry hundreds of tons of freight across the globe.</p>
+    <div class="divider"></div>
+  </div>
+  <div class="card-grid" id="grid-cargo"></div>
+</section>
+
+<!-- ==================================================================
+     SECTION 5 — MILITARY TRANSPORT
+     ================================================================== -->
+<section class="section" id="military">
+  <div class="section-header reveal">
+    <div class="tag">Strategic Airlift</div>
+    <h2>Military Transport</h2>
+    <p>Tactical and strategic airlifters moving troops, armor, and supplies to any theater of operations.</p>
+    <div class="divider"></div>
+  </div>
+  <div class="card-grid" id="grid-military"></div>
+</section>
+
+<!-- ==================================================================
+     SECTION 6 — TRAINER AIRCRAFT
+     ================================================================== -->
+<section class="section" id="trainers">
+  <div class="section-header reveal">
+    <div class="tag">Pilot Training</div>
+    <h2>Trainer Aircraft</h2>
+    <p>Where every pilot's journey begins — from basic prop trainers to advanced jet trainers.</p>
+    <div class="divider"></div>
+  </div>
+  <div class="card-grid" id="grid-trainers"></div>
+</section>
+
+<!-- ==================================================================
+     SECTION 7 — HELICOPTERS
+     ================================================================== -->
+<section class="section" id="helicopters">
+  <div class="section-header reveal">
+    <div class="tag">Rotary Wing</div>
+    <h2>Helicopters</h2>
+    <p>Masters of vertical flight — from attack gunships to search-and-rescue lifesavers.</p>
+    <div class="divider"></div>
+  </div>
+  <div class="card-grid" id="grid-helicopters"></div>
+</section>
+
+<!-- ==================================================================
+     SECTION 8 — SEAPLANES & AMPHIBIOUS
+     ================================================================== -->
+<section class="section" id="seaplanes">
+  <div class="section-header reveal">
+    <div class="tag">Amphibious</div>
+    <h2>Seaplanes & Amphibious Aircraft</h2>
+    <p>Aircraft engineered to operate from water — connecting remote islands and fighting wildfires.</p>
+    <div class="divider"></div>
+  </div>
+  <div class="card-grid" id="grid-seaplanes"></div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="logo-foot">SKYVAULT</div>
+  <p>&copy; 2026 SkyVault Aircraft Encyclopedia. All specifications sourced from manufacturer data.</p>
+</footer>
+
+<!-- ============================================================
+     JAVASCRIPT — DATA + RENDERING
+     ============================================================ -->
+<script>
+// ============ AIRCRAFT DATA ============
+const aircraft = {
+
+// ---- COMMERCIAL ----
+commercial: [
+  {
+    name: "Boeing 747-8",
+    origin: "United States — Boeing",
+    category: "Commercial",
+    img: "images/boeing-747-8.jpg",
+    stats: { "Max Speed": "988 km/h", "Range": "14,320 km", "Passengers": "467", "Engines": "4× GEnx" },
+    specs: { "Wingspan": "68.4 m", "Length": "76.3 m", "Height": "19.4 m", "MTOW": "447,696 kg", "Ceiling": "13,100 m", "First Flight": "2010", "Crew": "2 pilots", "Thrust": "4× 296 kN" },
+    desc: "The iconic 'Queen of the Skies' — the final variant of the legendary 747 family, featuring new GEnx engines, a stretched fuselage, and redesigned wings for 16% better fuel efficiency."
+  },
+  {
+    name: "Airbus A380",
+    origin: "Europe — Airbus",
+    category: "Commercial",
+    img: "images/airbus-a380.jpg",
+    stats: { "Max Speed": "1,020 km/h", "Range": "15,200 km", "Passengers": "853 max", "Engines": "4× Trent 900" },
+    specs: { "Wingspan": "79.75 m", "Length": "72.72 m", "Height": "24.09 m", "MTOW": "575,000 kg", "Ceiling": "13,136 m", "First Flight": "2005", "Crew": "2 pilots", "Thrust": "4× 374 kN" },
+    desc: "The world's largest passenger airliner, a double-deck, wide-body marvel that redefined luxury travel with its spacious cabins, onboard showers, and unmatched capacity."
+  },
+  {
+    name: "Boeing 787 Dreamliner",
+    origin: "United States — Boeing",
+    category: "Commercial",
+    img: "images/boeing-787.jpg",
+    stats: { "Max Speed": "954 km/h", "Range": "14,140 km", "Passengers": "330", "Engines": "2× GEnx / Trent" },
+    specs: { "Wingspan": "60.1 m", "Length": "62.8 m", "Height": "17.0 m", "MTOW": "254,011 kg", "Ceiling": "13,100 m", "First Flight": "2009", "Crew": "2 pilots", "Thrust": "2× 320 kN" },
+    desc: "A revolutionary wide-body built with 50% composite materials, featuring electrically dimmable windows, higher cabin pressure, and 20% less fuel consumption than predecessors."
+  },
+  {
+    name: "Airbus A350 XWB",
+    origin: "Europe — Airbus",
+    category: "Commercial",
+    img: "images/airbus-a350.jpg",
+    stats: { "Max Speed": "945 km/h", "Range": "16,100 km", "Passengers": "440", "Engines": "2× Trent XWB" },
+    specs: { "Wingspan": "64.75 m", "Length": "73.79 m", "Height": "17.05 m", "MTOW": "316,000 kg", "Ceiling": "13,100 m", "First Flight": "2013", "Crew": "2 pilots", "Thrust": "2× 431 kN" },
+    desc: "Airbus's latest-generation long-haul aircraft with 53% composite structure, the world's most powerful Trent XWB engines, and ultra-efficient aerodynamics."
+  },
+  {
+    name: "Boeing 777X",
+    origin: "United States — Boeing",
+    category: "Commercial",
+    img: "images/boeing-777x.jpg",
+    stats: { "Max Speed": "950 km/h", "Range": "16,170 km", "Passengers": "426", "Engines": "2× GE9X" },
+    specs: { "Wingspan": "71.8 m (64.8 folded)", "Length": "76.7 m", "Height": "19.5 m", "MTOW": "351,534 kg", "Ceiling": "13,100 m", "First Flight": "2020", "Crew": "2 pilots", "Thrust": "2× 470 kN" },
+    desc: "Boeing's newest and largest twin-engine jet with revolutionary folding wingtips, the most powerful commercial engine ever (GE9X), and a composite wing for exceptional range."
+  },
+  {
+    name: "Airbus A320neo",
+    origin: "Europe — Airbus",
+    category: "Commercial",
+    img: "images/airbus-a320neo.jpg",
+    stats: { "Max Speed": "871 km/h", "Range": "6,300 km", "Passengers": "194", "Engines": "2× LEAP / PW" },
+    specs: { "Wingspan": "35.8 m", "Length": "37.57 m", "Height": "11.76 m", "MTOW": "79,000 kg", "Ceiling": "11,900 m", "First Flight": "2014", "Crew": "2 pilots", "Thrust": "2× 120 kN" },
+    desc: "The best-selling single-aisle jet in aviation history. The 'neo' upgrade adds new-generation engines and sharklet wingtips for 20% fuel savings over previous models."
+  },
+  {
+    name: "Embraer E195-E2",
+    origin: "Brazil — Embraer",
+    category: "Commercial",
+    img: "images/embraer-e195-e2.jpg",
+    stats: { "Max Speed": "870 km/h", "Range": "4,815 km", "Passengers": "146", "Engines": "2× PW1900G" },
+    specs: { "Wingspan": "35.1 m", "Length": "41.5 m", "Height": "10.97 m", "MTOW": "62,500 kg", "Ceiling": "12,500 m", "First Flight": "2017", "Crew": "2 pilots", "Thrust": "2× 101 kN" },
+    desc: "Known as the 'Profit Hunter' — this regional jet offers the lowest operating costs per seat with a revolutionary swept wing and the quietest cabin in its class."
+  }
+],
+
+// ---- FIGHTER JETS ----
+"fighter-jets": [
+  {
+    name: "F-22 Raptor",
+    origin: "United States — Lockheed Martin",
+    category: "Fighter Jet",
+    img: "images/f-22-raptor.jpg",
+    stats: { "Max Speed": "Mach 2.25", "Range": "2,960 km", "Armament": "AIM-120 / AIM-9", "Generation": "5th Gen" },
+    specs: { "Wingspan": "13.56 m", "Length": "18.92 m", "Height": "5.08 m", "MTOW": "38,000 kg", "Ceiling": "19,812 m", "First Flight": "1997", "Crew": "1 pilot", "Thrust": "2× 156 kN (A/B)" },
+    desc: "The world's first operational 5th-generation stealth fighter, featuring thrust vectoring, supercruise capability (Mach 1.82 without afterburner), and unmatched air superiority."
+  },
+  {
+    name: "F-35 Lightning II",
+    origin: "United States — Lockheed Martin",
+    category: "Fighter Jet",
+    img: "images/f-35-lightning.jpg",
+    stats: { "Max Speed": "Mach 1.6", "Range": "2,800 km", "Armament": "AIM-120 / GBU-31", "Generation": "5th Gen" },
+    specs: { "Wingspan": "10.7 m", "Length": "15.7 m", "Height": "4.38 m", "MTOW": "31,751 kg", "Ceiling": "15,240 m", "First Flight": "2006", "Crew": "1 pilot", "Thrust": "1× 191 kN (A/B)" },
+    desc: "The most advanced and expensive weapons system ever built. Three variants (A/B/C) serve the Air Force, Marines (STOVL), and Navy (carrier). Unrivaled sensor fusion with the AN/APG-81 AESA radar."
+  },
+  {
+    name: "Su-57 Felon",
+    origin: "Russia — Sukhoi",
+    category: "Fighter Jet",
+    img: "images/su-57.jpg",
+    stats: { "Max Speed": "Mach 2.0", "Range": "3,500 km", "Armament": "R-77 / Kh-59", "Generation": "5th Gen" },
+    specs: { "Wingspan": "14.1 m", "Length": "19.8 m", "Height": "4.74 m", "MTOW": "35,000 kg", "Ceiling": "20,000 m", "First Flight": "2010", "Crew": "1 pilot", "Thrust": "2× 176 kN (A/B)" },
+    desc: "Russia's answer to the F-22 — a twin-engine stealth fighter with 3D thrust vectoring, internal weapons bays, and an advanced AESA radar suite for multi-role combat operations."
+  },
+  {
+    name: "Eurofighter Typhoon",
+    origin: "Europe — Airbus/BAE/Leonardo",
+    category: "Fighter Jet",
+    img: "images/eurofighter-typhoon.jpg",
+    stats: { "Max Speed": "Mach 2.0", "Range": "2,900 km", "Armament": "AMRAAM / Meteor", "Generation": "4.5 Gen" },
+    specs: { "Wingspan": "10.95 m", "Length": "15.96 m", "Height": "5.28 m", "MTOW": "23,500 kg", "Ceiling": "19,812 m", "First Flight": "1994", "Crew": "1-2 pilots", "Thrust": "2× 90 kN (A/B)" },
+    desc: "Europe's premier multi-role combat aircraft, designed by four nations. Features canard-delta wing design, Captor-E AESA radar, and exceptional high-altitude performance."
+  },
+  {
+    name: "Dassault Rafale",
+    origin: "France — Dassault Aviation",
+    category: "Fighter Jet",
+    img: "images/dassault-rafale.jpg",
+    stats: { "Max Speed": "Mach 1.8", "Range": "3,700 km", "Armament": "MICA / SCALP", "Generation": "4.5 Gen" },
+    specs: { "Wingspan": "10.8 m", "Length": "15.27 m", "Height": "5.34 m", "MTOW": "24,500 kg", "Ceiling": "15,235 m", "First Flight": "1986", "Crew": "1-2 pilots", "Thrust": "2× 75 kN (A/B)" },
+    desc: "France's 'omnirole' fighter capable of air superiority, deep strike, reconnaissance, and nuclear deterrence. Battle-proven in Libya, Mali, Iraq, and Syria."
+  },
+  {
+    name: "F-16 Fighting Falcon",
+    origin: "United States — General Dynamics / LM",
+    category: "Fighter Jet",
+    img: "images/f-16.jpg",
+    stats: { "Max Speed": "Mach 2.0", "Range": "4,220 km", "Armament": "AIM-9 / AGM-88", "Generation": "4th Gen" },
+    specs: { "Wingspan": "9.96 m", "Length": "15.06 m", "Height": "4.88 m", "MTOW": "21,772 kg", "Ceiling": "15,240 m", "First Flight": "1974", "Crew": "1-2 pilots", "Thrust": "1× 131 kN (A/B)" },
+    desc: "The most successful and widely exported fighter in history with 4,600+ built. Its fly-by-wire system and bubble canopy were revolutionary. Still being upgraded after 50 years of service."
+  },
+  {
+    name: "F/A-18E/F Super Hornet",
+    origin: "United States — Boeing",
+    category: "Fighter Jet",
+    img: "images/fa-18-super-hornet.jpg",
+    stats: { "Max Speed": "Mach 1.8", "Range": "2,346 km", "Armament": "AIM-120 / Harpoon", "Generation": "4.5 Gen" },
+    specs: { "Wingspan": "13.62 m", "Length": "18.31 m", "Height": "4.88 m", "MTOW": "29,937 kg", "Ceiling": "15,240 m", "First Flight": "1995", "Crew": "1-2 pilots", "Thrust": "2× 98 kN (A/B)" },
+    desc: "The U.S. Navy's backbone carrier-based strike fighter. The 'Rhino' can do it all — fleet defense, close air support, SEAD, and reconnaissance with the Advanced Super Hornet upgrades."
+  },
+  {
+    name: "Chengdu J-20 Mighty Dragon",
+    origin: "China — Chengdu Aerospace",
+    category: "Fighter Jet",
+    img: "images/chengdu-j-20.jpg",
+    stats: { "Max Speed": "Mach 2.0+", "Range": "~5,500 km", "Armament": "PL-15 / PL-10", "Generation": "5th Gen" },
+    specs: { "Wingspan": "13.01 m", "Length": "20.4 m", "Height": "4.69 m", "MTOW": "~37,000 kg", "Ceiling": "20,000 m", "First Flight": "2011", "Crew": "1 pilot", "Thrust": "2× 147 kN (A/B)" },
+    desc: "China's first stealth fighter — a large, twin-engine design optimized for long-range interception. Features canard-delta configuration, DSI intakes, and advanced AESA radar."
+  }
+],
+
+// ---- PRIVATE / BUSINESS JETS ----
+"private-jets": [
+  {
+    name: "Gulfstream G700",
+    origin: "United States — Gulfstream",
+    category: "Private Jet",
+    img: "images/gulfstream-g700.jpg",
+    stats: { "Max Speed": "Mach 0.925", "Range": "13,890 km", "Passengers": "19", "Engines": "2× Rolls PF" },
+    specs: { "Wingspan": "31.39 m", "Length": "33.53 m", "Height": "7.67 m", "MTOW": "48,807 kg", "Ceiling": "15,545 m", "First Flight": "2020", "Crew": "2 + 1-2 attendants", "Cabin Vol.": "175.2 m³" },
+    desc: "The undisputed king of business aviation — the tallest, widest, and longest cabin ever with up to five living areas, a master suite, and the Gulfstream Symmetry flight deck."
+  },
+  {
+    name: "Bombardier Global 7500",
+    origin: "Canada — Bombardier",
+    category: "Private Jet",
+    img: "images/bombardier-global-7500.jpg",
+    stats: { "Max Speed": "Mach 0.925", "Range": "14,260 km", "Passengers": "19", "Engines": "2× GE Passport" },
+    specs: { "Wingspan": "31.72 m", "Length": "33.88 m", "Height": "8.23 m", "MTOW": "48,806 kg", "Ceiling": "15,545 m", "First Flight": "2016", "Crew": "2 + attendant", "Cabin Vol.": "172.3 m³" },
+    desc: "Holder of the longest-range business jet record — four true cabin zones with a dedicated crew suite, Pur Air system, and Bombardier's smooth-ride Nu Wave wing."
+  },
+  {
+    name: "Dassault Falcon 10X",
+    origin: "France — Dassault Aviation",
+    category: "Private Jet",
+    img: "images/dassault-falcon-10x.jpg",
+    stats: { "Max Speed": "Mach 0.925", "Range": "13,890 km", "Passengers": "16", "Engines": "2× Rolls Pearl" },
+    specs: { "Wingspan": "33.58 m", "Length": "33.45 m", "Height": "8.37 m", "MTOW": "47,400 kg", "Ceiling": "15,545 m", "First Flight": "2024", "Crew": "2 pilots", "Cabin Width": "2.77 m" },
+    desc: "Dassault's flagship ultra-long-range jet, boasting the widest cabin cross-section in business aviation, a fighter-jet-derived FalconEye HUD, and unparalleled low-speed handling."
+  },
+  {
+    name: "Cessna Citation Longitude",
+    origin: "United States — Textron Aviation",
+    category: "Private Jet",
+    img: "images/cessna-citation-longitude.jpg",
+    stats: { "Max Speed": "898 km/h", "Range": "6,482 km", "Passengers": "12", "Engines": "2× Honeywell" },
+    specs: { "Wingspan": "20.29 m", "Length": "22.27 m", "Height": "5.94 m", "MTOW": "17,917 kg", "Ceiling": "13,716 m", "First Flight": "2016", "Crew": "2 pilots", "Cabin Vol.": "37.0 m³" },
+    desc: "A super-midsize jet offering transcontinental range with the quietest cabin in its class, flat-floor cabin, and Garmin G5000 touchscreen avionics."
+  }
+],
+
+// ---- CARGO ----
+cargo: [
+  {
+    name: "Antonov An-225 Mriya",
+    origin: "Ukraine — Antonov",
+    category: "Cargo",
+    img: "images/antonov-an-225.jpg",
+    stats: { "Max Speed": "850 km/h", "Payload": "250,000 kg", "Range": "15,400 km", "Engines": "6× D-18T" },
+    specs: { "Wingspan": "88.4 m", "Length": "84.0 m", "Height": "18.2 m", "MTOW": "640,000 kg", "Ceiling": "11,000 m", "First Flight": "1988", "Crew": "6", "Cargo Vol.": "1,300 m³" },
+    desc: "The largest and heaviest aircraft ever built — originally designed to carry the Soviet Buran space shuttle on its back. Only one was completed. Tragically destroyed in 2022."
+  },
+  {
+    name: "Boeing 747-8 Freighter",
+    origin: "United States — Boeing",
+    category: "Cargo",
+    img: "images/boeing-747-8f.jpg",
+    stats: { "Max Speed": "988 km/h", "Payload": "137,756 kg", "Range": "8,130 km", "Engines": "4× GEnx" },
+    specs: { "Wingspan": "68.4 m", "Length": "76.3 m", "Height": "19.4 m", "MTOW": "447,696 kg", "Ceiling": "13,100 m", "First Flight": "2010", "Crew": "2 pilots", "Cargo Vol.": "858 m³" },
+    desc: "The largest commercial freighter in production — the backbone of global cargo carriers like UPS, FedEx, and Atlas Air, with a distinctive nose-loading door."
+  },
+  {
+    name: "Airbus BelugaXL",
+    origin: "Europe — Airbus",
+    category: "Cargo",
+    img: "images/airbus-belugaxl.jpg",
+    stats: { "Max Speed": "780 km/h", "Payload": "51,000 kg", "Range": "4,000 km", "Engines": "2× CF6-80" },
+    specs: { "Wingspan": "60.3 m", "Length": "63.1 m", "Height": "18.9 m", "MTOW": "227,000 kg", "Ceiling": "10,700 m", "First Flight": "2018", "Crew": "2 pilots", "Cargo Vol.": "2,209 m³" },
+    desc: "The whale-shaped super transporter built to carry entire Airbus aircraft sections between factories. Its voluminous cargo bay can fit two A350 wings simultaneously."
+  },
+  {
+    name: "Lockheed C-5M Super Galaxy",
+    origin: "United States — Lockheed Martin",
+    category: "Cargo",
+    img: "images/lockheed-c-5m.jpg",
+    stats: { "Max Speed": "919 km/h", "Payload": "129,274 kg", "Range": "8,055 km", "Engines": "4× CF6-80C2" },
+    specs: { "Wingspan": "67.89 m", "Length": "75.54 m", "Height": "19.85 m", "MTOW": "381,018 kg", "Ceiling": "10,895 m", "First Flight": "1968", "Crew": "7", "Cargo Vol.": "876 m³" },
+    desc: "One of the largest military transport aircraft — it can swallow 6 Apache helicopters, 2 M1 Abrams tanks, or 36 standard pallets. Features both nose and tail loading ramps."
+  }
+],
+
+// ---- MILITARY TRANSPORT ----
+military: [
+  {
+    name: "Boeing C-17 Globemaster III",
+    origin: "United States — Boeing",
+    category: "Military Transport",
+    img: "images/boeing-c-17.jpg",
+    stats: { "Max Speed": "830 km/h", "Payload": "77,519 kg", "Range": "4,482 km", "Engines": "4× F117-PW" },
+    specs: { "Wingspan": "51.75 m", "Length": "53.04 m", "Height": "16.79 m", "MTOW": "265,350 kg", "Ceiling": "13,716 m", "First Flight": "1991", "Crew": "3", "Cargo Vol.": "592 m³" },
+    desc: "The workhorse of strategic airlift — capable of landing on short, austere runways carrying M1 tanks, helicopters, or 102 paratroopers. 279 built for global operations."
+  },
+  {
+    name: "Lockheed C-130J Super Hercules",
+    origin: "United States — Lockheed Martin",
+    category: "Military Transport",
+    img: "images/lockheed-c-130j.jpg",
+    stats: { "Max Speed": "671 km/h", "Payload": "19,090 kg", "Range": "6,852 km", "Engines": "4× AE2100D3" },
+    specs: { "Wingspan": "40.41 m", "Length": "29.79 m", "Height": "11.84 m", "MTOW": "79,378 kg", "Ceiling": "8,615 m", "First Flight": "1996", "Crew": "3-5", "Variants": "AC/MC/HC/EC/KC" },
+    desc: "The legendary 'Herc' — in continuous production since 1954, making it the longest military aircraft production run in history. Over 2,500 built across 70+ nations."
+  },
+  {
+    name: "Airbus A400M Atlas",
+    origin: "Europe — Airbus Defence",
+    category: "Military Transport",
+    img: "images/airbus-a400m.jpg",
+    stats: { "Max Speed": "780 km/h", "Payload": "37,000 kg", "Range": "8,710 km", "Engines": "4× TP400-D6" },
+    specs: { "Wingspan": "42.4 m", "Length": "45.1 m", "Height": "14.7 m", "MTOW": "141,000 kg", "Ceiling": "11,300 m", "First Flight": "2009", "Crew": "3-4", "Cargo Vol.": "340 m³" },
+    desc: "Europe's modern tactical/strategic airlifter bridging the gap between the C-130 and C-17. Features turboprop efficiency with jet-like speed, aerial refueling, and paradrop capability."
+  },
+  {
+    name: "Bell Boeing V-22 Osprey",
+    origin: "United States — Bell/Boeing",
+    category: "Military Transport",
+    img: "images/bell-boeing-v-22.jpg",
+    stats: { "Max Speed": "565 km/h", "Payload": "9,070 kg", "Range": "1,627 km", "Type": "Tiltrotor" },
+    specs: { "Rotor Dia.": "11.58 m each", "Length": "17.47 m", "Height": "6.73 m", "MTOW": "27,442 kg", "Ceiling": "7,620 m", "First Flight": "1989", "Crew": "4", "Troops": "24 combat" },
+    desc: "A revolutionary tiltrotor — takes off like a helicopter, then tilts its rotors to fly like a turboprop plane. Used by USMC, USAF, and Navy for assault, resupply, and special operations."
+  }
+],
+
+// ---- TRAINER AIRCRAFT ----
+trainers: [
+  {
+    name: "BAE Hawk T.2",
+    origin: "United Kingdom — BAE Systems",
+    category: "Trainer",
+    img: "images/bae-hawk.jpg",
+    stats: { "Max Speed": "1,028 km/h", "Range": "2,520 km", "Role": "Advanced Trainer", "G-Limit": "+8g / -4g" },
+    specs: { "Wingspan": "9.94 m", "Length": "12.43 m", "Height": "3.98 m", "MTOW": "9,100 kg", "Ceiling": "15,240 m", "First Flight": "1974", "Crew": "2 (tandem)", "Thrust": "1× 26.0 kN" },
+    desc: "The iconic jet trainer flown by the Red Arrows. Used by 18 air forces worldwide, the Hawk has trained more fast-jet pilots than any other trainer in history."
+  },
+  {
+    name: "Beechcraft T-6 Texan II",
+    origin: "United States — Textron Aviation",
+    category: "Trainer",
+    img: "images/beechcraft-t-6.jpg",
+    stats: { "Max Speed": "585 km/h", "Range": "1,667 km", "Role": "Primary Trainer", "G-Limit": "+7g / -3.5g" },
+    specs: { "Wingspan": "10.19 m", "Length": "10.16 m", "Height": "3.25 m", "MTOW": "3,311 kg", "Ceiling": "9,449 m", "First Flight": "1998", "Crew": "2 (tandem)", "Engine": "1× PT6A-68" },
+    desc: "The USAF and USN's primary trainer — every American military pilot's first aircraft. Features a pressurized cockpit, digital glass avionics, and aerobatic capability."
+  },
+  {
+    name: "Pilatus PC-21",
+    origin: "Switzerland — Pilatus",
+    category: "Trainer",
+    img: "images/pilatus-pc-21.jpg",
+    stats: { "Max Speed": "685 km/h", "Range": "1,352 km", "Role": "Advanced Trainer", "G-Limit": "+8g / -4g" },
+    specs: { "Wingspan": "9.11 m", "Length": "11.23 m", "Height": "3.75 m", "MTOW": "4,250 kg", "Ceiling": "11,582 m", "First Flight": "2002", "Crew": "2 (tandem)", "Engine": "1× PT6A-68B" },
+    desc: "A turboprop trainer so advanced it can replace lead-in jet trainers. Its embedded simulation system allows student pilots to practice radar, weapons, and tactical scenarios."
+  },
+  {
+    name: "KAI T-50 Golden Eagle",
+    origin: "South Korea — KAI / Lockheed Martin",
+    category: "Trainer",
+    img: "images/kai-t-50.jpg",
+    stats: { "Max Speed": "Mach 1.5", "Range": "1,851 km", "Role": "Lead-In Fighter", "G-Limit": "+8g / -3g" },
+    specs: { "Wingspan": "9.17 m", "Length": "13.14 m", "Height": "4.94 m", "MTOW": "12,300 kg", "Ceiling": "14,630 m", "First Flight": "2002", "Crew": "2 (tandem)", "Thrust": "1× 78.7 kN" },
+    desc: "The world's first supersonic advanced trainer — derived from the F-16 design. Variants include the FA-50 light combat aircraft used in the Philippines, Iraq, and Poland."
+  }
+],
+
+// ---- HELICOPTERS ----
+helicopters: [
+  {
+    name: "AH-64E Apache Guardian",
+    origin: "United States — Boeing",
+    category: "Helicopter",
+    img: "images/ah-64-apache.jpg",
+    stats: { "Max Speed": "293 km/h", "Range": "476 km", "Armament": "Hellfire / Hydra", "Role": "Attack" },
+    specs: { "Rotor Dia.": "14.63 m", "Length": "17.73 m", "Height": "3.87 m", "MTOW": "10,433 kg", "Ceiling": "6,400 m", "First Flight": "1975", "Crew": "2 (tandem)", "Engine": "2× T700-GE-701D" },
+    desc: "The world's most feared attack helicopter — features the Longbow fire control radar, helmet-mounted display, and can destroy 16 targets in rapid succession with Hellfire missiles."
+  },
+  {
+    name: "UH-60M Black Hawk",
+    origin: "United States — Sikorsky",
+    category: "Helicopter",
+    img: "images/uh-60-black-hawk.jpg",
+    stats: { "Max Speed": "294 km/h", "Range": "590 km", "Capacity": "11 troops", "Role": "Utility" },
+    specs: { "Rotor Dia.": "16.36 m", "Length": "19.76 m", "Height": "3.76 m", "MTOW": "10,660 kg", "Ceiling": "5,790 m", "First Flight": "1974", "Crew": "2 + 2 gunners", "Engine": "2× T700-GE-701D" },
+    desc: "The backbone of U.S. Army aviation — used for air assault, medevac, special operations, and VIP transport. Over 4,000 built and operated by 28 nations worldwide."
+  },
+  {
+    name: "Mi-24 Hind",
+    origin: "Russia — Mil Moscow",
+    category: "Helicopter",
+    img: "images/mi-24-hind.jpg",
+    stats: { "Max Speed": "335 km/h", "Range": "450 km", "Armament": "AT-6 / GSh-23", "Role": "Attack / Transport" },
+    specs: { "Rotor Dia.": "17.3 m", "Length": "21.5 m", "Height": "6.5 m", "MTOW": "12,000 kg", "Ceiling": "4,500 m", "First Flight": "1969", "Crew": "2-3", "Troops": "8 soldiers" },
+    desc: "The legendary 'flying tank' of the Soviet era — uniquely combines gunship firepower with a troop cabin carrying 8 soldiers. Feared in Afghanistan and still combat-active worldwide."
+  },
+  {
+    name: "CH-47F Chinook",
+    origin: "United States — Boeing",
+    category: "Helicopter",
+    img: "images/ch-47-chinook.jpg",
+    stats: { "Max Speed": "315 km/h", "Range": "741 km", "Capacity": "33-55 troops", "Role": "Heavy Lift" },
+    specs: { "Rotor Dia.": "18.29 m each", "Length": "30.1 m", "Height": "5.68 m", "MTOW": "22,680 kg", "Ceiling": "5,640 m", "First Flight": "1961", "Crew": "3-5", "Sling Load": "12,700 kg" },
+    desc: "The tandem-rotor heavy-lift legend — in service for 60+ years and still unmatched. Can carry artillery, vehicles, and supplies to high-altitude landing zones that no other helicopter can reach."
+  },
+  {
+    name: "Airbus H145",
+    origin: "Europe — Airbus Helicopters",
+    category: "Helicopter",
+    img: "images/airbus-h145.jpg",
+    stats: { "Max Speed": "267 km/h", "Range": "680 km", "Capacity": "10 pax", "Role": "Light Utility" },
+    specs: { "Rotor Dia.": "11.0 m", "Length": "13.64 m", "Height": "3.95 m", "MTOW": "3,800 kg", "Ceiling": "5,485 m", "First Flight": "2010", "Crew": "1-2", "Engine": "2× Arriel 2E" },
+    desc: "A versatile light twin used for HEMS air ambulance, law enforcement, corporate transport, and military training. Features the revolutionary Fenestron shrouded tail rotor for safety."
+  }
+],
+
+// ---- SEAPLANES ----
+seaplanes: [
+  {
+    name: "Canadair CL-415 SuperScooper",
+    origin: "Canada — De Havilland Canada",
+    category: "Seaplane",
+    img: "images/canadair-cl-415.jpg",
+    stats: { "Max Speed": "359 km/h", "Water Capacity": "6,137 L", "Range": "2,443 km", "Role": "Firefighting" },
+    specs: { "Wingspan": "28.6 m", "Length": "19.82 m", "Height": "8.98 m", "MTOW": "19,890 kg", "Ceiling": "4,480 m", "First Flight": "1993", "Crew": "2", "Scoop Time": "12 seconds" },
+    desc: "The ultimate aerial firefighter — scoops 6,137 liters of water in just 12 seconds while skimming a lake at 130 km/h, then drops it precisely on forest fires."
+  },
+  {
+    name: "ShinMaywa US-2",
+    origin: "Japan — ShinMaywa Industries",
+    category: "Seaplane",
+    img: "images/shinmaywa-us-2.jpg",
+    stats: { "Max Speed": "560 km/h", "Range": "4,500 km", "Capacity": "20 rescued", "Role": "Search & Rescue" },
+    specs: { "Wingspan": "33.15 m", "Length": "33.25 m", "Height": "10.06 m", "MTOW": "47,700 kg", "Ceiling": "7,195 m", "First Flight": "2003", "Crew": "11", "Engine": "4× AE2100J" },
+    desc: "One of the world's most advanced amphibious aircraft — can land in 3-meter open ocean swells using its boundary layer control system, making it uniquely capable for deep-sea rescue."
+  },
+  {
+    name: "AVIC AG600 Kunlong",
+    origin: "China — AVIC",
+    category: "Seaplane",
+    img: "images/avic-ag600.jpg",
+    stats: { "Max Speed": "570 km/h", "Water Capacity": "12,000 L", "Range": "4,500 km", "Role": "Firefighting / SAR" },
+    specs: { "Wingspan": "38.8 m", "Length": "39.6 m", "Height": "12.1 m", "MTOW": "60,000 kg", "Ceiling": "6,000 m", "First Flight": "2017", "Crew": "3+", "Scoop Time": "20 seconds" },
+    desc: "The world's largest amphibious aircraft currently in production — designed for maritime patrol, search and rescue, and aerial firefighting in the South China Sea region."
+  },
+  {
+    name: "de Havilland DHC-6 Twin Otter (Floats)",
+    origin: "Canada — De Havilland",
+    category: "Seaplane",
+    img: "images/dhc-6-twin-otter.jpg",
+    stats: { "Max Speed": "338 km/h", "Range": "1,480 km", "Passengers": "19", "Role": "Regional / Bush" },
+    specs: { "Wingspan": "19.81 m", "Length": "15.77 m", "Height": "5.94 m", "MTOW": "5,670 kg", "Ceiling": "7,620 m", "First Flight": "1965", "Crew": "1-2", "Engine": "2× PT6A-34" },
+    desc: "The legendary bush plane — operates on wheels, skis, or floats from the shortest, roughest strips imaginable. The lifeline of remote communities from Alaska to the Maldives."
+  }
+]
+};
+
+// ============ RENDER CARDS ============
+function createCard(plane) {
+  const statsHTML = Object.entries(plane.stats).map(([k,v]) =>
+    `<div class="stat"><span class="stat-label">${k}</span><span class="stat-value">${v}</span></div>`
+  ).join('');
+
+  const specsHTML = Object.entries(plane.specs).map(([k,v]) =>
+    `<div class="spec-item"><div class="spec-label">${k}</div><div class="spec-val">${v}</div></div>`
+  ).join('');
+
+  const card = document.createElement('div');
+  card.className = 'flashcard reveal';
+  card.innerHTML = `
+    <div class="flashcard-inner">
+      <div class="flashcard-front">
+        <div class="card-img-wrap">
+          <img src="${plane.img}" alt="${plane.name}" loading="lazy" />
+          <span class="card-category">${plane.category}</span>
+        </div>
+        <div class="card-body">
+          <h3>${plane.name}</h3>
+          <div class="origin">${plane.origin}</div>
+          <div class="card-stats">${statsHTML}</div>
+        </div>
+        <div class="flip-hint">Click for full specs</div>
+      </div>
+      <div class="flashcard-back">
+        <h3>${plane.name}</h3>
+        <div class="subtitle">${plane.origin}</div>
+        <div class="spec-grid">${specsHTML}</div>
+        <div class="back-desc">${plane.desc}</div>
+        <div class="flip-back-hint">Click to flip back</div>
+      </div>
+    </div>`;
+  card.addEventListener('click', () => card.classList.toggle('flipped'));
+  return card;
+}
+
+// Populate all grids
+Object.entries(aircraft).forEach(([key, planes]) => {
+  const grid = document.getElementById(`grid-${key}`);
+  if (grid) planes.forEach(p => grid.appendChild(createCard(p)));
+});
+
+// ============ SCROLL REVEAL ============
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ============ NAVBAR SCROLL SHADOW ============
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 30);
+});
+
+// ============ ACTIVE CATEGORY NAV ============
+const catLinks = document.querySelectorAll('.cat-nav a');
+const sections = [...catLinks].map(a => document.querySelector(a.getAttribute('href')));
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(sec => {
+    if (sec && sec.getBoundingClientRect().top <= 180) current = sec.id;
+  });
+  catLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === `#${current}`);
+  });
+});
+
+// ============ MOBILE NAV ============
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('navLinks').classList.toggle('open');
+});
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+});
+</script>
+
+</body>
+</html>
