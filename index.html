@@ -213,7 +213,7 @@
     /* ===== FLASHCARD ===== */
     .flashcard {
       perspective: 1500px;
-      height: 520px;
+      height: 620px;
       cursor: pointer;
     }
     .flashcard-inner {
@@ -309,9 +309,10 @@
       box-shadow: inset 0 0 40px rgba(0,212,255,0.05);
     }
     .flashcard-back::before {
-      content: ''; position: absolute; inset: 0; pointer-events: none;
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 100%;
+      pointer-events: none; z-index: 0;
       background-image: radial-gradient(rgba(0,212,255,0.15) 1px, transparent 1px);
-      background-size: 20px 20px; opacity: 0.5;
+      background-size: 20px 20px; opacity: 0.3;
     }
     .flashcard-back::-webkit-scrollbar { width: 4px; }
     .flashcard-back::-webkit-scrollbar-thumb { background: rgba(0,212,255,.4); border-radius: 10px; }
@@ -352,6 +353,24 @@
       border-left: 3px solid rgba(0,212,255,0.5);
       margin-top: auto; position: relative; z-index: 2;
     }
+    
+    .pros-cons { position: relative; z-index: 2; margin-top: 0.8rem; }
+    .pros-cons h4 {
+      font-family: 'Rajdhani', sans-serif; font-size: .8rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 2px; margin-bottom: .4rem;
+    }
+    .pros-cons .pros h4 { color: #00ff88; }
+    .pros-cons .cons h4 { color: #ff4466; }
+    .pros-cons ul {
+      list-style: none; padding: 0; margin: 0 0 .6rem 0;
+    }
+    .pros-cons li {
+      font-size: .78rem; color: #8a9bb8; padding: .2rem 0 .2rem 1rem;
+      position: relative; line-height: 1.4;
+    }
+    .pros li::before { content: '✓'; position: absolute; left: 0; color: #00ff88; font-weight: 700; }
+    .cons li::before { content: '✗'; position: absolute; left: 0; color: #ff4466; font-weight: 700; }
+
     .flip-back-hint {
       text-align: center; margin-top: 1rem;
       font-size: .7rem; color: #00d4ff; opacity: 0.6;
@@ -437,7 +456,7 @@
     @media (max-width: 600px) {
       .cat-nav { gap: .4rem; padding: 1rem; }
       .cat-nav a { font-size: .75rem; padding: .4rem .8rem; }
-      .flashcard { height: 560px; }
+      .flashcard { height: 640px; }
       .spec-grid { grid-template-columns: 1fr; }
     }
 
@@ -629,7 +648,9 @@ commercial: [
     img: "images/boeing-747-8.jpg",
     stats: { "Max Speed": "988 km/h", "Range": "14,320 km", "Passengers": "467", "Engines": "4× GEnx" },
     specs: { "Wingspan": "68.4 m", "Length": "76.3 m", "Height": "19.4 m", "MTOW": "447,696 kg", "Ceiling": "13,100 m", "First Flight": "2010", "Crew": "2 pilots", "Thrust": "4× 296 kN" },
-    desc: "The iconic 'Queen of the Skies' — the final variant of the legendary 747 family, featuring new GEnx engines, a stretched fuselage, and redesigned wings for 16% better fuel efficiency."
+    desc: "The iconic 'Queen of the Skies' — the final variant of the legendary 747 family, featuring new GEnx engines, a stretched fuselage, and redesigned wings for 16% better fuel efficiency.",
+    pros: ["Massive payload capacity", "Proven reliability over decades", "Nose-loading cargo variant available"],
+    cons: ["High fuel consumption (4 engines)", "Being phased out by twin-engine jets", "High operating costs"]
   },
   {
     name: "Airbus A380",
@@ -638,7 +659,9 @@ commercial: [
     img: "images/airbus-a380.jpg",
     stats: { "Max Speed": "1,020 km/h", "Range": "15,200 km", "Passengers": "853 max", "Engines": "4× Trent 900" },
     specs: { "Wingspan": "79.75 m", "Length": "72.72 m", "Height": "24.09 m", "MTOW": "575,000 kg", "Ceiling": "13,136 m", "First Flight": "2005", "Crew": "2 pilots", "Thrust": "4× 374 kN" },
-    desc: "The world's largest passenger airliner, a double-deck, wide-body marvel that redefined luxury travel with its spacious cabins, onboard showers, and unmatched capacity."
+    desc: "The world's largest passenger airliner, a double-deck, wide-body marvel that redefined luxury travel with its spacious cabins, onboard showers, and unmatched capacity.",
+    pros: ["Largest passenger capacity (853 max)", "Extremely quiet cabin", "Unmatched passenger comfort & space"],
+    cons: ["Production discontinued (2021)", "Requires special airport infrastructure", "Very high operating cost per flight"]
   },
   {
     name: "Boeing 787 Dreamliner",
@@ -647,7 +670,9 @@ commercial: [
     img: "images/boeing-787.jpg",
     stats: { "Max Speed": "954 km/h", "Range": "14,140 km", "Passengers": "330", "Engines": "2× GEnx / Trent" },
     specs: { "Wingspan": "60.1 m", "Length": "62.8 m", "Height": "17.0 m", "MTOW": "254,011 kg", "Ceiling": "13,100 m", "First Flight": "2009", "Crew": "2 pilots", "Thrust": "2× 320 kN" },
-    desc: "A revolutionary wide-body built with 50% composite materials, featuring electrically dimmable windows, higher cabin pressure, and 20% less fuel consumption than predecessors."
+    desc: "A revolutionary wide-body built with 50% composite materials, featuring electrically dimmable windows, higher cabin pressure, and 20% less fuel consumption than predecessors.",
+    pros: ["50% composite = lighter & fuel-efficient", "Higher cabin humidity & pressure", "20% less fuel than predecessors"],
+    cons: ["Battery fire issues (early models)", "Slower than legacy wide-bodies", "Production quality concerns"]
   },
   {
     name: "Airbus A350 XWB",
@@ -656,7 +681,9 @@ commercial: [
     img: "images/airbus-a350.jpg",
     stats: { "Max Speed": "945 km/h", "Range": "16,100 km", "Passengers": "440", "Engines": "2× Trent XWB" },
     specs: { "Wingspan": "64.75 m", "Length": "73.79 m", "Height": "17.05 m", "MTOW": "316,000 kg", "Ceiling": "13,100 m", "First Flight": "2013", "Crew": "2 pilots", "Thrust": "2× 431 kN" },
-    desc: "Airbus's latest-generation long-haul aircraft with 53% composite structure, the world's most powerful Trent XWB engines, and ultra-efficient aerodynamics."
+    desc: "Airbus's latest-generation long-haul aircraft with 53% composite structure, the world's most powerful Trent XWB engines, and ultra-efficient aerodynamics.",
+    pros: ["53% composite airframe", "Ultra-long range (16,100 km)", "Lower noise footprint"],
+    cons: ["Relatively new fleet = less data", "Expensive list price", "Limited freighter variant availability"]
   },
   {
     name: "Boeing 777X",
@@ -665,7 +692,9 @@ commercial: [
     img: "images/boeing-777x.jpg",
     stats: { "Max Speed": "950 km/h", "Range": "16,170 km", "Passengers": "426", "Engines": "2× GE9X" },
     specs: { "Wingspan": "71.8 m (64.8 folded)", "Length": "76.7 m", "Height": "19.5 m", "MTOW": "351,534 kg", "Ceiling": "13,100 m", "First Flight": "2020", "Crew": "2 pilots", "Thrust": "2× 470 kN" },
-    desc: "Boeing's newest and largest twin-engine jet with revolutionary folding wingtips, the most powerful commercial engine ever (GE9X), and a composite wing for exceptional range."
+    desc: "Boeing's newest and largest twin-engine jet with revolutionary folding wingtips, the most powerful commercial engine ever (GE9X), and a composite wing for exceptional range.",
+    pros: ["World's most powerful engine (GE9X)", "Folding wingtips for gate compatibility", "Exceptional range for twin-engine"],
+    cons: ["Significant certification delays", "Heavy competition from A350", "High development cost overruns"]
   },
   {
     name: "Airbus A320neo",
@@ -674,7 +703,9 @@ commercial: [
     img: "images/airbus-a320neo.jpg",
     stats: { "Max Speed": "871 km/h", "Range": "6,300 km", "Passengers": "194", "Engines": "2× LEAP / PW" },
     specs: { "Wingspan": "35.8 m", "Length": "37.57 m", "Height": "11.76 m", "MTOW": "79,000 kg", "Ceiling": "11,900 m", "First Flight": "2014", "Crew": "2 pilots", "Thrust": "2× 120 kN" },
-    desc: "The best-selling single-aisle jet in aviation history. The 'neo' upgrade adds new-generation engines and sharklet wingtips for 20% fuel savings over previous models."
+    desc: "The best-selling single-aisle jet in aviation history. The 'neo' upgrade adds new-generation engines and sharklet wingtips for 20% fuel savings over previous models.",
+    pros: ["Best-selling single-aisle ever", "20% fuel savings over ceo", "Massive global support network"],
+    cons: ["Limited range for transatlantic", "Narrow cabin for long flights", "Engine delivery bottlenecks"]
   },
   {
     name: "Embraer E195-E2",
@@ -683,7 +714,9 @@ commercial: [
     img: "images/embraer-e195-e2.jpg",
     stats: { "Max Speed": "870 km/h", "Range": "4,815 km", "Passengers": "146", "Engines": "2× PW1900G" },
     specs: { "Wingspan": "35.1 m", "Length": "41.5 m", "Height": "10.97 m", "MTOW": "62,500 kg", "Ceiling": "12,500 m", "First Flight": "2017", "Crew": "2 pilots", "Thrust": "2× 101 kN" },
-    desc: "Known as the 'Profit Hunter' — this regional jet offers the lowest operating costs per seat with a revolutionary swept wing and the quietest cabin in its class."
+    desc: "Known as the 'Profit Hunter' — this regional jet offers the lowest operating costs per seat with a revolutionary swept wing and the quietest cabin in its class.",
+    pros: ["Lowest seat-mile cost in class", "Quietest cabin in regional jets", "Excellent short-runway performance"],
+    cons: ["Smaller passenger capacity", "Limited brand recognition vs Airbus/Boeing", "Fewer operator networks"]
   }
 ],
 
@@ -696,7 +729,9 @@ commercial: [
     img: "images/f-22-raptor.jpg",
     stats: { "Max Speed": "Mach 2.25", "Range": "2,960 km", "Armament": "AIM-120 / AIM-9", "Generation": "5th Gen" },
     specs: { "Wingspan": "13.56 m", "Length": "18.92 m", "Height": "5.08 m", "MTOW": "38,000 kg", "Ceiling": "19,812 m", "First Flight": "1997", "Crew": "1 pilot", "Thrust": "2× 156 kN (A/B)" },
-    desc: "The world's first operational 5th-generation stealth fighter, featuring thrust vectoring, supercruise capability (Mach 1.82 without afterburner), and unmatched air superiority."
+    desc: "The world's first operational 5th-generation stealth fighter, featuring thrust vectoring, supercruise capability (Mach 1.82 without afterburner), and unmatched air superiority.",
+    pros: ["Unmatched stealth & supercruise", "Thrust vectoring for extreme agility", "Dominant air superiority record"],
+    cons: ["Extremely expensive ($150M+ each)", "Export banned by US law", "Production line closed (187 built)"]
   },
   {
     name: "F-35 Lightning II",
@@ -705,7 +740,9 @@ commercial: [
     img: "images/f-35-lightning.jpg",
     stats: { "Max Speed": "Mach 1.6", "Range": "2,800 km", "Armament": "AIM-120 / GBU-31", "Generation": "5th Gen" },
     specs: { "Wingspan": "10.7 m", "Length": "15.7 m", "Height": "4.38 m", "MTOW": "31,751 kg", "Ceiling": "15,240 m", "First Flight": "2006", "Crew": "1 pilot", "Thrust": "1× 191 kN (A/B)" },
-    desc: "The most advanced and expensive weapons system ever built. Three variants (A/B/C) serve the Air Force, Marines (STOVL), and Navy (carrier). Unrivaled sensor fusion with the AN/APG-81 AESA radar."
+    desc: "The most advanced and expensive weapons system ever built. Three variants (A/B/C) serve the Air Force, Marines (STOVL), and Navy (carrier). Unrivaled sensor fusion with the AN/APG-81 AESA radar.",
+    pros: ["Most advanced sensor fusion ever", "Three variants (CTOL/STOVL/CV)", "Massive international coalition"],
+    cons: ["Most expensive weapons program in history", "Limited sustained speed (Mach 1.6)", "Ongoing software & reliability issues"]
   },
   {
     name: "Su-57 Felon",
@@ -714,7 +751,9 @@ commercial: [
     img: "images/su-57.jpg",
     stats: { "Max Speed": "Mach 2.0", "Range": "3,500 km", "Armament": "R-77 / Kh-59", "Generation": "5th Gen" },
     specs: { "Wingspan": "14.1 m", "Length": "19.8 m", "Height": "4.74 m", "MTOW": "35,000 kg", "Ceiling": "20,000 m", "First Flight": "2010", "Crew": "1 pilot", "Thrust": "2× 176 kN (A/B)" },
-    desc: "Russia's answer to the F-22 — a twin-engine stealth fighter with 3D thrust vectoring, internal weapons bays, and an advanced AESA radar suite for multi-role combat operations."
+    desc: "Russia's answer to the F-22 — a twin-engine stealth fighter with 3D thrust vectoring, internal weapons bays, and an advanced AESA radar suite for multi-role combat operations.",
+    pros: ["3D thrust vectoring", "Very long combat range", "Advanced AESA radar suite"],
+    cons: ["Very limited production numbers", "Engine still being upgraded", "Stealth inferior to F-22/F-35"]
   },
   {
     name: "Eurofighter Typhoon",
@@ -723,7 +762,9 @@ commercial: [
     img: "images/eurofighter-typhoon.jpg",
     stats: { "Max Speed": "Mach 2.0", "Range": "2,900 km", "Armament": "AMRAAM / Meteor", "Generation": "4.5 Gen" },
     specs: { "Wingspan": "10.95 m", "Length": "15.96 m", "Height": "5.28 m", "MTOW": "23,500 kg", "Ceiling": "19,812 m", "First Flight": "1994", "Crew": "1-2 pilots", "Thrust": "2× 90 kN (A/B)" },
-    desc: "Europe's premier multi-role combat aircraft, designed by four nations. Features canard-delta wing design, Captor-E AESA radar, and exceptional high-altitude performance."
+    desc: "Europe's premier multi-role combat aircraft, designed by four nations. Features canard-delta wing design, Captor-E AESA radar, and exceptional high-altitude performance.",
+    pros: ["Exceptional high-altitude performance", "Proven in NATO operations", "Continuous upgrades (Captor-E AESA)"],
+    cons: ["Multi-nation politics slow upgrades", "Higher maintenance than single-engine jets", "Limited stealth capability"]
   },
   {
     name: "Dassault Rafale",
@@ -732,7 +773,9 @@ commercial: [
     img: "images/dassault-rafale.jpg",
     stats: { "Max Speed": "Mach 1.8", "Range": "3,700 km", "Armament": "MICA / SCALP", "Generation": "4.5 Gen" },
     specs: { "Wingspan": "10.8 m", "Length": "15.27 m", "Height": "5.34 m", "MTOW": "24,500 kg", "Ceiling": "15,235 m", "First Flight": "1986", "Crew": "1-2 pilots", "Thrust": "2× 75 kN (A/B)" },
-    desc: "France's 'omnirole' fighter capable of air superiority, deep strike, reconnaissance, and nuclear deterrence. Battle-proven in Libya, Mali, Iraq, and Syria."
+    desc: "France's 'omnirole' fighter capable of air superiority, deep strike, reconnaissance, and nuclear deterrence. Battle-proven in Libya, Mali, Iraq, and Syria.",
+    pros: ["True omnirole capability", "Nuclear deterrence certified", "Battle-proven in 5+ conflicts"],
+    cons: ["Smaller payload than twin-engine peers", "Higher cost than F-16 class", "Limited export base (growing)"]
   },
   {
     name: "F-16 Fighting Falcon",
@@ -741,7 +784,9 @@ commercial: [
     img: "images/f-16.jpg",
     stats: { "Max Speed": "Mach 2.0", "Range": "4,220 km", "Armament": "AIM-9 / AGM-88", "Generation": "4th Gen" },
     specs: { "Wingspan": "9.96 m", "Length": "15.06 m", "Height": "4.88 m", "MTOW": "21,772 kg", "Ceiling": "15,240 m", "First Flight": "1974", "Crew": "1-2 pilots", "Thrust": "1× 131 kN (A/B)" },
-    desc: "The most successful and widely exported fighter in history with 4,600+ built. Its fly-by-wire system and bubble canopy were revolutionary. Still being upgraded after 50 years of service."
+    desc: "The most successful and widely exported fighter in history with 4,600+ built. Its fly-by-wire system and bubble canopy were revolutionary. Still being upgraded after 50 years of service.",
+    pros: ["4,600+ built = massive support network", "Extremely affordable per unit", "50+ years of continuous upgrades"],
+    cons: ["Single engine = less survivability", "4th-gen = limited stealth", "Aging airframe design"]
   },
   {
     name: "F/A-18E/F Super Hornet",
@@ -750,7 +795,9 @@ commercial: [
     img: "images/fa-18-super-hornet.jpg",
     stats: { "Max Speed": "Mach 1.8", "Range": "2,346 km", "Armament": "AIM-120 / Harpoon", "Generation": "4.5 Gen" },
     specs: { "Wingspan": "13.62 m", "Length": "18.31 m", "Height": "4.88 m", "MTOW": "29,937 kg", "Ceiling": "15,240 m", "First Flight": "1995", "Crew": "1-2 pilots", "Thrust": "2× 98 kN (A/B)" },
-    desc: "The U.S. Navy's backbone carrier-based strike fighter. The 'Rhino' can do it all — fleet defense, close air support, SEAD, and reconnaissance with the Advanced Super Hornet upgrades."
+    desc: "The U.S. Navy's backbone carrier-based strike fighter. The 'Rhino' can do it all — fleet defense, close air support, SEAD, and reconnaissance with the Advanced Super Hornet upgrades.",
+    pros: ["Carrier-capable multirole fighter", "Excellent low-speed handling", "Advanced Super Hornet upgrade path"],
+    cons: ["Slower than land-based peers", "Higher drag from carrier hardware", "Being replaced by F-35C"]
   },
   {
     name: "Chengdu J-20 Mighty Dragon",
@@ -759,7 +806,9 @@ commercial: [
     img: "images/chengdu-j-20.jpg",
     stats: { "Max Speed": "Mach 2.0+", "Range": "~5,500 km", "Armament": "PL-15 / PL-10", "Generation": "5th Gen" },
     specs: { "Wingspan": "13.01 m", "Length": "20.4 m", "Height": "4.69 m", "MTOW": "~37,000 kg", "Ceiling": "20,000 m", "First Flight": "2011", "Crew": "1 pilot", "Thrust": "2× 147 kN (A/B)" },
-    desc: "China's first stealth fighter — a large, twin-engine design optimized for long-range interception. Features canard-delta configuration, DSI intakes, and advanced AESA radar."
+    desc: "China's first stealth fighter — a large, twin-engine design optimized for long-range interception. Features canard-delta configuration, DSI intakes, and advanced AESA radar.",
+    pros: ["Long-range interception capability", "Large internal weapons bays", "Rapidly improving Chinese avionics"],
+    cons: ["Engine performance still developing", "Limited combat-proven record", "Classified specs = uncertain data"]
   }
 ],
 
@@ -772,7 +821,9 @@ commercial: [
     img: "images/gulfstream-g700.jpg",
     stats: { "Max Speed": "Mach 0.925", "Range": "13,890 km", "Passengers": "19", "Engines": "2× Rolls PF" },
     specs: { "Wingspan": "31.39 m", "Length": "33.53 m", "Height": "7.67 m", "MTOW": "48,807 kg", "Ceiling": "15,545 m", "First Flight": "2020", "Crew": "2 + 1-2 attendants", "Cabin Vol.": "175.2 m³" },
-    desc: "The undisputed king of business aviation — the tallest, widest, and longest cabin ever with up to five living areas, a master suite, and the Gulfstream Symmetry flight deck."
+    desc: "The undisputed king of business aviation — the tallest, widest, and longest cabin ever with up to five living areas, a master suite, and the Gulfstream Symmetry flight deck.",
+    pros: ["Tallest, widest, longest cabin ever", "5 living areas + master suite", "Ultra-quiet cabin environment"],
+    cons: ["$75M+ price tag", "High fuel burn for private jet", "Limited airport access due to size"]
   },
   {
     name: "Bombardier Global 7500",
@@ -781,7 +832,9 @@ commercial: [
     img: "images/bombardier-global-7500.jpg",
     stats: { "Max Speed": "Mach 0.925", "Range": "14,260 km", "Passengers": "19", "Engines": "2× GE Passport" },
     specs: { "Wingspan": "31.72 m", "Length": "33.88 m", "Height": "8.23 m", "MTOW": "48,806 kg", "Ceiling": "15,545 m", "First Flight": "2016", "Crew": "2 + attendant", "Cabin Vol.": "172.3 m³" },
-    desc: "Holder of the longest-range business jet record — four true cabin zones with a dedicated crew suite, Pur Air system, and Bombardier's smooth-ride Nu Wave wing."
+    desc: "Holder of the longest-range business jet record — four true cabin zones with a dedicated crew suite, Pur Air system, and Bombardier's smooth-ride Nu Wave wing.",
+    pros: ["Longest range in business aviation", "4 true cabin zones", "Smooth-ride Nu Wave wing"],
+    cons: ["Very high acquisition cost", "Large ramp footprint", "Limited cabin crew facilities"]
   },
   {
     name: "Dassault Falcon 10X",
@@ -790,7 +843,9 @@ commercial: [
     img: "images/dassault-falcon-10x.jpg",
     stats: { "Max Speed": "Mach 0.925", "Range": "13,890 km", "Passengers": "16", "Engines": "2× Rolls Pearl" },
     specs: { "Wingspan": "33.58 m", "Length": "33.45 m", "Height": "8.37 m", "MTOW": "47,400 kg", "Ceiling": "15,545 m", "First Flight": "2024", "Crew": "2 pilots", "Cabin Width": "2.77 m" },
-    desc: "Dassault's flagship ultra-long-range jet, boasting the widest cabin cross-section in business aviation, a fighter-jet-derived FalconEye HUD, and unparalleled low-speed handling."
+    desc: "Dassault's flagship ultra-long-range jet, boasting the widest cabin cross-section in business aviation, a fighter-jet-derived FalconEye HUD, and unparalleled low-speed handling.",
+    pros: ["Widest cabin cross-section", "Fighter-derived FalconEye HUD", "Exceptional low-speed handling"],
+    cons: ["Still entering service", "Limited service network vs G700", "Premium pricing"]
   },
   {
     name: "Cessna Citation Longitude",
@@ -799,7 +854,9 @@ commercial: [
     img: "images/cessna-citation-longitude.jpg",
     stats: { "Max Speed": "898 km/h", "Range": "6,482 km", "Passengers": "12", "Engines": "2× Honeywell" },
     specs: { "Wingspan": "20.29 m", "Length": "22.27 m", "Height": "5.94 m", "MTOW": "17,917 kg", "Ceiling": "13,716 m", "First Flight": "2016", "Crew": "2 pilots", "Cabin Vol.": "37.0 m³" },
-    desc: "A super-midsize jet offering transcontinental range with the quietest cabin in its class, flat-floor cabin, and Garmin G5000 touchscreen avionics."
+    desc: "A super-midsize jet offering transcontinental range with the quietest cabin in its class, flat-floor cabin, and Garmin G5000 touchscreen avionics.",
+    pros: ["Quietest cabin in super-midsize class", "Flat floor cabin", "Lower operating costs than peers"],
+    cons: ["Smaller cabin than large-cabin jets", "Limited transcontinental range", "Fewer amenities than flagships"]
   }
 ],
 
@@ -812,7 +869,9 @@ cargo: [
     img: "images/antonov-an-225.jpg",
     stats: { "Max Speed": "850 km/h", "Payload": "250,000 kg", "Range": "15,400 km", "Engines": "6× D-18T" },
     specs: { "Wingspan": "88.4 m", "Length": "84.0 m", "Height": "18.2 m", "MTOW": "640,000 kg", "Ceiling": "11,000 m", "First Flight": "1988", "Crew": "6", "Cargo Vol.": "1,300 m³" },
-    desc: "The largest and heaviest aircraft ever built — originally designed to carry the Soviet Buran space shuttle on its back. Only one was completed. Tragically destroyed in 2022."
+    desc: "The largest and heaviest aircraft ever built — originally designed to carry the Soviet Buran space shuttle on its back. Only one was completed. Tragically destroyed in 2022.",
+    pros: ["Largest aircraft ever built", "250-ton payload capacity", "Carried space shuttle on its back"],
+    cons: ["Destroyed in 2022 (irreplaceable)", "Only 1 ever completed", "Extremely expensive to operate"]
   },
   {
     name: "Boeing 747-8 Freighter",
@@ -821,7 +880,9 @@ cargo: [
     img: "images/boeing-747-8f.jpg",
     stats: { "Max Speed": "988 km/h", "Payload": "137,756 kg", "Range": "8,130 km", "Engines": "4× GEnx" },
     specs: { "Wingspan": "68.4 m", "Length": "76.3 m", "Height": "19.4 m", "MTOW": "447,696 kg", "Ceiling": "13,100 m", "First Flight": "2010", "Crew": "2 pilots", "Cargo Vol.": "858 m³" },
-    desc: "The largest commercial freighter in production — the backbone of global cargo carriers like UPS, FedEx, and Atlas Air, with a distinctive nose-loading door."
+    desc: "The largest commercial freighter in production — the backbone of global cargo carriers like UPS, FedEx, and Atlas Air, with a distinctive nose-loading door.",
+    pros: ["Nose-loading door for outsized cargo", "Largest commercial freighter in production", "Proven backbone of global freight"],
+    cons: ["4-engine fuel consumption", "Being challenged by 777F", "High crew & maintenance costs"]
   },
   {
     name: "Airbus BelugaXL",
@@ -830,7 +891,9 @@ cargo: [
     img: "images/airbus-belugaxl.jpg",
     stats: { "Max Speed": "780 km/h", "Payload": "51,000 kg", "Range": "4,000 km", "Engines": "2× CF6-80" },
     specs: { "Wingspan": "60.3 m", "Length": "63.1 m", "Height": "18.9 m", "MTOW": "227,000 kg", "Ceiling": "10,700 m", "First Flight": "2018", "Crew": "2 pilots", "Cargo Vol.": "2,209 m³" },
-    desc: "The whale-shaped super transporter built to carry entire Airbus aircraft sections between factories. Its voluminous cargo bay can fit two A350 wings simultaneously."
+    desc: "The whale-shaped super transporter built to carry entire Airbus aircraft sections between factories. Its voluminous cargo bay can fit two A350 wings simultaneously.",
+    pros: ["Enormous 2,209 m3 cargo bay", "Can carry 2 A350 wings at once", "Purpose-built for outsized loads"],
+    cons: ["Very limited range (4,000 km)", "Not commercially available", "Specialized = no versatility"]
   },
   {
     name: "Lockheed C-5M Super Galaxy",
@@ -839,7 +902,9 @@ cargo: [
     img: "images/lockheed-c-5m.jpg",
     stats: { "Max Speed": "919 km/h", "Payload": "129,274 kg", "Range": "8,055 km", "Engines": "4× CF6-80C2" },
     specs: { "Wingspan": "67.89 m", "Length": "75.54 m", "Height": "19.85 m", "MTOW": "381,018 kg", "Ceiling": "10,895 m", "First Flight": "1968", "Crew": "7", "Cargo Vol.": "876 m³" },
-    desc: "One of the largest military transport aircraft — it can swallow 6 Apache helicopters, 2 M1 Abrams tanks, or 36 standard pallets. Features both nose and tail loading ramps."
+    desc: "One of the largest military transport aircraft — it can swallow 6 Apache helicopters, 2 M1 Abrams tanks, or 36 standard pallets. Features both nose and tail loading ramps.",
+    pros: ["Front AND rear loading ramps", "Can carry 2 M1 Abrams tanks", "Intercontinental strategic range"],
+    cons: ["Very high maintenance hours per flight", "Aging airframe (1960s design)", "Limited fleet size"]
   }
 ],
 
@@ -852,7 +917,9 @@ military: [
     img: "images/boeing-c-17.jpg",
     stats: { "Max Speed": "830 km/h", "Payload": "77,519 kg", "Range": "4,482 km", "Engines": "4× F117-PW" },
     specs: { "Wingspan": "51.75 m", "Length": "53.04 m", "Height": "16.79 m", "MTOW": "265,350 kg", "Ceiling": "13,716 m", "First Flight": "1991", "Crew": "3", "Cargo Vol.": "592 m³" },
-    desc: "The workhorse of strategic airlift — capable of landing on short, austere runways carrying M1 tanks, helicopters, or 102 paratroopers. 279 built for global operations."
+    desc: "The workhorse of strategic airlift — capable of landing on short, austere runways carrying M1 tanks, helicopters, or 102 paratroopers. 279 built for global operations.",
+    pros: ["Lands on short austere runways", "Carries M1 tanks & helicopters", "Excellent tactical flexibility"],
+    cons: ["Production ended (2015)", "High unit cost ($218M)", "Limited to military operators"]
   },
   {
     name: "Lockheed C-130J Super Hercules",
@@ -861,7 +928,9 @@ military: [
     img: "images/lockheed-c-130j.jpg",
     stats: { "Max Speed": "671 km/h", "Payload": "19,090 kg", "Range": "6,852 km", "Engines": "4× AE2100D3" },
     specs: { "Wingspan": "40.41 m", "Length": "29.79 m", "Height": "11.84 m", "MTOW": "79,378 kg", "Ceiling": "8,615 m", "First Flight": "1996", "Crew": "3-5", "Variants": "AC/MC/HC/EC/KC" },
-    desc: "The legendary 'Herc' — in continuous production since 1954, making it the longest military aircraft production run in history. Over 2,500 built across 70+ nations."
+    desc: "The legendary 'Herc' — in continuous production since 1954, making it the longest military aircraft production run in history. Over 2,500 built across 70+ nations.",
+    pros: ["Longest military production run ever", "70+ nations operate it", "Dozens of specialized variants"],
+    cons: ["Turboprop = slower than jets", "Limited payload vs C-17", "Pressurized but not comfortable"]
   },
   {
     name: "Airbus A400M Atlas",
@@ -870,7 +939,9 @@ military: [
     img: "images/airbus-a400m.jpg",
     stats: { "Max Speed": "780 km/h", "Payload": "37,000 kg", "Range": "8,710 km", "Engines": "4× TP400-D6" },
     specs: { "Wingspan": "42.4 m", "Length": "45.1 m", "Height": "14.7 m", "MTOW": "141,000 kg", "Ceiling": "11,300 m", "First Flight": "2009", "Crew": "3-4", "Cargo Vol.": "340 m³" },
-    desc: "Europe's modern tactical/strategic airlifter bridging the gap between the C-130 and C-17. Features turboprop efficiency with jet-like speed, aerial refueling, and paradrop capability."
+    desc: "Europe's modern tactical/strategic airlifter bridging the gap between the C-130 and C-17. Features turboprop efficiency with jet-like speed, aerial refueling, and paradrop capability.",
+    pros: ["Turboprop efficiency + jet speed", "Aerial refueling capable", "Bridges C-130 and C-17 gap"],
+    cons: ["Troubled development history", "Engine reliability issues early on", "Higher cost than planned"]
   },
   {
     name: "Bell Boeing V-22 Osprey",
@@ -879,7 +950,9 @@ military: [
     img: "images/bell-boeing-v-22.jpg",
     stats: { "Max Speed": "565 km/h", "Payload": "9,070 kg", "Range": "1,627 km", "Type": "Tiltrotor" },
     specs: { "Rotor Dia.": "11.58 m each", "Length": "17.47 m", "Height": "6.73 m", "MTOW": "27,442 kg", "Ceiling": "7,620 m", "First Flight": "1989", "Crew": "4", "Troops": "24 combat" },
-    desc: "A revolutionary tiltrotor — takes off like a helicopter, then tilts its rotors to fly like a turboprop plane. Used by USMC, USAF, and Navy for assault, resupply, and special operations."
+    desc: "A revolutionary tiltrotor — takes off like a helicopter, then tilts its rotors to fly like a turboprop plane. Used by USMC, USAF, and Navy for assault, resupply, and special operations.",
+    pros: ["Unique tiltrotor = VTOL + speed", "2x faster than helicopters", "Long-range special operations capable"],
+    cons: ["Controversial safety record", "Very high maintenance costs", "Complex & expensive to operate"]
   }
 ],
 
@@ -892,7 +965,9 @@ trainers: [
     img: "images/bae-hawk.jpg",
     stats: { "Max Speed": "1,028 km/h", "Range": "2,520 km", "Role": "Advanced Trainer", "G-Limit": "+8g / -4g" },
     specs: { "Wingspan": "9.94 m", "Length": "12.43 m", "Height": "3.98 m", "MTOW": "9,100 kg", "Ceiling": "15,240 m", "First Flight": "1974", "Crew": "2 (tandem)", "Thrust": "1× 26.0 kN" },
-    desc: "The iconic jet trainer flown by the Red Arrows. Used by 18 air forces worldwide, the Hawk has trained more fast-jet pilots than any other trainer in history."
+    desc: "The iconic jet trainer flown by the Red Arrows. Used by 18 air forces worldwide, the Hawk has trained more fast-jet pilots than any other trainer in history.",
+    pros: ["Trained more pilots than any trainer", "Red Arrows display team aircraft", "Combat-capable light attack variant"],
+    cons: ["Subsonic only", "Aging design (1974)", "Limited avionics vs modern trainers"]
   },
   {
     name: "Beechcraft T-6 Texan II",
@@ -901,7 +976,9 @@ trainers: [
     img: "images/beechcraft-t-6.jpg",
     stats: { "Max Speed": "585 km/h", "Range": "1,667 km", "Role": "Primary Trainer", "G-Limit": "+7g / -3.5g" },
     specs: { "Wingspan": "10.19 m", "Length": "10.16 m", "Height": "3.25 m", "MTOW": "3,311 kg", "Ceiling": "9,449 m", "First Flight": "1998", "Crew": "2 (tandem)", "Engine": "1× PT6A-68" },
-    desc: "The USAF and USN's primary trainer — every American military pilot's first aircraft. Features a pressurized cockpit, digital glass avionics, and aerobatic capability."
+    desc: "The USAF and USN's primary trainer — every American military pilot's first aircraft. Features a pressurized cockpit, digital glass avionics, and aerobatic capability.",
+    pros: ["Every US military pilot's first aircraft", "Pressurized cockpit", "Aerobatic capable"],
+    cons: ["Oxygen system safety concerns", "Turboprop = limited speed envelope", "Not lead-in fighter capable"]
   },
   {
     name: "Pilatus PC-21",
@@ -910,7 +987,9 @@ trainers: [
     img: "images/pilatus-pc-21.jpg",
     stats: { "Max Speed": "685 km/h", "Range": "1,352 km", "Role": "Advanced Trainer", "G-Limit": "+8g / -4g" },
     specs: { "Wingspan": "9.11 m", "Length": "11.23 m", "Height": "3.75 m", "MTOW": "4,250 kg", "Ceiling": "11,582 m", "First Flight": "2002", "Crew": "2 (tandem)", "Engine": "1× PT6A-68B" },
-    desc: "A turboprop trainer so advanced it can replace lead-in jet trainers. Its embedded simulation system allows student pilots to practice radar, weapons, and tactical scenarios."
+    desc: "A turboprop trainer so advanced it can replace lead-in jet trainers. Its embedded simulation system allows student pilots to practice radar, weapons, and tactical scenarios.",
+    pros: ["Can replace lead-in jet trainers", "Embedded tactical simulation", "Extremely cost-effective training"],
+    cons: ["Turboprop = no actual jet experience", "Swiss export restrictions", "Small cockpit for larger pilots"]
   },
   {
     name: "KAI T-50 Golden Eagle",
@@ -919,7 +998,9 @@ trainers: [
     img: "images/kai-t-50.jpg",
     stats: { "Max Speed": "Mach 1.5", "Range": "1,851 km", "Role": "Lead-In Fighter", "G-Limit": "+8g / -3g" },
     specs: { "Wingspan": "9.17 m", "Length": "13.14 m", "Height": "4.94 m", "MTOW": "12,300 kg", "Ceiling": "14,630 m", "First Flight": "2002", "Crew": "2 (tandem)", "Thrust": "1× 78.7 kN" },
-    desc: "The world's first supersonic advanced trainer — derived from the F-16 design. Variants include the FA-50 light combat aircraft used in the Philippines, Iraq, and Poland."
+    desc: "The world's first supersonic advanced trainer — derived from the F-16 design. Variants include the FA-50 light combat aircraft used in the Philippines, Iraq, and Poland.",
+    pros: ["First supersonic trainer ever", "F-16 derived = real fighter feel", "FA-50 light combat variant"],
+    cons: ["Single engine = less safe for training", "Limited export success so far", "Higher cost than turboprop trainers"]
   }
 ],
 
@@ -932,7 +1013,9 @@ helicopters: [
     img: "images/ah-64-apache.jpg",
     stats: { "Max Speed": "293 km/h", "Range": "476 km", "Armament": "Hellfire / Hydra", "Role": "Attack" },
     specs: { "Rotor Dia.": "14.63 m", "Length": "17.73 m", "Height": "3.87 m", "MTOW": "10,433 kg", "Ceiling": "6,400 m", "First Flight": "1975", "Crew": "2 (tandem)", "Engine": "2× T700-GE-701D" },
-    desc: "The world's most feared attack helicopter — features the Longbow fire control radar, helmet-mounted display, and can destroy 16 targets in rapid succession with Hellfire missiles."
+    desc: "The world's most feared attack helicopter — features the Longbow fire control radar, helmet-mounted display, and can destroy 16 targets in rapid succession with Hellfire missiles.",
+    pros: ["Longbow radar = fire-and-forget", "Helmet-mounted target acquisition", "16 Hellfire missiles capacity"],
+    cons: ["Very expensive ($35M+ each)", "Complex maintenance requirements", "Vulnerable to MANPADS"]
   },
   {
     name: "UH-60M Black Hawk",
@@ -941,7 +1024,9 @@ helicopters: [
     img: "images/uh-60-black-hawk.jpg",
     stats: { "Max Speed": "294 km/h", "Range": "590 km", "Capacity": "11 troops", "Role": "Utility" },
     specs: { "Rotor Dia.": "16.36 m", "Length": "19.76 m", "Height": "3.76 m", "MTOW": "10,660 kg", "Ceiling": "5,790 m", "First Flight": "1974", "Crew": "2 + 2 gunners", "Engine": "2× T700-GE-701D" },
-    desc: "The backbone of U.S. Army aviation — used for air assault, medevac, special operations, and VIP transport. Over 4,000 built and operated by 28 nations worldwide."
+    desc: "The backbone of U.S. Army aviation — used for air assault, medevac, special operations, and VIP transport. Over 4,000 built and operated by 28 nations worldwide.",
+    pros: ["4,000+ built worldwide", "Extremely versatile (medevac/assault/VIP)", "28 nations operate it"],
+    cons: ["Not heavily armed by default", "Tail rotor vulnerability", "High acquisition cost for allies"]
   },
   {
     name: "Mi-24 Hind",
@@ -950,7 +1035,9 @@ helicopters: [
     img: "images/mi-24-hind.jpg",
     stats: { "Max Speed": "335 km/h", "Range": "450 km", "Armament": "AT-6 / GSh-23", "Role": "Attack / Transport" },
     specs: { "Rotor Dia.": "17.3 m", "Length": "21.5 m", "Height": "6.5 m", "MTOW": "12,000 kg", "Ceiling": "4,500 m", "First Flight": "1969", "Crew": "2-3", "Troops": "8 soldiers" },
-    desc: "The legendary 'flying tank' of the Soviet era — uniquely combines gunship firepower with a troop cabin carrying 8 soldiers. Feared in Afghanistan and still combat-active worldwide."
+    desc: "The legendary 'flying tank' of the Soviet era — uniquely combines gunship firepower with a troop cabin carrying 8 soldiers. Feared in Afghanistan and still combat-active worldwide.",
+    pros: ["Unique gunship + troop carrier combo", "Heavily armored 'flying tank'", "Affordable & widely available"],
+    cons: ["Less maneuverable than pure gunships", "Outdated avionics in base models", "High fuel consumption"]
   },
   {
     name: "CH-47F Chinook",
@@ -959,7 +1046,9 @@ helicopters: [
     img: "images/ch-47-chinook.jpg",
     stats: { "Max Speed": "315 km/h", "Range": "741 km", "Capacity": "33-55 troops", "Role": "Heavy Lift" },
     specs: { "Rotor Dia.": "18.29 m each", "Length": "30.1 m", "Height": "5.68 m", "MTOW": "22,680 kg", "Ceiling": "5,640 m", "First Flight": "1961", "Crew": "3-5", "Sling Load": "12,700 kg" },
-    desc: "The tandem-rotor heavy-lift legend — in service for 60+ years and still unmatched. Can carry artillery, vehicles, and supplies to high-altitude landing zones that no other helicopter can reach."
+    desc: "The tandem-rotor heavy-lift legend — in service for 60+ years and still unmatched. Can carry artillery, vehicles, and supplies to high-altitude landing zones that no other helicopter can reach.",
+    pros: ["Unmatched heavy-lift capability", "60+ years of proven service", "High-altitude operations capable"],
+    cons: ["Very large & hard to conceal", "Tandem rotors = complex maintenance", "Slow compared to tiltrotors"]
   },
   {
     name: "Airbus H145",
@@ -968,7 +1057,9 @@ helicopters: [
     img: "images/airbus-h145.jpg",
     stats: { "Max Speed": "267 km/h", "Range": "680 km", "Capacity": "10 pax", "Role": "Light Utility" },
     specs: { "Rotor Dia.": "11.0 m", "Length": "13.64 m", "Height": "3.95 m", "MTOW": "3,800 kg", "Ceiling": "5,485 m", "First Flight": "2010", "Crew": "1-2", "Engine": "2× Arriel 2E" },
-    desc: "A versatile light twin used for HEMS air ambulance, law enforcement, corporate transport, and military training. Features the revolutionary Fenestron shrouded tail rotor for safety."
+    desc: "A versatile light twin used for HEMS air ambulance, law enforcement, corporate transport, and military training. Features the revolutionary Fenestron shrouded tail rotor for safety.",
+    pros: ["Fenestron tail rotor = very safe", "Excellent air ambulance platform", "Low noise footprint for urban ops"],
+    cons: ["Light utility = limited payload", "Not suitable for heavy combat", "Higher cost than single-engine options"]
   }
 ],
 
@@ -981,7 +1072,9 @@ seaplanes: [
     img: "images/canadair-cl-415.jpg",
     stats: { "Max Speed": "359 km/h", "Water Capacity": "6,137 L", "Range": "2,443 km", "Role": "Firefighting" },
     specs: { "Wingspan": "28.6 m", "Length": "19.82 m", "Height": "8.98 m", "MTOW": "19,890 kg", "Ceiling": "4,480 m", "First Flight": "1993", "Crew": "2", "Scoop Time": "12 seconds" },
-    desc: "The ultimate aerial firefighter — scoops 6,137 liters of water in just 12 seconds while skimming a lake at 130 km/h, then drops it precisely on forest fires."
+    desc: "The ultimate aerial firefighter — scoops 6,137 liters of water in just 12 seconds while skimming a lake at 130 km/h, then drops it precisely on forest fires.",
+    pros: ["Scoops 6,137L in 12 seconds", "Purpose-built aerial firefighter", "Amphibious landing capability"],
+    cons: ["Very limited non-firefighting use", "Slow cruise speed", "Aging design (1993)"]
   },
   {
     name: "ShinMaywa US-2",
@@ -990,7 +1083,9 @@ seaplanes: [
     img: "images/shinmaywa-us-2.jpg",
     stats: { "Max Speed": "560 km/h", "Range": "4,500 km", "Capacity": "20 rescued", "Role": "Search & Rescue" },
     specs: { "Wingspan": "33.15 m", "Length": "33.25 m", "Height": "10.06 m", "MTOW": "47,700 kg", "Ceiling": "7,195 m", "First Flight": "2003", "Crew": "11", "Engine": "4× AE2100J" },
-    desc: "One of the world's most advanced amphibious aircraft — can land in 3-meter open ocean swells using its boundary layer control system, making it uniquely capable for deep-sea rescue."
+    desc: "One of the world's most advanced amphibious aircraft — can land in 3-meter open ocean swells using its boundary layer control system, making it uniquely capable for deep-sea rescue.",
+    pros: ["Lands in 3m ocean swells", "Advanced boundary layer control", "Deep-sea rescue capability"],
+    cons: ["Extremely expensive ($150M+)", "Only operated by Japan", "Very limited production"]
   },
   {
     name: "AVIC AG600 Kunlong",
@@ -999,7 +1094,9 @@ seaplanes: [
     img: "images/avic-ag600.jpg",
     stats: { "Max Speed": "570 km/h", "Water Capacity": "12,000 L", "Range": "4,500 km", "Role": "Firefighting / SAR" },
     specs: { "Wingspan": "38.8 m", "Length": "39.6 m", "Height": "12.1 m", "MTOW": "60,000 kg", "Ceiling": "6,000 m", "First Flight": "2017", "Crew": "3+", "Scoop Time": "20 seconds" },
-    desc: "The world's largest amphibious aircraft currently in production — designed for maritime patrol, search and rescue, and aerial firefighting in the South China Sea region."
+    desc: "The world's largest amphibious aircraft currently in production — designed for maritime patrol, search and rescue, and aerial firefighting in the South China Sea region.",
+    pros: ["Largest amphibious aircraft in production", "12,000L water capacity", "Multi-role (SAR + firefighting)"],
+    cons: ["Still in testing/certification", "Unproven in operational service", "Limited international interest"]
   },
   {
     name: "de Havilland DHC-6 Twin Otter (Floats)",
@@ -1008,7 +1105,9 @@ seaplanes: [
     img: "images/dhc-6-twin-otter.jpg",
     stats: { "Max Speed": "338 km/h", "Range": "1,480 km", "Passengers": "19", "Role": "Regional / Bush" },
     specs: { "Wingspan": "19.81 m", "Length": "15.77 m", "Height": "5.94 m", "MTOW": "5,670 kg", "Ceiling": "7,620 m", "First Flight": "1965", "Crew": "1-2", "Engine": "2× PT6A-34" },
-    desc: "The legendary bush plane — operates on wheels, skis, or floats from the shortest, roughest strips imaginable. The lifeline of remote communities from Alaska to the Maldives."
+    desc: "The legendary bush plane — operates on wheels, skis, or floats from the shortest, roughest strips imaginable. The lifeline of remote communities from Alaska to the Maldives.",
+    pros: ["Legendary bush plane reliability", "Operates on wheels/skis/floats", "STOL from shortest strips"],
+    cons: ["Small passenger capacity (19)", "Unpressurized cabin", "Slow cruise speed"]
   }
 ]
 };
@@ -1022,6 +1121,14 @@ function createCard(plane) {
   const specsHTML = Object.entries(plane.specs).map(([k,v]) =>
     `<div class="spec-item"><div class="spec-label">${k}</div><div class="spec-val">${v}</div></div>`
   ).join('');
+
+  const prosHTML = (plane.pros || []).map(p => `<li>${p}</li>`).join('');
+  const consHTML = (plane.cons || []).map(c => `<li>${c}</li>`).join('');
+  const prosConsHTML = (prosHTML || consHTML) ? `
+    <div class="pros-cons">
+      <div class="pros"><h4>✦ Advantages</h4><ul>${prosHTML}</ul></div>
+      <div class="cons"><h4>✦ Disadvantages</h4><ul>${consHTML}</ul></div>
+    </div>` : '';
 
   const card = document.createElement('div');
   card.className = 'flashcard reveal';
@@ -1047,6 +1154,7 @@ function createCard(plane) {
         </div>
         <div class="spec-grid">${specsHTML}</div>
         <div class="back-desc">${plane.desc}</div>
+        ${prosConsHTML}
         <div class="flip-back-hint">Click to flip back</div>
 
       </div>
