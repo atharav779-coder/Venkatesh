@@ -13,6 +13,18 @@ You are currently integrated into the SkyVault Aircraft Encyclopedia website. Fo
 try {
   // Grab the detailDataObj from the DOM
   const detailData = document.getElementById('detailDataObj').textContent;
+  systemInstruction += `Deep Granular Aircraft Data (JSON):
+${detailData}
+
+`;
+} catch (e) {
+  console.warn("Could not load detail data for AI context");
+}
+
+
+try {
+  // Grab the detailDataObj from the DOM
+  const detailData = document.getElementById('detailDataObj').textContent;
   systemInstruction += `Deep Granular Aircraft Data (JSON):\n${detailData}\n\n`;
 } catch (e) {
   console.warn("Could not load detail data for AI context");
@@ -23,7 +35,7 @@ let chatSession;
 async function initChat() {
   try {
     chatSession = await ai.chats.create({
-      model: 'gemini-3.8-flash',
+      model: 'gemini-flash-lite-latest',
       config: {
         systemInstruction: systemInstruction,
         temperature: 0.7,
