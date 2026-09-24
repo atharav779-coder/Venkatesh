@@ -481,10 +481,6 @@
     }
     .info-btn .btn-icon { display: block; font-size: 1.1rem; margin-bottom: 2px; }
 
-    
-      .modal-box { padding: 1.5rem; }
-      .card-buttons { flex-direction: column; }
-    }
 
     /* ===== FOOTER ===== */
     footer {
@@ -517,11 +513,4 @@
         padding: 1rem 2rem 2rem;
         border-bottom: 1px solid rgba(0,212,255,.2);
       }
-    }
-    
-      .cat-nav a { font-size: .75rem; padding: .4rem .8rem; }
-      .flashcard { height: 640px; }
-      .spec-grid { grid-template-columns: 1fr; }
-    }
-
-  
+    }
