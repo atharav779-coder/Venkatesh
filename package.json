@@ -16,12 +16,14 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/atharav779-coder/Venkatesh/issues"
   },
   "homepage": "https://github.com/atharav779-coder/Venkatesh#readme",
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@tailwindcss/vite": "^4.3.3",
     "autoprefixer": "^10.6.1",
     "postcss": "^8.5.28",
     "tailwindcss": "^4.3.3",

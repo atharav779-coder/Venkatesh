@@ -1,0 +1,1953 @@
+
+// ============ AIRCRAFT DATA ============
+const aircraft = {
+
+// ---- COMMERCIAL ----
+commercial: [
+  {
+    name: "Boeing 747-8",
+    origin: "United States — Boeing",
+    category: "Commercial",
+    img: "images/boeing-747-8.jpg",
+    stats: { "Max Speed": "988 km/h", "Range": "14,320 km", "Passengers": "467", "Engines": "4× GEnx" },
+    specs: { "Wingspan": "68.4 m", "Length": "76.3 m", "Height": "19.4 m", "MTOW": "447,696 kg", "Ceiling": "13,100 m", "First Flight": "2010", "Crew": "2 pilots", "Thrust": "4× 296 kN" },
+    desc: "The iconic 'Queen of the Skies' — the final variant of the legendary 747 family, featuring new GEnx engines, a stretched fuselage, and redesigned wings for 16% better fuel efficiency.",
+    pros: ["Massive payload capacity", "Proven reliability over decades", "Nose-loading cargo variant available"],
+    cons: ["High fuel consumption (4 engines)", "Being phased out by twin-engine jets", "High operating costs"]
+  },
+  {
+    name: "Airbus A380",
+    origin: "Europe — Airbus",
+    category: "Commercial",
+    img: "images/airbus-a380.jpg",
+    stats: { "Max Speed": "1,020 km/h", "Range": "15,200 km", "Passengers": "853 max", "Engines": "4× Trent 900" },
+    specs: { "Wingspan": "79.75 m", "Length": "72.72 m", "Height": "24.09 m", "MTOW": "575,000 kg", "Ceiling": "13,136 m", "First Flight": "2005", "Crew": "2 pilots", "Thrust": "4× 374 kN" },
+    desc: "The world's largest passenger airliner, a double-deck, wide-body marvel that redefined luxury travel with its spacious cabins, onboard showers, and unmatched capacity.",
+    pros: ["Largest passenger capacity (853 max)", "Extremely quiet cabin", "Unmatched passenger comfort & space"],
+    cons: ["Production discontinued (2021)", "Requires special airport infrastructure", "Very high operating cost per flight"]
+  },
+  {
+    name: "Boeing 787 Dreamliner",
+    origin: "United States — Boeing",
+    category: "Commercial",
+    img: "images/boeing-787.jpg",
+    stats: { "Max Speed": "954 km/h", "Range": "14,140 km", "Passengers": "330", "Engines": "2× GEnx / Trent" },
+    specs: { "Wingspan": "60.1 m", "Length": "62.8 m", "Height": "17.0 m", "MTOW": "254,011 kg", "Ceiling": "13,100 m", "First Flight": "2009", "Crew": "2 pilots", "Thrust": "2× 320 kN" },
+    desc: "A revolutionary wide-body built with 50% composite materials, featuring electrically dimmable windows, higher cabin pressure, and 20% less fuel consumption than predecessors.",
+    pros: ["50% composite = lighter & fuel-efficient", "Higher cabin humidity & pressure", "20% less fuel than predecessors"],
+    cons: ["Battery fire issues (early models)", "Slower than legacy wide-bodies", "Production quality concerns"]
+  },
+  {
+    name: "Airbus A350 XWB",
+    origin: "Europe — Airbus",
+    category: "Commercial",
+    img: "images/airbus-a350.jpg",
+    stats: { "Max Speed": "945 km/h", "Range": "16,100 km", "Passengers": "440", "Engines": "2× Trent XWB" },
+    specs: { "Wingspan": "64.75 m", "Length": "73.79 m", "Height": "17.05 m", "MTOW": "316,000 kg", "Ceiling": "13,100 m", "First Flight": "2013", "Crew": "2 pilots", "Thrust": "2× 431 kN" },
+    desc: "Airbus's latest-generation long-haul aircraft with 53% composite structure, the world's most powerful Trent XWB engines, and ultra-efficient aerodynamics.",
+    pros: ["53% composite airframe", "Ultra-long range (16,100 km)", "Lower noise footprint"],
+    cons: ["Relatively new fleet = less data", "Expensive list price", "Limited freighter variant availability"]
+  },
+  {
+    name: "Boeing 777X",
+    origin: "United States — Boeing",
+    category: "Commercial",
+    img: "images/boeing-777x.jpg",
+    stats: { "Max Speed": "950 km/h", "Range": "16,170 km", "Passengers": "426", "Engines": "2× GE9X" },
+    specs: { "Wingspan": "71.8 m (64.8 folded)", "Length": "76.7 m", "Height": "19.5 m", "MTOW": "351,534 kg", "Ceiling": "13,100 m", "First Flight": "2020", "Crew": "2 pilots", "Thrust": "2× 470 kN" },
+    desc: "Boeing's newest and largest twin-engine jet with revolutionary folding wingtips, the most powerful commercial engine ever (GE9X), and a composite wing for exceptional range.",
+    pros: ["World's most powerful engine (GE9X)", "Folding wingtips for gate compatibility", "Exceptional range for twin-engine"],
+    cons: ["Significant certification delays", "Heavy competition from A350", "High development cost overruns"]
+  },
+  {
+    name: "Airbus A320neo",
+    origin: "Europe — Airbus",
+    category: "Commercial",
+    img: "images/airbus-a320neo.jpg",
+    stats: { "Max Speed": "871 km/h", "Range": "6,300 km", "Passengers": "194", "Engines": "2× LEAP / PW" },
+    specs: { "Wingspan": "35.8 m", "Length": "37.57 m", "Height": "11.76 m", "MTOW": "79,000 kg", "Ceiling": "11,900 m", "First Flight": "2014", "Crew": "2 pilots", "Thrust": "2× 120 kN" },
+    desc: "The best-selling single-aisle jet in aviation history. The 'neo' upgrade adds new-generation engines and sharklet wingtips for 20% fuel savings over previous models.",
+    pros: ["Best-selling single-aisle ever", "20% fuel savings over ceo", "Massive global support network"],
+    cons: ["Limited range for transatlantic", "Narrow cabin for long flights", "Engine delivery bottlenecks"]
+  },
+  {
+    name: "Embraer E195-E2",
+    origin: "Brazil — Embraer",
+    category: "Commercial",
+    img: "images/embraer-e195-e2.jpg",
+    stats: { "Max Speed": "870 km/h", "Range": "4,815 km", "Passengers": "146", "Engines": "2× PW1900G" },
+    specs: { "Wingspan": "35.1 m", "Length": "41.5 m", "Height": "10.97 m", "MTOW": "62,500 kg", "Ceiling": "12,500 m", "First Flight": "2017", "Crew": "2 pilots", "Thrust": "2× 101 kN" },
+    desc: "Known as the 'Profit Hunter' — this regional jet offers the lowest operating costs per seat with a revolutionary swept wing and the quietest cabin in its class.",
+    pros: ["Lowest seat-mile cost in class", "Quietest cabin in regional jets", "Excellent short-runway performance"],
+    cons: ["Smaller passenger capacity", "Limited brand recognition vs Airbus/Boeing", "Fewer operator networks"]
+  }
+],
+
+// ---- FIGHTER JETS ----
+"fighter-jets": [
+  {
+    name: "F-22 Raptor",
+    origin: "United States — Lockheed Martin",
+    category: "Fighter Jet",
+    img: "images/f-22-raptor.jpg",
+    stats: { "Max Speed": "Mach 2.25", "Range": "2,960 km", "Armament": "AIM-120 / AIM-9", "Generation": "5th Gen" },
+    specs: { "Wingspan": "13.56 m", "Length": "18.92 m", "Height": "5.08 m", "MTOW": "38,000 kg", "Ceiling": "19,812 m", "First Flight": "1997", "Crew": "1 pilot", "Thrust": "2× 156 kN (A/B)" },
+    desc: "The world's first operational 5th-generation stealth fighter, featuring thrust vectoring, supercruise capability (Mach 1.82 without afterburner), and unmatched air superiority.",
+    pros: ["Unmatched stealth & supercruise", "Thrust vectoring for extreme agility", "Dominant air superiority record"],
+    cons: ["Extremely expensive ($150M+ each)", "Export banned by US law", "Production line closed (187 built)"]
+  },
+  {
+    name: "F-35 Lightning II",
+    origin: "United States — Lockheed Martin",
+    category: "Fighter Jet",
+    img: "images/f-35-lightning.jpg",
+    stats: { "Max Speed": "Mach 1.6", "Range": "2,800 km", "Armament": "AIM-120 / GBU-31", "Generation": "5th Gen" },
+    specs: { "Wingspan": "10.7 m", "Length": "15.7 m", "Height": "4.38 m", "MTOW": "31,751 kg", "Ceiling": "15,240 m", "First Flight": "2006", "Crew": "1 pilot", "Thrust": "1× 191 kN (A/B)" },
+    desc: "The most advanced and expensive weapons system ever built. Three variants (A/B/C) serve the Air Force, Marines (STOVL), and Navy (carrier). Unrivaled sensor fusion with the AN/APG-81 AESA radar.",
+    pros: ["Most advanced sensor fusion ever", "Three variants (CTOL/STOVL/CV)", "Massive international coalition"],
+    cons: ["Most expensive weapons program in history", "Limited sustained speed (Mach 1.6)", "Ongoing software & reliability issues"]
+  },
+  {
+    name: "Su-57 Felon",
+    origin: "Russia — Sukhoi",
+    category: "Fighter Jet",
+    img: "images/su-57.jpg",
+    stats: { "Max Speed": "Mach 2.0", "Range": "3,500 km", "Armament": "R-77 / Kh-59", "Generation": "5th Gen" },
+    specs: { "Wingspan": "14.1 m", "Length": "19.8 m", "Height": "4.74 m", "MTOW": "35,000 kg", "Ceiling": "20,000 m", "First Flight": "2010", "Crew": "1 pilot", "Thrust": "2× 176 kN (A/B)" },
+    desc: "Russia's answer to the F-22 — a twin-engine stealth fighter with 3D thrust vectoring, internal weapons bays, and an advanced AESA radar suite for multi-role combat operations.",
+    pros: ["3D thrust vectoring", "Very long combat range", "Advanced AESA radar suite"],
+    cons: ["Very limited production numbers", "Engine still being upgraded", "Stealth inferior to F-22/F-35"]
+  },
+  {
+    name: "Eurofighter Typhoon",
+    origin: "Europe — Airbus/BAE/Leonardo",
+    category: "Fighter Jet",
+    img: "images/eurofighter-typhoon.jpg",
+    stats: { "Max Speed": "Mach 2.0", "Range": "2,900 km", "Armament": "AMRAAM / Meteor", "Generation": "4.5 Gen" },
+    specs: { "Wingspan": "10.95 m", "Length": "15.96 m", "Height": "5.28 m", "MTOW": "23,500 kg", "Ceiling": "19,812 m", "First Flight": "1994", "Crew": "1-2 pilots", "Thrust": "2× 90 kN (A/B)" },
+    desc: "Europe's premier multi-role combat aircraft, designed by four nations. Features canard-delta wing design, Captor-E AESA radar, and exceptional high-altitude performance.",
+    pros: ["Exceptional high-altitude performance", "Proven in NATO operations", "Continuous upgrades (Captor-E AESA)"],
+    cons: ["Multi-nation politics slow upgrades", "Higher maintenance than single-engine jets", "Limited stealth capability"]
+  },
+  {
+    name: "Dassault Rafale",
+    origin: "France — Dassault Aviation",
+    category: "Fighter Jet",
+    img: "images/dassault-rafale.jpg",
+    stats: { "Max Speed": "Mach 1.8", "Range": "3,700 km", "Armament": "MICA / SCALP", "Generation": "4.5 Gen" },
+    specs: { "Wingspan": "10.8 m", "Length": "15.27 m", "Height": "5.34 m", "MTOW": "24,500 kg", "Ceiling": "15,235 m", "First Flight": "1986", "Crew": "1-2 pilots", "Thrust": "2× 75 kN (A/B)" },
+    desc: "France's 'omnirole' fighter capable of air superiority, deep strike, reconnaissance, and nuclear deterrence. Battle-proven in Libya, Mali, Iraq, and Syria.",
+    pros: ["True omnirole capability", "Nuclear deterrence certified", "Battle-proven in 5+ conflicts"],
+    cons: ["Smaller payload than twin-engine peers", "Higher cost than F-16 class", "Limited export base (growing)"]
+  },
+  {
+    name: "F-16 Fighting Falcon",
+    origin: "United States — General Dynamics / LM",
+    category: "Fighter Jet",
+    img: "images/f-16.jpg",
+    stats: { "Max Speed": "Mach 2.0", "Range": "4,220 km", "Armament": "AIM-9 / AGM-88", "Generation": "4th Gen" },
+    specs: { "Wingspan": "9.96 m", "Length": "15.06 m", "Height": "4.88 m", "MTOW": "21,772 kg", "Ceiling": "15,240 m", "First Flight": "1974", "Crew": "1-2 pilots", "Thrust": "1× 131 kN (A/B)" },
+    desc: "The most successful and widely exported fighter in history with 4,600+ built. Its fly-by-wire system and bubble canopy were revolutionary. Still being upgraded after 50 years of service.",
+    pros: ["4,600+ built = massive support network", "Extremely affordable per unit", "50+ years of continuous upgrades"],
+    cons: ["Single engine = less survivability", "4th-gen = limited stealth", "Aging airframe design"]
+  },
+  {
+    name: "F/A-18E/F Super Hornet",
+    origin: "United States — Boeing",
+    category: "Fighter Jet",
+    img: "images/fa-18-super-hornet.jpg",
+    stats: { "Max Speed": "Mach 1.8", "Range": "2,346 km", "Armament": "AIM-120 / Harpoon", "Generation": "4.5 Gen" },
+    specs: { "Wingspan": "13.62 m", "Length": "18.31 m", "Height": "4.88 m", "MTOW": "29,937 kg", "Ceiling": "15,240 m", "First Flight": "1995", "Crew": "1-2 pilots", "Thrust": "2× 98 kN (A/B)" },
+    desc: "The U.S. Navy's backbone carrier-based strike fighter. The 'Rhino' can do it all — fleet defense, close air support, SEAD, and reconnaissance with the Advanced Super Hornet upgrades.",
+    pros: ["Carrier-capable multirole fighter", "Excellent low-speed handling", "Advanced Super Hornet upgrade path"],
+    cons: ["Slower than land-based peers", "Higher drag from carrier hardware", "Being replaced by F-35C"]
+  },
+  {
+    name: "Chengdu J-20 Mighty Dragon",
+    origin: "China — Chengdu Aerospace",
+    category: "Fighter Jet",
+    img: "images/chengdu-j-20.jpg",
+    stats: { "Max Speed": "Mach 2.0+", "Range": "~5,500 km", "Armament": "PL-15 / PL-10", "Generation": "5th Gen" },
+    specs: { "Wingspan": "13.01 m", "Length": "20.4 m", "Height": "4.69 m", "MTOW": "~37,000 kg", "Ceiling": "20,000 m", "First Flight": "2011", "Crew": "1 pilot", "Thrust": "2× 147 kN (A/B)" },
+    desc: "China's first stealth fighter — a large, twin-engine design optimized for long-range interception. Features canard-delta configuration, DSI intakes, and advanced AESA radar.",
+    pros: ["Long-range interception capability", "Large internal weapons bays", "Rapidly improving Chinese avionics"],
+    cons: ["Engine performance still developing", "Limited combat-proven record", "Classified specs = uncertain data"]
+  }
+],
+
+// ---- PRIVATE / BUSINESS JETS ----
+"private-jets": [
+  {
+    name: "Gulfstream G700",
+    origin: "United States — Gulfstream",
+    category: "Private Jet",
+    img: "images/gulfstream-g700.jpg",
+    stats: { "Max Speed": "Mach 0.925", "Range": "13,890 km", "Passengers": "19", "Engines": "2× Rolls PF" },
+    specs: { "Wingspan": "31.39 m", "Length": "33.53 m", "Height": "7.67 m", "MTOW": "48,807 kg", "Ceiling": "15,545 m", "First Flight": "2020", "Crew": "2 + 1-2 attendants", "Cabin Vol.": "175.2 m³" },
+    desc: "The undisputed king of business aviation — the tallest, widest, and longest cabin ever with up to five living areas, a master suite, and the Gulfstream Symmetry flight deck.",
+    pros: ["Tallest, widest, longest cabin ever", "5 living areas + master suite", "Ultra-quiet cabin environment"],
+    cons: ["$75M+ price tag", "High fuel burn for private jet", "Limited airport access due to size"]
+  },
+  {
+    name: "Bombardier Global 7500",
+    origin: "Canada — Bombardier",
+    category: "Private Jet",
+    img: "images/bombardier-global-7500.jpg",
+    stats: { "Max Speed": "Mach 0.925", "Range": "14,260 km", "Passengers": "19", "Engines": "2× GE Passport" },
+    specs: { "Wingspan": "31.72 m", "Length": "33.88 m", "Height": "8.23 m", "MTOW": "48,806 kg", "Ceiling": "15,545 m", "First Flight": "2016", "Crew": "2 + attendant", "Cabin Vol.": "172.3 m³" },
+    desc: "Holder of the longest-range business jet record — four true cabin zones with a dedicated crew suite, Pur Air system, and Bombardier's smooth-ride Nu Wave wing.",
+    pros: ["Longest range in business aviation", "4 true cabin zones", "Smooth-ride Nu Wave wing"],
+    cons: ["Very high acquisition cost", "Large ramp footprint", "Limited cabin crew facilities"]
+  },
+  {
+    name: "Dassault Falcon 10X",
+    origin: "France — Dassault Aviation",
+    category: "Private Jet",
+    img: "images/dassault-falcon-10x.jpg",
+    stats: { "Max Speed": "Mach 0.925", "Range": "13,890 km", "Passengers": "16", "Engines": "2× Rolls Pearl" },
+    specs: { "Wingspan": "33.58 m", "Length": "33.45 m", "Height": "8.37 m", "MTOW": "47,400 kg", "Ceiling": "15,545 m", "First Flight": "2024", "Crew": "2 pilots", "Cabin Width": "2.77 m" },
+    desc: "Dassault's flagship ultra-long-range jet, boasting the widest cabin cross-section in business aviation, a fighter-jet-derived FalconEye HUD, and unparalleled low-speed handling.",
+    pros: ["Widest cabin cross-section", "Fighter-derived FalconEye HUD", "Exceptional low-speed handling"],
+    cons: ["Still entering service", "Limited service network vs G700", "Premium pricing"]
+  },
+  {
+    name: "Cessna Citation Longitude",
+    origin: "United States — Textron Aviation",
+    category: "Private Jet",
+    img: "images/cessna-citation-longitude.jpg",
+    stats: { "Max Speed": "898 km/h", "Range": "6,482 km", "Passengers": "12", "Engines": "2× Honeywell" },
+    specs: { "Wingspan": "20.29 m", "Length": "22.27 m", "Height": "5.94 m", "MTOW": "17,917 kg", "Ceiling": "13,716 m", "First Flight": "2016", "Crew": "2 pilots", "Cabin Vol.": "37.0 m³" },
+    desc: "A super-midsize jet offering transcontinental range with the quietest cabin in its class, flat-floor cabin, and Garmin G5000 touchscreen avionics.",
+    pros: ["Quietest cabin in super-midsize class", "Flat floor cabin", "Lower operating costs than peers"],
+    cons: ["Smaller cabin than large-cabin jets", "Limited transcontinental range", "Fewer amenities than flagships"]
+  }
+],
+
+// ---- CARGO ----
+cargo: [
+  {
+    name: "Antonov An-225 Mriya",
+    origin: "Ukraine — Antonov",
+    category: "Cargo",
+    img: "images/antonov-an-225.jpg",
+    stats: { "Max Speed": "850 km/h", "Payload": "250,000 kg", "Range": "15,400 km", "Engines": "6× D-18T" },
+    specs: { "Wingspan": "88.4 m", "Length": "84.0 m", "Height": "18.2 m", "MTOW": "640,000 kg", "Ceiling": "11,000 m", "First Flight": "1988", "Crew": "6", "Cargo Vol.": "1,300 m³" },
+    desc: "The largest and heaviest aircraft ever built — originally designed to carry the Soviet Buran space shuttle on its back. Only one was completed. Tragically destroyed in 2022.",
+    pros: ["Largest aircraft ever built", "250-ton payload capacity", "Carried space shuttle on its back"],
+    cons: ["Destroyed in 2022 (irreplaceable)", "Only 1 ever completed", "Extremely expensive to operate"]
+  },
+  {
+    name: "Boeing 747-8 Freighter",
+    origin: "United States — Boeing",
+    category: "Cargo",
+    img: "images/boeing-747-8f.jpg",
+    stats: { "Max Speed": "988 km/h", "Payload": "137,756 kg", "Range": "8,130 km", "Engines": "4× GEnx" },
+    specs: { "Wingspan": "68.4 m", "Length": "76.3 m", "Height": "19.4 m", "MTOW": "447,696 kg", "Ceiling": "13,100 m", "First Flight": "2010", "Crew": "2 pilots", "Cargo Vol.": "858 m³" },
+    desc: "The largest commercial freighter in production — the backbone of global cargo carriers like UPS, FedEx, and Atlas Air, with a distinctive nose-loading door.",
+    pros: ["Nose-loading door for outsized cargo", "Largest commercial freighter in production", "Proven backbone of global freight"],
+    cons: ["4-engine fuel consumption", "Being challenged by 777F", "High crew & maintenance costs"]
+  },
+  {
+    name: "Airbus BelugaXL",
+    origin: "Europe — Airbus",
+    category: "Cargo",
+    img: "images/airbus-belugaxl.jpg",
+    stats: { "Max Speed": "780 km/h", "Payload": "51,000 kg", "Range": "4,000 km", "Engines": "2× CF6-80" },
+    specs: { "Wingspan": "60.3 m", "Length": "63.1 m", "Height": "18.9 m", "MTOW": "227,000 kg", "Ceiling": "10,700 m", "First Flight": "2018", "Crew": "2 pilots", "Cargo Vol.": "2,209 m³" },
+    desc: "The whale-shaped super transporter built to carry entire Airbus aircraft sections between factories. Its voluminous cargo bay can fit two A350 wings simultaneously.",
+    pros: ["Enormous 2,209 m3 cargo bay", "Can carry 2 A350 wings at once", "Purpose-built for outsized loads"],
+    cons: ["Very limited range (4,000 km)", "Not commercially available", "Specialized = no versatility"]
+  },
+  {
+    name: "Lockheed C-5M Super Galaxy",
+    origin: "United States — Lockheed Martin",
+    category: "Cargo",
+    img: "images/lockheed-c-5m.jpg",
+    stats: { "Max Speed": "919 km/h", "Payload": "129,274 kg", "Range": "8,055 km", "Engines": "4× CF6-80C2" },
+    specs: { "Wingspan": "67.89 m", "Length": "75.54 m", "Height": "19.85 m", "MTOW": "381,018 kg", "Ceiling": "10,895 m", "First Flight": "1968", "Crew": "7", "Cargo Vol.": "876 m³" },
+    desc: "One of the largest military transport aircraft — it can swallow 6 Apache helicopters, 2 M1 Abrams tanks, or 36 standard pallets. Features both nose and tail loading ramps.",
+    pros: ["Front AND rear loading ramps", "Can carry 2 M1 Abrams tanks", "Intercontinental strategic range"],
+    cons: ["Very high maintenance hours per flight", "Aging airframe (1960s design)", "Limited fleet size"]
+  }
+],
+
+// ---- MILITARY TRANSPORT ----
+military: [
+  {
+    name: "Boeing C-17 Globemaster III",
+    origin: "United States — Boeing",
+    category: "Military Transport",
+    img: "images/boeing-c-17.jpg",
+    stats: { "Max Speed": "830 km/h", "Payload": "77,519 kg", "Range": "4,482 km", "Engines": "4× F117-PW" },
+    specs: { "Wingspan": "51.75 m", "Length": "53.04 m", "Height": "16.79 m", "MTOW": "265,350 kg", "Ceiling": "13,716 m", "First Flight": "1991", "Crew": "3", "Cargo Vol.": "592 m³" },
+    desc: "The workhorse of strategic airlift — capable of landing on short, austere runways carrying M1 tanks, helicopters, or 102 paratroopers. 279 built for global operations.",
+    pros: ["Lands on short austere runways", "Carries M1 tanks & helicopters", "Excellent tactical flexibility"],
+    cons: ["Production ended (2015)", "High unit cost ($218M)", "Limited to military operators"]
+  },
+  {
+    name: "Lockheed C-130J Super Hercules",
+    origin: "United States — Lockheed Martin",
+    category: "Military Transport",
+    img: "images/lockheed-c-130j.jpg",
+    stats: { "Max Speed": "671 km/h", "Payload": "19,090 kg", "Range": "6,852 km", "Engines": "4× AE2100D3" },
+    specs: { "Wingspan": "40.41 m", "Length": "29.79 m", "Height": "11.84 m", "MTOW": "79,378 kg", "Ceiling": "8,615 m", "First Flight": "1996", "Crew": "3-5", "Variants": "AC/MC/HC/EC/KC" },
+    desc: "The legendary 'Herc' — in continuous production since 1954, making it the longest military aircraft production run in history. Over 2,500 built across 70+ nations.",
+    pros: ["Longest military production run ever", "70+ nations operate it", "Dozens of specialized variants"],
+    cons: ["Turboprop = slower than jets", "Limited payload vs C-17", "Pressurized but not comfortable"]
+  },
+  {
+    name: "Airbus A400M Atlas",
+    origin: "Europe — Airbus Defence",
+    category: "Military Transport",
+    img: "images/airbus-a400m.jpg",
+    stats: { "Max Speed": "780 km/h", "Payload": "37,000 kg", "Range": "8,710 km", "Engines": "4× TP400-D6" },
+    specs: { "Wingspan": "42.4 m", "Length": "45.1 m", "Height": "14.7 m", "MTOW": "141,000 kg", "Ceiling": "11,300 m", "First Flight": "2009", "Crew": "3-4", "Cargo Vol.": "340 m³" },
+    desc: "Europe's modern tactical/strategic airlifter bridging the gap between the C-130 and C-17. Features turboprop efficiency with jet-like speed, aerial refueling, and paradrop capability.",
+    pros: ["Turboprop efficiency + jet speed", "Aerial refueling capable", "Bridges C-130 and C-17 gap"],
+    cons: ["Troubled development history", "Engine reliability issues early on", "Higher cost than planned"]
+  },
+  {
+    name: "Bell Boeing V-22 Osprey",
+    origin: "United States — Bell/Boeing",
+    category: "Military Transport",
+    img: "images/bell-boeing-v-22.jpg",
+    stats: { "Max Speed": "565 km/h", "Payload": "9,070 kg", "Range": "1,627 km", "Type": "Tiltrotor" },
+    specs: { "Rotor Dia.": "11.58 m each", "Length": "17.47 m", "Height": "6.73 m", "MTOW": "27,442 kg", "Ceiling": "7,620 m", "First Flight": "1989", "Crew": "4", "Troops": "24 combat" },
+    desc: "A revolutionary tiltrotor — takes off like a helicopter, then tilts its rotors to fly like a turboprop plane. Used by USMC, USAF, and Navy for assault, resupply, and special operations.",
+    pros: ["Unique tiltrotor = VTOL + speed", "2x faster than helicopters", "Long-range special operations capable"],
+    cons: ["Controversial safety record", "Very high maintenance costs", "Complex & expensive to operate"]
+  }
+],
+
+// ---- TRAINER AIRCRAFT ----
+trainers: [
+  {
+    name: "BAE Hawk T.2",
+    origin: "United Kingdom — BAE Systems",
+    category: "Trainer",
+    img: "images/bae-hawk.jpg",
+    stats: { "Max Speed": "1,028 km/h", "Range": "2,520 km", "Role": "Advanced Trainer", "G-Limit": "+8g / -4g" },
+    specs: { "Wingspan": "9.94 m", "Length": "12.43 m", "Height": "3.98 m", "MTOW": "9,100 kg", "Ceiling": "15,240 m", "First Flight": "1974", "Crew": "2 (tandem)", "Thrust": "1× 26.0 kN" },
+    desc: "The iconic jet trainer flown by the Red Arrows. Used by 18 air forces worldwide, the Hawk has trained more fast-jet pilots than any other trainer in history.",
+    pros: ["Trained more pilots than any trainer", "Red Arrows display team aircraft", "Combat-capable light attack variant"],
+    cons: ["Subsonic only", "Aging design (1974)", "Limited avionics vs modern trainers"]
+  },
+  {
+    name: "Beechcraft T-6 Texan II",
+    origin: "United States — Textron Aviation",
+    category: "Trainer",
+    img: "images/beechcraft-t-6.jpg",
+    stats: { "Max Speed": "585 km/h", "Range": "1,667 km", "Role": "Primary Trainer", "G-Limit": "+7g / -3.5g" },
+    specs: { "Wingspan": "10.19 m", "Length": "10.16 m", "Height": "3.25 m", "MTOW": "3,311 kg", "Ceiling": "9,449 m", "First Flight": "1998", "Crew": "2 (tandem)", "Engine": "1× PT6A-68" },
+    desc: "The USAF and USN's primary trainer — every American military pilot's first aircraft. Features a pressurized cockpit, digital glass avionics, and aerobatic capability.",
+    pros: ["Every US military pilot's first aircraft", "Pressurized cockpit", "Aerobatic capable"],
+    cons: ["Oxygen system safety concerns", "Turboprop = limited speed envelope", "Not lead-in fighter capable"]
+  },
+  {
+    name: "Pilatus PC-21",
+    origin: "Switzerland — Pilatus",
+    category: "Trainer",
+    img: "images/pilatus-pc-21.jpg",
+    stats: { "Max Speed": "685 km/h", "Range": "1,352 km", "Role": "Advanced Trainer", "G-Limit": "+8g / -4g" },
+    specs: { "Wingspan": "9.11 m", "Length": "11.23 m", "Height": "3.75 m", "MTOW": "4,250 kg", "Ceiling": "11,582 m", "First Flight": "2002", "Crew": "2 (tandem)", "Engine": "1× PT6A-68B" },
+    desc: "A turboprop trainer so advanced it can replace lead-in jet trainers. Its embedded simulation system allows student pilots to practice radar, weapons, and tactical scenarios.",
+    pros: ["Can replace lead-in jet trainers", "Embedded tactical simulation", "Extremely cost-effective training"],
+    cons: ["Turboprop = no actual jet experience", "Swiss export restrictions", "Small cockpit for larger pilots"]
+  },
+  {
+    name: "KAI T-50 Golden Eagle",
+    origin: "South Korea — KAI / Lockheed Martin",
+    category: "Trainer",
+    img: "images/kai-t-50.jpg",
+    stats: { "Max Speed": "Mach 1.5", "Range": "1,851 km", "Role": "Lead-In Fighter", "G-Limit": "+8g / -3g" },
+    specs: { "Wingspan": "9.17 m", "Length": "13.14 m", "Height": "4.94 m", "MTOW": "12,300 kg", "Ceiling": "14,630 m", "First Flight": "2002", "Crew": "2 (tandem)", "Thrust": "1× 78.7 kN" },
+    desc: "The world's first supersonic advanced trainer — derived from the F-16 design. Variants include the FA-50 light combat aircraft used in the Philippines, Iraq, and Poland.",
+    pros: ["First supersonic trainer ever", "F-16 derived = real fighter feel", "FA-50 light combat variant"],
+    cons: ["Single engine = less safe for training", "Limited export success so far", "Higher cost than turboprop trainers"]
+  }
+],
+
+// ---- HELICOPTERS ----
+helicopters: [
+  {
+    name: "AH-64E Apache Guardian",
+    origin: "United States — Boeing",
+    category: "Helicopter",
+    img: "images/ah-64-apache.jpg",
+    stats: { "Max Speed": "293 km/h", "Range": "476 km", "Armament": "Hellfire / Hydra", "Role": "Attack" },
+    specs: { "Rotor Dia.": "14.63 m", "Length": "17.73 m", "Height": "3.87 m", "MTOW": "10,433 kg", "Ceiling": "6,400 m", "First Flight": "1975", "Crew": "2 (tandem)", "Engine": "2× T700-GE-701D" },
+    desc: "The world's most feared attack helicopter — features the Longbow fire control radar, helmet-mounted display, and can destroy 16 targets in rapid succession with Hellfire missiles.",
+    pros: ["Longbow radar = fire-and-forget", "Helmet-mounted target acquisition", "16 Hellfire missiles capacity"],
+    cons: ["Very expensive ($35M+ each)", "Complex maintenance requirements", "Vulnerable to MANPADS"]
+  },
+  {
+    name: "UH-60M Black Hawk",
+    origin: "United States — Sikorsky",
+    category: "Helicopter",
+    img: "images/uh-60-black-hawk.jpg",
+    stats: { "Max Speed": "294 km/h", "Range": "590 km", "Capacity": "11 troops", "Role": "Utility" },
+    specs: { "Rotor Dia.": "16.36 m", "Length": "19.76 m", "Height": "3.76 m", "MTOW": "10,660 kg", "Ceiling": "5,790 m", "First Flight": "1974", "Crew": "2 + 2 gunners", "Engine": "2× T700-GE-701D" },
+    desc: "The backbone of U.S. Army aviation — used for air assault, medevac, special operations, and VIP transport. Over 4,000 built and operated by 28 nations worldwide.",
+    pros: ["4,000+ built worldwide", "Extremely versatile (medevac/assault/VIP)", "28 nations operate it"],
+    cons: ["Not heavily armed by default", "Tail rotor vulnerability", "High acquisition cost for allies"]
+  },
+  {
+    name: "Mi-24 Hind",
+    origin: "Russia — Mil Moscow",
+    category: "Helicopter",
+    img: "images/mi-24-hind.jpg",
+    stats: { "Max Speed": "335 km/h", "Range": "450 km", "Armament": "AT-6 / GSh-23", "Role": "Attack / Transport" },
+    specs: { "Rotor Dia.": "17.3 m", "Length": "21.5 m", "Height": "6.5 m", "MTOW": "12,000 kg", "Ceiling": "4,500 m", "First Flight": "1969", "Crew": "2-3", "Troops": "8 soldiers" },
+    desc: "The legendary 'flying tank' of the Soviet era — uniquely combines gunship firepower with a troop cabin carrying 8 soldiers. Feared in Afghanistan and still combat-active worldwide.",
+    pros: ["Unique gunship + troop carrier combo", "Heavily armored 'flying tank'", "Affordable & widely available"],
+    cons: ["Less maneuverable than pure gunships", "Outdated avionics in base models", "High fuel consumption"]
+  },
+  {
+    name: "CH-47F Chinook",
+    origin: "United States — Boeing",
+    category: "Helicopter",
+    img: "images/ch-47-chinook.jpg",
+    stats: { "Max Speed": "315 km/h", "Range": "741 km", "Capacity": "33-55 troops", "Role": "Heavy Lift" },
+    specs: { "Rotor Dia.": "18.29 m each", "Length": "30.1 m", "Height": "5.68 m", "MTOW": "22,680 kg", "Ceiling": "5,640 m", "First Flight": "1961", "Crew": "3-5", "Sling Load": "12,700 kg" },
+    desc: "The tandem-rotor heavy-lift legend — in service for 60+ years and still unmatched. Can carry artillery, vehicles, and supplies to high-altitude landing zones that no other helicopter can reach.",
+    pros: ["Unmatched heavy-lift capability", "60+ years of proven service", "High-altitude operations capable"],
+    cons: ["Very large & hard to conceal", "Tandem rotors = complex maintenance", "Slow compared to tiltrotors"]
+  },
+  {
+    name: "Airbus H145",
+    origin: "Europe — Airbus Helicopters",
+    category: "Helicopter",
+    img: "images/airbus-h145.jpg",
+    stats: { "Max Speed": "267 km/h", "Range": "680 km", "Capacity": "10 pax", "Role": "Light Utility" },
+    specs: { "Rotor Dia.": "11.0 m", "Length": "13.64 m", "Height": "3.95 m", "MTOW": "3,800 kg", "Ceiling": "5,485 m", "First Flight": "2010", "Crew": "1-2", "Engine": "2× Arriel 2E" },
+    desc: "A versatile light twin used for HEMS air ambulance, law enforcement, corporate transport, and military training. Features the revolutionary Fenestron shrouded tail rotor for safety.",
+    pros: ["Fenestron tail rotor = very safe", "Excellent air ambulance platform", "Low noise footprint for urban ops"],
+    cons: ["Light utility = limited payload", "Not suitable for heavy combat", "Higher cost than single-engine options"]
+  }
+],
+
+// ---- SEAPLANES ----
+seaplanes: [
+  {
+    name: "Canadair CL-415 SuperScooper",
+    origin: "Canada — De Havilland Canada",
+    category: "Seaplane",
+    img: "images/canadair-cl-415.jpg",
+    stats: { "Max Speed": "359 km/h", "Water Capacity": "6,137 L", "Range": "2,443 km", "Role": "Firefighting" },
+    specs: { "Wingspan": "28.6 m", "Length": "19.82 m", "Height": "8.98 m", "MTOW": "19,890 kg", "Ceiling": "4,480 m", "First Flight": "1993", "Crew": "2", "Scoop Time": "12 seconds" },
+    desc: "The ultimate aerial firefighter — scoops 6,137 liters of water in just 12 seconds while skimming a lake at 130 km/h, then drops it precisely on forest fires.",
+    pros: ["Scoops 6,137L in 12 seconds", "Purpose-built aerial firefighter", "Amphibious landing capability"],
+    cons: ["Very limited non-firefighting use", "Slow cruise speed", "Aging design (1993)"]
+  },
+  {
+    name: "ShinMaywa US-2",
+    origin: "Japan — ShinMaywa Industries",
+    category: "Seaplane",
+    img: "images/shinmaywa-us-2.jpg",
+    stats: { "Max Speed": "560 km/h", "Range": "4,500 km", "Capacity": "20 rescued", "Role": "Search & Rescue" },
+    specs: { "Wingspan": "33.15 m", "Length": "33.25 m", "Height": "10.06 m", "MTOW": "47,700 kg", "Ceiling": "7,195 m", "First Flight": "2003", "Crew": "11", "Engine": "4× AE2100J" },
+    desc: "One of the world's most advanced amphibious aircraft — can land in 3-meter open ocean swells using its boundary layer control system, making it uniquely capable for deep-sea rescue.",
+    pros: ["Lands in 3m ocean swells", "Advanced boundary layer control", "Deep-sea rescue capability"],
+    cons: ["Extremely expensive ($150M+)", "Only operated by Japan", "Very limited production"]
+  },
+  {
+    name: "AVIC AG600 Kunlong",
+    origin: "China — AVIC",
+    category: "Seaplane",
+    img: "images/avic-ag600.jpg",
+    stats: { "Max Speed": "570 km/h", "Water Capacity": "12,000 L", "Range": "4,500 km", "Role": "Firefighting / SAR" },
+    specs: { "Wingspan": "38.8 m", "Length": "39.6 m", "Height": "12.1 m", "MTOW": "60,000 kg", "Ceiling": "6,000 m", "First Flight": "2017", "Crew": "3+", "Scoop Time": "20 seconds" },
+    desc: "The world's largest amphibious aircraft currently in production — designed for maritime patrol, search and rescue, and aerial firefighting in the South China Sea region.",
+    pros: ["Largest amphibious aircraft in production", "12,000L water capacity", "Multi-role (SAR + firefighting)"],
+    cons: ["Still in testing/certification", "Unproven in operational service", "Limited international interest"]
+  },
+  {
+    name: "de Havilland DHC-6 Twin Otter (Floats)",
+    origin: "Canada — De Havilland",
+    category: "Seaplane",
+    img: "images/dhc-6-twin-otter.jpg",
+    stats: { "Max Speed": "338 km/h", "Range": "1,480 km", "Passengers": "19", "Role": "Regional / Bush" },
+    specs: { "Wingspan": "19.81 m", "Length": "15.77 m", "Height": "5.94 m", "MTOW": "5,670 kg", "Ceiling": "7,620 m", "First Flight": "1965", "Crew": "1-2", "Engine": "2× PT6A-34" },
+    desc: "The legendary bush plane — operates on wheels, skis, or floats from the shortest, roughest strips imaginable. The lifeline of remote communities from Alaska to the Maldives.",
+    pros: ["Legendary bush plane reliability", "Operates on wheels/skis/floats", "STOL from shortest strips"],
+    cons: ["Small passenger capacity (19)", "Unpressurized cabin", "Slow cruise speed"]
+  }
+]
+};
+
+// ============ RENDER CARDS ============
+function createCard(plane) {
+  const statsHTML = Object.entries(plane.stats).map(([k,v]) =>
+    `<div class="stat"><span class="stat-label">${k}</span><span class="stat-value">${v}</span></div>`
+  ).join('');
+
+  const specsHTML = Object.entries(plane.specs).map(([k,v]) =>
+    `<div class="spec-item"><div class="spec-label">${k}</div><div class="spec-val">${v}</div></div>`
+  ).join('');
+
+  const prosHTML = (plane.pros || []).map(p => `<li>${p}</li>`).join('');
+  const consHTML = (plane.cons || []).map(c => `<li>${c}</li>`).join('');
+  const prosConsHTML = (prosHTML || consHTML) ? `
+    <div class="pros-cons">
+      <div class="pros"><h4>✦ Advantages</h4><ul>${prosHTML}</ul></div>
+      <div class="cons"><h4>✦ Disadvantages</h4><ul>${consHTML}</ul></div>
+    </div>` : '';
+
+  const card = document.createElement('div');
+  card.className = 'flashcard-wrapper reveal';
+  const fc = document.createElement('div');
+  fc.className = 'flashcard';
+  fc.innerHTML = `
+    <div class="flashcard-inner">
+      <div class="flashcard-front">
+        <div class="card-img-wrap">
+          <img src="${plane.img}" alt="${plane.name}" loading="lazy" />
+          <span class="card-category">${plane.category}</span>
+        </div>
+        <div class="card-body">
+          <h3>${plane.name}</h3>
+          <div class="origin">${plane.origin}</div>
+          <div class="card-stats">${statsHTML}</div>
+        </div>
+        <div class="flip-hint">Click for full specs</div>
+      </div>
+      <div class="flashcard-back">
+        
+        <div class="back-header">
+          <h3>${plane.name}</h3>
+          <div class="subtitle">${plane.origin}</div>
+        </div>
+        <div class="spec-grid">${specsHTML}</div>
+        <div class="back-desc">${plane.desc}</div>
+        ${prosConsHTML}
+        <div class="flip-back-hint">Click to flip back</div>
+
+      </div>
+    </div>`;
+  fc.addEventListener('click', () => fc.classList.toggle('flipped'));
+
+  // Add info buttons below card
+  const btnContainer = document.createElement('div');
+  btnContainer.className = 'card-buttons';
+  btnContainer.innerHTML = `
+    <button class="info-btn" onclick="event.stopPropagation(); openModal('${plane.name}', 'cabin')">
+      <span class="btn-icon">🛩️</span>Cabin & Pax Experience
+    </button>
+    <button class="info-btn" onclick="event.stopPropagation(); openModal('${plane.name}', 'airframe')">
+      <span class="btn-icon">⚙️</span>Airframe & Engine
+    </button>
+    <button class="info-btn" onclick="event.stopPropagation(); openModal('${plane.name}', 'performance')">
+      <span class="btn-icon">📊</span>Performance & Load
+    </button>
+  `;
+
+  card.appendChild(fc);
+  card.appendChild(btnContainer);
+  return card;
+}
+
+// Populate all grids
+Object.entries(aircraft).forEach(([key, planes]) => {
+  const grid = document.getElementById(`grid-${key}`);
+  if (grid) planes.forEach(p => grid.appendChild(createCard(p)));
+});
+
+// ============ SCROLL REVEAL ============
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ============ NAVBAR SCROLL SHADOW ============
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 30);
+});
+
+// ============ ACTIVE CATEGORY NAV ============
+const catLinks = document.querySelectorAll('.cat-nav a');
+const sections = [...catLinks].map(a => document.querySelector(a.getAttribute('href')));
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(sec => {
+    if (sec && sec.getBoundingClientRect().top <= 180) current = sec.id;
+  });
+  catLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === `#${current}`);
+  });
+});
+
+
+// ============ SEARCH FUNCTIONALITY ============
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', (e) => {
+  const term = e.target.value.toLowerCase();
+  const allCards = document.querySelectorAll('.flashcard');
+  const sections = document.querySelectorAll('.section');
+  
+  allCards.forEach(card => {
+    const text = card.innerText.toLowerCase();
+    if (text.includes(term)) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+
+  // Hide sections if all cards inside are hidden
+  sections.forEach(sec => {
+    const cards = sec.querySelectorAll('.flashcard');
+    const hasVisible = Array.from(cards).some(c => c.style.display !== 'none');
+    sec.style.display = (hasVisible || term === '') ? 'block' : 'none';
+  });
+});
+
+// ============ MOBILE NAV ============
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('navLinks').classList.toggle('open');
+});
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+});
+
+// ============ DETAIL MODAL DATA ============
+const detailData = {
+  "Boeing 747-8": {
+    "cabin": {
+      "Cabin Length": "57.3 m",
+      "Cabin Width": "6.1 m",
+      "Seat Pitch (Econ)": "31-32 in",
+      "Seat Pitch (Business)": "60-78 in",
+      "Aisle Width": "Dual aisle, 51 cm each",
+      "IFE System": "Panasonic eX3 / Thales AVANT",
+      "Blind Spots": "Nose below cockpit, rear empennage",
+      "Config Options": "3-class 410 / 2-class 467"
+    },
+    "airframe": {
+      "Engine Model": "GEnx-2B67",
+      "Engine Type": "High-bypass turbofan",
+      "Bypass Ratio": "8.0:1",
+      "Compressor Stages": "4 LP + 10 HP",
+      "Turbine Stages": "2 HP + 7 LP",
+      "Engine Dry Weight": "5,622 kg each",
+      "Key Components": "Composite fan blades, titanium core",
+      "Airframe Material": "Aluminum alloy + composite fairings"
+    },
+    "performance": {
+      "MTOW": "447,696 kg (987,000 lb)",
+      "T/W Ratio": "0.27",
+      "Service Ceiling": "13,100 m (43,000 ft)",
+      "Runway Required": "3,050 m (10,000 ft)",
+      "Max Fuel": "216,840 L (57,285 US gal)",
+      "Climb Rate": "490 m/min",
+      "Approach Speed": "260 km/h (140 kt)",
+      "Wing Loading": "730 kg/m2"
+    }
+  },
+  "Airbus A380": {
+    "cabin": {
+      "Cabin Length": "49.9 m (main) + 44.9 m (upper)",
+      "Cabin Width": "6.58 m (main deck)",
+      "Seat Pitch (Econ)": "32 in",
+      "Seat Pitch (First)": "86 in (suites)",
+      "Aisle Width": "Dual aisle both decks",
+      "IFE System": "Thales TopSeries / Panasonic eX3",
+      "Blind Spots": "Below nose, wing root zones",
+      "Config Options": "3-class 525 / 1-class 853 max"
+    },
+    "airframe": {
+      "Engine Model": "Rolls-Royce Trent 900",
+      "Engine Type": "High-bypass turbofan",
+      "Bypass Ratio": "8.7:1",
+      "Compressor Stages": "8 IP + 6 HP",
+      "Turbine Stages": "1 HP + 1 IP + 5 LP",
+      "Engine Dry Weight": "6,246 kg each",
+      "Key Components": "GLARE fuselage panels, CFRP wing box",
+      "Airframe Material": "25% composite + aluminum-lithium"
+    },
+    "performance": {
+      "MTOW": "575,000 kg (1,268,000 lb)",
+      "T/W Ratio": "0.22",
+      "Service Ceiling": "13,136 m (43,100 ft)",
+      "Runway Required": "2,900 m (9,500 ft)",
+      "Max Fuel": "320,000 L (84,535 US gal)",
+      "Climb Rate": "520 m/min",
+      "Approach Speed": "260 km/h (140 kt)",
+      "Wing Loading": "663 kg/m2"
+    }
+  },
+  "Boeing 787 Dreamliner": {
+    "cabin": {
+      "Cabin Length": "50.7 m",
+      "Cabin Width": "5.49 m",
+      "Seat Pitch (Econ)": "31-33 in",
+      "Seat Pitch (Business)": "60-78 in",
+      "Aisle Width": "Dual aisle, 53 cm",
+      "IFE System": "Panasonic eX3 / Thales AVANT",
+      "Blind Spots": "Standard nose blind area",
+      "Config Options": "2-class 242 / 3-class 210-330"
+    },
+    "airframe": {
+      "Engine Model": "GEnx-1B / Rolls-Royce Trent 1000",
+      "Engine Type": "High-bypass turbofan",
+      "Bypass Ratio": "9.6:1 (GEnx)",
+      "Compressor Stages": "4 LP + 10 HP",
+      "Turbine Stages": "2 HP + 7 LP",
+      "Engine Dry Weight": "5,812 kg each",
+      "Key Components": "50% CFRP, one-piece barrel fuselage",
+      "Airframe Material": "Carbon fiber reinforced polymer"
+    },
+    "performance": {
+      "MTOW": "254,011 kg (560,000 lb)",
+      "T/W Ratio": "0.25",
+      "Service Ceiling": "13,100 m (43,000 ft)",
+      "Runway Required": "2,600 m (8,500 ft)",
+      "Max Fuel": "126,917 L (33,528 US gal)",
+      "Climb Rate": "500 m/min",
+      "Approach Speed": "250 km/h (135 kt)",
+      "Wing Loading": "587 kg/m2"
+    }
+  },
+  "Airbus A350 XWB": {
+    "cabin": {
+      "Cabin Length": "51.04 m (-900) / 60.76 m (-1000)",
+      "Cabin Width": "5.61 m",
+      "Seat Pitch (Econ)": "31-32 in",
+      "Seat Pitch (Business)": "44-82 in",
+      "Aisle Width": "Dual aisle, 52.5 cm",
+      "IFE System": "Thales AVANT Up / Panasonic X-series",
+      "Blind Spots": "Minimal \u2014 camera systems installed",
+      "Config Options": "3-class 300 / high-density 440"
+    },
+    "airframe": {
+      "Engine Model": "Rolls-Royce Trent XWB-84 / XWB-97",
+      "Engine Type": "High-bypass turbofan",
+      "Bypass Ratio": "9.6:1",
+      "Compressor Stages": "8 IP + 6 HP",
+      "Turbine Stages": "1 HP + 1 IP + 6 LP",
+      "Engine Dry Weight": "7,277 kg each",
+      "Key Components": "53% CFRP, thermoplastic wing rib",
+      "Airframe Material": "Carbon fiber + titanium + aluminum"
+    },
+    "performance": {
+      "MTOW": "316,000 kg (696,700 lb)",
+      "T/W Ratio": "0.24",
+      "Service Ceiling": "13,100 m (43,100 ft)",
+      "Runway Required": "2,600 m (8,530 ft)",
+      "Max Fuel": "141,000 L (37,250 US gal)",
+      "Climb Rate": "512 m/min",
+      "Approach Speed": "255 km/h (138 kt)",
+      "Wing Loading": "620 kg/m2"
+    }
+  },
+  "Boeing 777X": {
+    "cabin": {
+      "Cabin Length": "63.73 m",
+      "Cabin Width": "5.87 m",
+      "Seat Pitch (Econ)": "32 in",
+      "Seat Pitch (Business)": "78 in",
+      "Aisle Width": "Dual aisle, 48 cm",
+      "IFE System": "Next-gen Panasonic Astrova",
+      "Blind Spots": "Reduced by 4 external cameras",
+      "Config Options": "2-class 384 / 3-class 365-426"
+    },
+    "airframe": {
+      "Engine Model": "GE9X-105B1A",
+      "Engine Type": "High-bypass turbofan (world's largest)",
+      "Bypass Ratio": "10:1",
+      "Compressor Stages": "3 LP + 11 HP",
+      "Turbine Stages": "2 HP + 8 LP",
+      "Engine Dry Weight": "8,296 kg each",
+      "Key Components": "Carbon fiber composite wing, folding tips",
+      "Airframe Material": "Aluminum + composite wing + CMC turbine"
+    },
+    "performance": {
+      "MTOW": "351,534 kg (775,000 lb)",
+      "T/W Ratio": "0.27",
+      "Service Ceiling": "13,100 m (43,000 ft)",
+      "Runway Required": "3,050 m (10,000 ft)",
+      "Max Fuel": "197,977 L (52,300 US gal)",
+      "Climb Rate": "530 m/min",
+      "Approach Speed": "265 km/h (143 kt)",
+      "Wing Loading": "700 kg/m2"
+    }
+  },
+  "Airbus A320neo": {
+    "cabin": {
+      "Cabin Length": "27.51 m",
+      "Cabin Width": "3.70 m",
+      "Seat Pitch (Econ)": "28-32 in",
+      "Seat Pitch (Business)": "38-52 in",
+      "Aisle Width": "Single aisle, 50 cm",
+      "IFE System": "Immersive / RAVE streaming",
+      "Blind Spots": "Standard narrow-body nose area",
+      "Config Options": "2-class 150 / high-density 194"
+    },
+    "airframe": {
+      "Engine Model": "CFM LEAP-1A / PW1100G-JM",
+      "Engine Type": "Geared turbofan (PW) / direct-drive (CFM)",
+      "Bypass Ratio": "11:1 (LEAP) / 12.5:1 (PW)",
+      "Compressor Stages": "3 LP + 10 HP (LEAP)",
+      "Turbine Stages": "2 HP + 7 LP",
+      "Engine Dry Weight": "2,990 kg each (LEAP)",
+      "Key Components": "Sharklet wingtips, composite nacelles",
+      "Airframe Material": "Aluminum alloy + composite fairings"
+    },
+    "performance": {
+      "MTOW": "79,000 kg (174,200 lb)",
+      "T/W Ratio": "0.31",
+      "Service Ceiling": "11,900 m (39,100 ft)",
+      "Runway Required": "2,100 m (6,900 ft)",
+      "Max Fuel": "26,730 L (7,062 US gal)",
+      "Climb Rate": "630 m/min",
+      "Approach Speed": "230 km/h (124 kt)",
+      "Wing Loading": "640 kg/m2"
+    }
+  },
+  "Embraer E195-E2": {
+    "cabin": {
+      "Cabin Length": "33.47 m",
+      "Cabin Width": "2.74 m",
+      "Seat Pitch (Econ)": "31-32 in",
+      "Seat Pitch (Business)": "36-38 in",
+      "Aisle Width": "Single aisle, 48 cm",
+      "IFE System": "Wireless streaming (BYOD)",
+      "Blind Spots": "Standard regional jet configuration",
+      "Config Options": "1-class 146 / 2-class 120"
+    },
+    "airframe": {
+      "Engine Model": "PW1919G (Geared Turbofan)",
+      "Engine Type": "Geared turbofan",
+      "Bypass Ratio": "12.5:1",
+      "Compressor Stages": "3 LP + 8 HP",
+      "Turbine Stages": "2 HP + 3 LP",
+      "Engine Dry Weight": "2,857 kg each",
+      "Key Components": "4th-gen swept wing, new landing gear",
+      "Airframe Material": "Aluminum-lithium + composite empennage"
+    },
+    "performance": {
+      "MTOW": "62,500 kg (137,800 lb)",
+      "T/W Ratio": "0.33",
+      "Service Ceiling": "12,500 m (41,000 ft)",
+      "Runway Required": "1,970 m (6,463 ft)",
+      "Max Fuel": "14,280 L (3,772 US gal)",
+      "Climb Rate": "680 m/min",
+      "Approach Speed": "225 km/h (121 kt)",
+      "Wing Loading": "560 kg/m2"
+    }
+  },
+  "F-22 Raptor": {
+    "cabin": {
+      "Cockpit Type": "Single-seat, bubble canopy",
+      "HUD System": "Kaiser AN/AVQ-34 wide-angle",
+      "HMDS": "Not standard (HMD planned)",
+      "Ejection Seat": "ACES II zero-zero",
+      "Cockpit Displays": "6 LCD color MFDs",
+      "Night Vision": "NVG-compatible lighting",
+      "Oxygen System": "OBOGS (On-Board)",
+      "Blind Spots": "Minimal \u2014 360-degree canopy"
+    },
+    "airframe": {
+      "Engine Model": "Pratt & Whitney F119-PW-100",
+      "Engine Type": "Low-bypass afterburning turbofan",
+      "Bypass Ratio": "0.30:1",
+      "Compressor Stages": "3 fan + 6 HP",
+      "Turbine Stages": "1 HP + 1 LP",
+      "Engine Dry Weight": "1,800 kg each",
+      "Key Components": "2D thrust-vectoring nozzles, radar-absorbent skin",
+      "Airframe Material": "Titanium (39%) + composite (24%) + aluminum (16%)"
+    },
+    "performance": {
+      "MTOW": "38,000 kg (83,500 lb)",
+      "T/W Ratio": "1.08 (loaded)",
+      "Service Ceiling": "19,812 m (65,000 ft)",
+      "Runway Required": "914 m (3,000 ft)",
+      "Max Fuel": "8,200 kg internal",
+      "Climb Rate": ">315 m/s",
+      "Approach Speed": "280 km/h (150 kt)",
+      "Wing Loading": "375 kg/m2"
+    }
+  },
+  "F-35 Lightning II": {
+    "cabin": {
+      "Cockpit Type": "Single-seat glass cockpit",
+      "HUD System": "No HUD \u2014 uses helmet-mounted display",
+      "HMDS": "AN/PVS-21 Gen III HMDS",
+      "Ejection Seat": "Martin-Baker US16E",
+      "Cockpit Displays": "20x8 in panoramic touchscreen",
+      "Night Vision": "Integrated DAS (6 IR cameras)",
+      "Oxygen System": "OBIGGS + OBOGS",
+      "Blind Spots": "Zero \u2014 DAS provides 360\u00b0 sphere"
+    },
+    "airframe": {
+      "Engine Model": "Pratt & Whitney F135-PW-100/400/600",
+      "Engine Type": "Low-bypass afterburning turbofan",
+      "Bypass Ratio": "0.57:1",
+      "Compressor Stages": "3 fan + 6 HP",
+      "Turbine Stages": "1 HP + 2 LP",
+      "Engine Dry Weight": "1,701 kg",
+      "Key Components": "EOTS sensor, internal weapon bays, LO coatings",
+      "Airframe Material": "Carbon fiber (35%) + titanium + aluminum"
+    },
+    "performance": {
+      "MTOW": "31,751 kg (70,000 lb)",
+      "T/W Ratio": "0.87 (loaded A-variant)",
+      "Service Ceiling": "15,240 m (50,000 ft)",
+      "Runway Required": "168 m (550 ft, STOVL B)",
+      "Max Fuel": "8,382 kg (A-variant internal)",
+      "Climb Rate": "254 m/s",
+      "Approach Speed": "250 km/h (135 kt)",
+      "Wing Loading": "526 kg/m2"
+    }
+  },
+  "Su-57 Felon": {
+    "cabin": {
+      "Cockpit Type": "Single-seat tandem displays",
+      "HUD System": "Wide-angle HUD + HMDS",
+      "HMDS": "Sura helmet-mounted system",
+      "Ejection Seat": "NPP Zvezda K-36D-5",
+      "Cockpit Displays": "2 MFI-35 15-in LCDs + HUD",
+      "Night Vision": "NVG-compatible cockpit",
+      "Oxygen System": "OBOGS",
+      "Blind Spots": "Rear hemisphere partially blocked"
+    },
+    "airframe": {
+      "Engine Model": "Saturn AL-41F1 (interim) / Izdeliye 30 (final)",
+      "Engine Type": "Low-bypass afterburning turbofan",
+      "Bypass Ratio": "0.59:1",
+      "Compressor Stages": "4 LP + 9 HP",
+      "Turbine Stages": "1 HP + 1 LP",
+      "Engine Dry Weight": "1,600 kg each",
+      "Key Components": "3D TVC nozzles, internal bays, 101KS EO suite",
+      "Airframe Material": "25% composite + titanium + aluminum"
+    },
+    "performance": {
+      "MTOW": "35,000 kg (77,162 lb)",
+      "T/W Ratio": "1.02 (loaded)",
+      "Service Ceiling": "20,000 m (65,600 ft)",
+      "Runway Required": "1,000 m (3,280 ft)",
+      "Max Fuel": "10,300 kg internal",
+      "Climb Rate": ">330 m/s",
+      "Approach Speed": "265 km/h (143 kt)",
+      "Wing Loading": "330 kg/m2"
+    }
+  },
+  "Eurofighter Typhoon": {
+    "cabin": {
+      "Cockpit Type": "Single/twin-seat tandem",
+      "HUD System": "BAE Wide-Angle HUD",
+      "HMDS": "Striker II helmet display",
+      "Ejection Seat": "Martin-Baker Mk.16A",
+      "Cockpit Displays": "3 MHDDs + DASS panel",
+      "Night Vision": "NVG + Striker II integrated",
+      "Oxygen System": "OBOGS",
+      "Blind Spots": "6 o'clock partially blocked by fin"
+    },
+    "airframe": {
+      "Engine Model": "Eurojet EJ200",
+      "Engine Type": "Low-bypass afterburning turbofan",
+      "Bypass Ratio": "0.4:1",
+      "Compressor Stages": "3 LP + 5 HP",
+      "Turbine Stages": "1 HP + 1 LP",
+      "Engine Dry Weight": "1,000 kg each",
+      "Key Components": "Canard-delta, Captor-E AESA radar",
+      "Airframe Material": "Carbon fiber (40%) + glass fiber + aluminum"
+    },
+    "performance": {
+      "MTOW": "23,500 kg (51,809 lb)",
+      "T/W Ratio": "1.15 (loaded)",
+      "Service Ceiling": "19,812 m (65,000 ft)",
+      "Runway Required": "700 m (2,300 ft)",
+      "Max Fuel": "4,996 kg internal",
+      "Climb Rate": ">315 m/s",
+      "Approach Speed": "240 km/h (130 kt)",
+      "Wing Loading": "311 kg/m2"
+    }
+  },
+  "Dassault Rafale": {
+    "cabin": {
+      "Cockpit Type": "Single/twin-seat (B/C/M)",
+      "HUD System": "Thales CTH 3022 wide-angle",
+      "HMDS": "TopSight-I helmet system",
+      "Ejection Seat": "Martin-Baker Mk.16F",
+      "Cockpit Displays": "1 wide HMD + touchscreen MFD",
+      "Night Vision": "NVG + Damocles pod",
+      "Oxygen System": "OBOGS",
+      "Blind Spots": "Canard creates minor lower-front occlusion"
+    },
+    "airframe": {
+      "Engine Model": "Safran M88-2",
+      "Engine Type": "Low-bypass afterburning turbofan",
+      "Bypass Ratio": "0.30:1",
+      "Compressor Stages": "3 LP + 6 HP",
+      "Turbine Stages": "1 HP + 1 LP",
+      "Engine Dry Weight": "897 kg each",
+      "Key Components": "RBE2 AESA radar, SPECTRA EW suite, OSF",
+      "Airframe Material": "Carbon fiber + Kevlar + aluminum-lithium"
+    },
+    "performance": {
+      "MTOW": "24,500 kg (54,000 lb)",
+      "T/W Ratio": "0.98 (loaded)",
+      "Service Ceiling": "15,235 m (50,000 ft)",
+      "Runway Required": "450 m (1,475 ft) with catapult",
+      "Max Fuel": "4,700 kg internal",
+      "Climb Rate": ">305 m/s",
+      "Approach Speed": "230 km/h (124 kt)",
+      "Wing Loading": "306 kg/m2"
+    }
+  },
+  "F-16 Fighting Falcon": {
+    "cabin": {
+      "Cockpit Type": "Single-seat (C) / twin-seat (D)",
+      "HUD System": "Lockheed Martin AN/AVQ-34",
+      "HMDS": "JHMCS (Joint Helmet-Mounted Cueing)",
+      "Ejection Seat": "ACES II zero-zero",
+      "Cockpit Displays": "2 MFDs + center display (Block 70/72)",
+      "Night Vision": "NVG + Sniper XR pod",
+      "Oxygen System": "OBOGS (Block 50+)",
+      "Blind Spots": "360\u00b0 bubble canopy \u2014 minimal blind spots"
+    },
+    "airframe": {
+      "Engine Model": "GE F110-GE-132 / PW F100-PW-229",
+      "Engine Type": "Low-bypass afterburning turbofan",
+      "Bypass Ratio": "0.76:1 (F110)",
+      "Compressor Stages": "3 fan + 9 HP (F110)",
+      "Turbine Stages": "1 HP + 2 LP",
+      "Engine Dry Weight": "1,996 kg (F110)",
+      "Key Components": "Fly-by-wire, blended wing-body, ventral fin",
+      "Airframe Material": "Aluminum alloy + graphite epoxy composites"
+    },
+    "performance": {
+      "MTOW": "21,772 kg (48,000 lb)",
+      "T/W Ratio": "1.095 (loaded Block 50)",
+      "Service Ceiling": "15,240 m (50,000 ft)",
+      "Runway Required": "457 m (1,500 ft)",
+      "Max Fuel": "3,175 kg internal",
+      "Climb Rate": ">254 m/s",
+      "Approach Speed": "230 km/h (124 kt)",
+      "Wing Loading": "431 kg/m2"
+    }
+  },
+  "F/A-18E/F Super Hornet": {
+    "cabin": {
+      "Cockpit Type": "Single-seat (E) / twin-seat (F)",
+      "HUD System": "Kaiser AVQ-28(V) HUD",
+      "HMDS": "JHMCS II (Joint Helmet-Mounted)",
+      "Ejection Seat": "Martin-Baker SJU-17/A",
+      "Cockpit Displays": "3 color MFDs + touchscreen (Block III)",
+      "Night Vision": "NVG + ATFLIR pod",
+      "Oxygen System": "OBOGS",
+      "Blind Spots": "Slightly restricted rear by twin tails"
+    },
+    "airframe": {
+      "Engine Model": "GE F414-GE-400",
+      "Engine Type": "Low-bypass afterburning turbofan",
+      "Bypass Ratio": "0.25:1",
+      "Compressor Stages": "3 fan + 7 HP",
+      "Turbine Stages": "1 HP + 1 LP",
+      "Engine Dry Weight": "1,110 kg each",
+      "Key Components": "AN/APG-79 AESA, conformal fuel tanks (Block III)",
+      "Airframe Material": "Aluminum-lithium + carbon fiber composites"
+    },
+    "performance": {
+      "MTOW": "29,937 kg (66,000 lb)",
+      "T/W Ratio": "0.93 (loaded)",
+      "Service Ceiling": "15,240 m (50,000 ft)",
+      "Runway Required": "427 m (1,400 ft) catapult",
+      "Max Fuel": "6,780 kg internal",
+      "Climb Rate": ">254 m/s",
+      "Approach Speed": "250 km/h (135 kt)",
+      "Wing Loading": "459 kg/m2"
+    }
+  },
+  "Chengdu J-20 Mighty Dragon": {
+    "cabin": {
+      "Cockpit Type": "Single-seat wide canopy",
+      "HUD System": "Holographic wide-angle HUD",
+      "HMDS": "Integrated HMDS (classified)",
+      "Ejection Seat": "Martin-Baker derived zero-zero",
+      "Cockpit Displays": "Large-area panoramic MFD",
+      "Night Vision": "EOTS + EODAS (6 cameras)",
+      "Oxygen System": "OBOGS",
+      "Blind Spots": "Canard-delta creates minor low-front occlusion"
+    },
+    "airframe": {
+      "Engine Model": "WS-10C (current) / WS-15 (planned)",
+      "Engine Type": "Low-bypass afterburning turbofan",
+      "Bypass Ratio": "0.57:1 (estimated)",
+      "Compressor Stages": "3 fan + 9 HP",
+      "Turbine Stages": "1 HP + 2 LP",
+      "Engine Dry Weight": "1,850 kg each (estimated)",
+      "Key Components": "DSI intakes, internal bays, KLJ-5 AESA radar",
+      "Airframe Material": "Composite + RAM coatings + titanium"
+    },
+    "performance": {
+      "MTOW": "~37,000 kg (81,571 lb)",
+      "T/W Ratio": "~0.89 (loaded, WS-10C)",
+      "Service Ceiling": "20,000 m (65,600 ft)",
+      "Runway Required": "~700 m (2,300 ft)",
+      "Max Fuel": "~11,100 kg internal",
+      "Climb Rate": ">300 m/s (estimated)",
+      "Approach Speed": "270 km/h (146 kt)",
+      "Wing Loading": "340 kg/m2"
+    }
+  },
+  "Gulfstream G700": {
+    "cabin": {
+      "Cabin Length": "17.35 m (56.92 ft)",
+      "Cabin Width": "2.49 m (8.17 ft)",
+      "Cabin Height": "1.93 m (6.33 ft)",
+      "Seat Config": "Up to 5 living areas",
+      "IFE System": "Gulfstream Cabin Management System",
+      "Blind Spots": "N/A \u2014 business jet",
+      "Cabin Volume": "175.2 m3",
+      "Features": "Master suite, shower, circadian lighting"
+    },
+    "airframe": {
+      "Engine Model": "Rolls-Royce Pearl 700",
+      "Engine Type": "High-bypass turbofan",
+      "Bypass Ratio": "5.2:1",
+      "Compressor Stages": "1 fan + 5 IP + 6 HP",
+      "Turbine Stages": "2 HP + 3 LP",
+      "Engine Dry Weight": "889 kg each",
+      "Key Components": "Symmetry Flight Deck, active winglets",
+      "Airframe Material": "Aluminum + advanced composites"
+    },
+    "performance": {
+      "MTOW": "48,807 kg (107,600 lb)",
+      "T/W Ratio": "0.38",
+      "Service Ceiling": "15,545 m (51,000 ft)",
+      "Runway Required": "1,875 m (6,250 ft)",
+      "Max Fuel": "20,050 kg",
+      "Climb Rate": "1,128 m/min",
+      "Approach Speed": "215 km/h (116 kt)",
+      "Wing Loading": "410 kg/m2"
+    }
+  },
+  "Bombardier Global 7500": {
+    "cabin": {
+      "Cabin Length": "16.62 m (54.53 ft)",
+      "Cabin Width": "2.44 m (8.0 ft)",
+      "Cabin Height": "1.88 m (6.17 ft)",
+      "Seat Config": "4 true cabin zones",
+      "IFE System": "Bombardier nice HD CMS",
+      "Blind Spots": "N/A \u2014 business jet",
+      "Cabin Volume": "172.3 m3",
+      "Features": "Pur Air system, full kitchen, crew rest"
+    },
+    "airframe": {
+      "Engine Model": "GE Passport 20-19BB1A",
+      "Engine Type": "High-bypass turbofan",
+      "Bypass Ratio": "5.6:1",
+      "Compressor Stages": "1 fan + 5 HP",
+      "Turbine Stages": "2 HP + 3 LP",
+      "Engine Dry Weight": "1,028 kg each",
+      "Key Components": "Nu Wave wing, composite empennage",
+      "Airframe Material": "Advanced composites + aluminum"
+    },
+    "performance": {
+      "MTOW": "48,806 kg (107,600 lb)",
+      "T/W Ratio": "0.36",
+      "Service Ceiling": "15,545 m (51,000 ft)",
+      "Runway Required": "1,768 m (5,800 ft)",
+      "Max Fuel": "20,048 kg",
+      "Climb Rate": "1,082 m/min",
+      "Approach Speed": "220 km/h (119 kt)",
+      "Wing Loading": "425 kg/m2"
+    }
+  },
+  "Dassault Falcon 10X": {
+    "cabin": {
+      "Cabin Length": "16.5 m (54.1 ft)",
+      "Cabin Width": "2.77 m (9.1 ft) widest ever",
+      "Cabin Height": "2.03 m (6.67 ft)",
+      "Seat Config": "Up to 4 zones + crew",
+      "IFE System": "FalconCabin HD smart system",
+      "Blind Spots": "N/A \u2014 business jet",
+      "Cabin Volume": "78.7 m3",
+      "Features": "Standing shower, pressurized to 3,000 ft"
+    },
+    "airframe": {
+      "Engine Model": "Rolls-Royce Pearl 10X",
+      "Engine Type": "High-bypass turbofan",
+      "Bypass Ratio": "5.5:1",
+      "Compressor Stages": "1 fan + 5 IP + 6 HP",
+      "Turbine Stages": "2 HP + 3 LP",
+      "Engine Dry Weight": "920 kg each",
+      "Key Components": "FalconEye HUD, carbon fiber wing",
+      "Airframe Material": "All-composite wing + aluminum fuselage"
+    },
+    "performance": {
+      "MTOW": "47,400 kg (104,500 lb)",
+      "T/W Ratio": "0.36",
+      "Service Ceiling": "15,545 m (51,000 ft)",
+      "Runway Required": "1,820 m (5,970 ft)",
+      "Max Fuel": "18,800 kg",
+      "Climb Rate": "1,100 m/min",
+      "Approach Speed": "210 km/h (113 kt)",
+      "Wing Loading": "400 kg/m2"
+    }
+  },
+  "Cessna Citation Longitude": {
+    "cabin": {
+      "Cabin Length": "7.62 m (25.0 ft)",
+      "Cabin Width": "1.93 m (6.33 ft)",
+      "Cabin Height": "1.83 m (6.0 ft)",
+      "Seat Config": "Up to 12 passengers",
+      "IFE System": "Garmin G5000 integrated",
+      "Blind Spots": "N/A \u2014 business jet",
+      "Cabin Volume": "37.0 m3",
+      "Features": "Flat floor, full refreshment center"
+    },
+    "airframe": {
+      "Engine Model": "Honeywell HTF7700L",
+      "Engine Type": "High-bypass turbofan",
+      "Bypass Ratio": "4.4:1",
+      "Compressor Stages": "1 fan + 5 HP",
+      "Turbine Stages": "2 HP + 3 LP",
+      "Engine Dry Weight": "499 kg each",
+      "Key Components": "Garmin G5000 touchscreen avionics",
+      "Airframe Material": "Aluminum + composite empennage"
+    },
+    "performance": {
+      "MTOW": "17,917 kg (39,500 lb)",
+      "T/W Ratio": "0.41",
+      "Service Ceiling": "13,716 m (45,000 ft)",
+      "Runway Required": "1,091 m (3,580 ft)",
+      "Max Fuel": "6,108 kg",
+      "Climb Rate": "1,006 m/min",
+      "Approach Speed": "195 km/h (105 kt)",
+      "Wing Loading": "350 kg/m2"
+    }
+  },
+  "Antonov An-225 Mriya": {
+    "cabin": {
+      "Cargo Bay Length": "43.35 m (142.2 ft)",
+      "Cargo Bay Width": "6.4 m (21.0 ft)",
+      "Cargo Bay Height": "4.4 m (14.4 ft)",
+      "Cargo Volume": "1,300 m3",
+      "Loading System": "Front visor nose door",
+      "IFE System": "N/A \u2014 cargo",
+      "Blind Spots": "Massive forward blind zone",
+      "Config Options": "Cargo only \u2014 no passenger variant"
+    },
+    "airframe": {
+      "Engine Model": "ZMKB Progress D-18T",
+      "Engine Type": "High-bypass turbofan",
+      "Bypass Ratio": "5.7:1",
+      "Compressor Stages": "7 LP + 7 HP",
+      "Turbine Stages": "1 HP + 4 LP",
+      "Engine Dry Weight": "4,100 kg each",
+      "Key Components": "6 engines, twin tail, external payload mount",
+      "Airframe Material": "Aluminum alloy + titanium critical structures"
+    },
+    "performance": {
+      "MTOW": "640,000 kg (1,411,000 lb)",
+      "T/W Ratio": "0.23",
+      "Service Ceiling": "11,000 m (36,100 ft)",
+      "Runway Required": "3,500 m (11,500 ft)",
+      "Max Fuel": "300,000 kg",
+      "Climb Rate": "360 m/min",
+      "Approach Speed": "275 km/h (148 kt)",
+      "Wing Loading": "662 kg/m2"
+    }
+  },
+  "Boeing 747-8 Freighter": {
+    "cabin": {
+      "Cargo Bay Length": "41.0 m (main) + 14.4 m (lower)",
+      "Cargo Bay Width": "6.1 m (main deck)",
+      "Cargo Bay Height": "3.04 m (main deck)",
+      "Cargo Volume": "858 m3",
+      "Loading System": "Nose door + side cargo door",
+      "IFE System": "N/A \u2014 cargo",
+      "Blind Spots": "Large forward area below nose",
+      "Config Options": "Full freighter / Combi variant"
+    },
+    "airframe": {
+      "Engine Model": "GEnx-2B67",
+      "Engine Type": "High-bypass turbofan",
+      "Bypass Ratio": "8.0:1",
+      "Compressor Stages": "4 LP + 10 HP",
+      "Turbine Stages": "2 HP + 7 LP",
+      "Engine Dry Weight": "5,622 kg each",
+      "Key Components": "Nose-loading door, pallet conveyor system",
+      "Airframe Material": "Aluminum alloy + composite fairings"
+    },
+    "performance": {
+      "MTOW": "447,696 kg (987,000 lb)",
+      "T/W Ratio": "0.27",
+      "Service Ceiling": "13,100 m (43,000 ft)",
+      "Runway Required": "3,050 m (10,000 ft)",
+      "Max Fuel": "216,840 L (57,285 US gal)",
+      "Climb Rate": "490 m/min",
+      "Approach Speed": "260 km/h (140 kt)",
+      "Wing Loading": "730 kg/m2"
+    }
+  },
+  "Airbus BelugaXL": {
+    "cabin": {
+      "Cargo Bay Length": "Unknown (classified Airbus logistics)",
+      "Cargo Bay Width": "7.10 m (internal)",
+      "Cargo Bay Height": "6.70 m (internal)",
+      "Cargo Volume": "2,209 m3",
+      "Loading System": "Upper-fuselage hinged nose door",
+      "IFE System": "N/A \u2014 cargo",
+      "Blind Spots": "Massive nose area when open",
+      "Config Options": "Specialized Airbus component transport only"
+    },
+    "airframe": {
+      "Engine Model": "GE CF6-80E1A4",
+      "Engine Type": "High-bypass turbofan",
+      "Bypass Ratio": "5.1:1",
+      "Compressor Stages": "1 fan + 14 HP",
+      "Turbine Stages": "2 HP + 5 LP",
+      "Engine Dry Weight": "4,290 kg each",
+      "Key Components": "Lowered cockpit, whale-shaped upper fuselage",
+      "Airframe Material": "Aluminum alloy (A330 derived structure)"
+    },
+    "performance": {
+      "MTOW": "227,000 kg (500,400 lb)",
+      "T/W Ratio": "0.24",
+      "Service Ceiling": "10,700 m (35,100 ft)",
+      "Runway Required": "2,700 m (8,860 ft)",
+      "Max Fuel": "139,090 L",
+      "Climb Rate": "400 m/min",
+      "Approach Speed": "255 km/h (138 kt)",
+      "Wing Loading": "590 kg/m2"
+    }
+  },
+  "Lockheed C-5M Super Galaxy": {
+    "cabin": {
+      "Cargo Bay Length": "36.91 m (121.1 ft)",
+      "Cargo Bay Width": "5.79 m (19.0 ft)",
+      "Cargo Bay Height": "4.11 m (13.5 ft)",
+      "Cargo Volume": "876 m3",
+      "Loading System": "Nose visor + aft ramp (drive-through)",
+      "IFE System": "N/A \u2014 military cargo",
+      "Blind Spots": "Large T-tail area, nose below",
+      "Config Options": "Cargo only \u2014 36 pallets / 2 M1 tanks"
+    },
+    "airframe": {
+      "Engine Model": "GE CF6-80C2L1F",
+      "Engine Type": "High-bypass turbofan",
+      "Bypass Ratio": "5.1:1",
+      "Compressor Stages": "1 fan + 14 HP",
+      "Turbine Stages": "2 HP + 5 LP",
+      "Engine Dry Weight": "4,290 kg each",
+      "Key Components": "Kneeling landing gear, drive-through loading",
+      "Airframe Material": "Aluminum alloy + titanium substructure"
+    },
+    "performance": {
+      "MTOW": "381,018 kg (840,000 lb)",
+      "T/W Ratio": "0.22",
+      "Service Ceiling": "10,895 m (35,745 ft)",
+      "Runway Required": "2,530 m (8,300 ft)",
+      "Max Fuel": "150,820 L",
+      "Climb Rate": "520 m/min",
+      "Approach Speed": "265 km/h (143 kt)",
+      "Wing Loading": "610 kg/m2"
+    }
+  },
+  "Boeing C-17 Globemaster III": {
+    "cabin": {
+      "Cargo Bay Length": "26.82 m (88.0 ft)",
+      "Cargo Bay Width": "5.49 m (18.0 ft)",
+      "Cargo Bay Height": "3.76 m (12.3 ft)",
+      "Cargo Volume": "592 m3",
+      "Loading System": "Rear ramp + airdrop capable",
+      "IFE System": "N/A \u2014 military",
+      "Blind Spots": "T-tail area, rear below ramp",
+      "Config Options": "18 pallets / 1 M1 tank / 102 paratroopers"
+    },
+    "airframe": {
+      "Engine Model": "Pratt & Whitney F117-PW-100",
+      "Engine Type": "High-bypass turbofan (PW2040 military)",
+      "Bypass Ratio": "6.0:1",
+      "Compressor Stages": "1 fan + 12 HP",
+      "Turbine Stages": "2 HP + 5 LP",
+      "Engine Dry Weight": "3,311 kg each",
+      "Key Components": "Externally blown flap STOL system",
+      "Airframe Material": "Aluminum alloy + composite empennage"
+    },
+    "performance": {
+      "MTOW": "265,350 kg (585,000 lb)",
+      "T/W Ratio": "0.25",
+      "Service Ceiling": "13,716 m (45,000 ft)",
+      "Runway Required": "1,064 m (3,500 ft) tactical",
+      "Max Fuel": "134,556 L",
+      "Climb Rate": "580 m/min",
+      "Approach Speed": "240 km/h (130 kt)",
+      "Wing Loading": "540 kg/m2"
+    }
+  },
+  "Lockheed C-130J Super Hercules": {
+    "cabin": {
+      "Cargo Bay Length": "12.31 m (40.4 ft)",
+      "Cargo Bay Width": "3.12 m (10.3 ft)",
+      "Cargo Bay Height": "2.74 m (9.0 ft)",
+      "Cargo Volume": "131.6 m3",
+      "Loading System": "Rear ramp + paradrop door",
+      "IFE System": "N/A \u2014 military",
+      "Blind Spots": "Under nose, behind empennage",
+      "Config Options": "6 pallets / 92 troops / 64 paratroopers"
+    },
+    "airframe": {
+      "Engine Model": "Rolls-Royce AE2100D3",
+      "Engine Type": "Turboprop",
+      "Propeller": "Dowty R391 6-blade composite",
+      "Compressor Stages": "14-stage axial compressor",
+      "Turbine Stages": "2 HP + 2 power",
+      "Engine Dry Weight": "745 kg each",
+      "Key Components": "Digital avionics, NP2000 prop, LAIRCM",
+      "Airframe Material": "Aluminum alloy + composite center wing box"
+    },
+    "performance": {
+      "MTOW": "79,378 kg (175,000 lb)",
+      "T/W Ratio": "0.28",
+      "Service Ceiling": "8,615 m (28,000 ft)",
+      "Runway Required": "1,093 m (3,586 ft)",
+      "Max Fuel": "20,820 kg",
+      "Climb Rate": "580 m/min",
+      "Approach Speed": "200 km/h (108 kt)",
+      "Wing Loading": "350 kg/m2"
+    }
+  },
+  "Airbus A400M Atlas": {
+    "cabin": {
+      "Cargo Bay Length": "17.71 m (58.1 ft)",
+      "Cargo Bay Width": "4.0 m (13.1 ft)",
+      "Cargo Bay Height": "3.85 m (12.6 ft)",
+      "Cargo Volume": "340 m3",
+      "Loading System": "Rear ramp + paradrop side doors",
+      "IFE System": "N/A \u2014 military",
+      "Blind Spots": "Under nose, empennage area",
+      "Config Options": "9 pallets / 116 troops / 2 APCs"
+    },
+    "airframe": {
+      "Engine Model": "Europrop TP400-D6",
+      "Engine Type": "Turboprop (most powerful Western)",
+      "Propeller": "Ratier-Figeac FH386 8-blade",
+      "Compressor Stages": "5 LP + 6 HP axial",
+      "Turbine Stages": "1 HP + 1 LP + 3 power",
+      "Engine Dry Weight": "1,854 kg each",
+      "Key Components": "FBW flight controls, aerial refueling boom",
+      "Airframe Material": "Composite + aluminum alloy fuselage"
+    },
+    "performance": {
+      "MTOW": "141,000 kg (310,852 lb)",
+      "T/W Ratio": "0.26",
+      "Service Ceiling": "11,300 m (37,000 ft)",
+      "Runway Required": "980 m (3,215 ft) tactical",
+      "Max Fuel": "50,500 kg",
+      "Climb Rate": "600 m/min",
+      "Approach Speed": "225 km/h (121 kt)",
+      "Wing Loading": "450 kg/m2"
+    }
+  },
+  "Bell Boeing V-22 Osprey": {
+    "cabin": {
+      "Cargo Bay Length": "7.37 m (24.2 ft)",
+      "Cargo Bay Width": "1.83 m (6.0 ft)",
+      "Cargo Bay Height": "1.68 m (5.5 ft)",
+      "Cargo Volume": "24.3 m3",
+      "Loading System": "Rear ramp + belly hook",
+      "IFE System": "N/A \u2014 military",
+      "Blind Spots": "Large engine nacelles block lateral view",
+      "Config Options": "24 troops / 12 litters / 10,000 lb cargo"
+    },
+    "airframe": {
+      "Engine Model": "Rolls-Royce T406-AD-400 (AE1107C)",
+      "Engine Type": "Turboshaft (drives proprotors)",
+      "Power Output": "4,586 kW (6,150 shp) each",
+      "Compressor Stages": "14-stage axial",
+      "Turbine Stages": "2 HP + 2 power",
+      "Engine Dry Weight": "441 kg each",
+      "Key Components": "Tilt nacelles, interconnect driveshaft (OEI)",
+      "Airframe Material": "Graphite-epoxy composite (43%) + aluminum"
+    },
+    "performance": {
+      "MTOW": "27,442 kg (60,500 lb)",
+      "T/W Ratio": "N/A (rotorcraft)",
+      "Service Ceiling": "7,620 m (25,000 ft)",
+      "Runway Required": "0 m (VTOL capable)",
+      "Max Fuel": "6,513 kg",
+      "Climb Rate": "686 m/min",
+      "Approach Speed": "185 km/h (100 kt)",
+      "Disc Loading": "129 kg/m2"
+    }
+  },
+  "BAE Hawk T.2": {
+    "cabin": {
+      "Cockpit Type": "Tandem two-seat",
+      "HUD System": "BAE Wide-Angle HUD",
+      "HMDS": "Not standard",
+      "Ejection Seat": "Martin-Baker Mk.16L",
+      "Cockpit Displays": "3 color MFDs + HUD",
+      "Night Vision": "NVG-compatible",
+      "Oxygen System": "LOX (liquid oxygen)",
+      "Blind Spots": "Rear seat slightly restricted forward"
+    },
+    "airframe": {
+      "Engine Model": "Rolls-Royce Adour Mk 951",
+      "Engine Type": "Low-bypass turbofan (non-afterburning)",
+      "Bypass Ratio": "0.75:1",
+      "Compressor Stages": "2 LP + 5 HP",
+      "Turbine Stages": "1 HP + 1 LP",
+      "Engine Dry Weight": "580 kg",
+      "Key Components": "Robust airframe for +8g, wing hardpoints",
+      "Airframe Material": "Aluminum alloy + composite fairings"
+    },
+    "performance": {
+      "MTOW": "9,100 kg (20,062 lb)",
+      "T/W Ratio": "0.63",
+      "Service Ceiling": "15,240 m (50,000 ft)",
+      "Runway Required": "600 m (1,970 ft)",
+      "Max Fuel": "1,361 kg",
+      "Climb Rate": "2,640 m/min",
+      "Approach Speed": "195 km/h (105 kt)",
+      "Wing Loading": "370 kg/m2"
+    }
+  },
+  "Beechcraft T-6 Texan II": {
+    "cabin": {
+      "Cockpit Type": "Tandem two-seat pressurized",
+      "HUD System": "Optional HUD",
+      "HMDS": "Not equipped",
+      "Ejection Seat": "Martin-Baker US16LA",
+      "Cockpit Displays": "2 MFDs + standby instruments",
+      "Night Vision": "NVG-compatible",
+      "Oxygen System": "OBOGS",
+      "Blind Spots": "Canopy arch limits top-rear view"
+    },
+    "airframe": {
+      "Engine Model": "Pratt & Whitney Canada PT6A-68",
+      "Engine Type": "Free turbine turboprop",
+      "Power Output": "820 kW (1,100 shp)",
+      "Propeller": "Hartzell 4-blade constant speed",
+      "Turbine Stages": "1 compressor + 1 power",
+      "Engine Dry Weight": "215 kg",
+      "Key Components": "Pressurized cockpit, HOTAS controls",
+      "Airframe Material": "Aluminum alloy + composite cowling"
+    },
+    "performance": {
+      "MTOW": "3,311 kg (7,300 lb)",
+      "T/W Ratio": "0.34",
+      "Service Ceiling": "9,449 m (31,000 ft)",
+      "Runway Required": "536 m (1,758 ft)",
+      "Max Fuel": "564 kg",
+      "Climb Rate": "1,036 m/min",
+      "Approach Speed": "170 km/h (92 kt)",
+      "Wing Loading": "240 kg/m2"
+    }
+  },
+  "Pilatus PC-21": {
+    "cabin": {
+      "Cockpit Type": "Tandem two-seat",
+      "HUD System": "Elbit HUD (optional)",
+      "HMDS": "Embedded simulation HMDS option",
+      "Ejection Seat": "Martin-Baker Mk.16 (CH16)",
+      "Cockpit Displays": "3 large MFDs + mission computer",
+      "Night Vision": "NVG-compatible",
+      "Oxygen System": "OBOGS",
+      "Blind Spots": "Standard tandem \u2014 rear seat restricted"
+    },
+    "airframe": {
+      "Engine Model": "Pratt & Whitney Canada PT6A-68B",
+      "Engine Type": "Free turbine turboprop",
+      "Power Output": "1,193 kW (1,600 shp)",
+      "Propeller": "5-blade composite constant-speed",
+      "Turbine Stages": "1 CT + 1 PT",
+      "Engine Dry Weight": "224 kg",
+      "Key Components": "Embedded tactical simulation, data link",
+      "Airframe Material": "Aluminum alloy + carbon fiber composites"
+    },
+    "performance": {
+      "MTOW": "4,250 kg (9,370 lb)",
+      "T/W Ratio": "0.38",
+      "Service Ceiling": "11,582 m (38,000 ft)",
+      "Runway Required": "690 m (2,264 ft)",
+      "Max Fuel": "680 kg",
+      "Climb Rate": "1,220 m/min",
+      "Approach Speed": "175 km/h (95 kt)",
+      "Wing Loading": "260 kg/m2"
+    }
+  },
+  "KAI T-50 Golden Eagle": {
+    "cabin": {
+      "Cockpit Type": "Tandem two-seat (single in FA-50)",
+      "HUD System": "BAE Systems wide-angle HUD",
+      "HMDS": "JHMCS option",
+      "Ejection Seat": "Martin-Baker Mk.16K",
+      "Cockpit Displays": "2 MFDs + UFC + HUD",
+      "Night Vision": "NVG + targeting pod (FA-50)",
+      "Oxygen System": "OBOGS",
+      "Blind Spots": "Twin tail slightly restricts 6 o'clock"
+    },
+    "airframe": {
+      "Engine Model": "GE F404-GE-102",
+      "Engine Type": "Low-bypass afterburning turbofan",
+      "Bypass Ratio": "0.34:1",
+      "Compressor Stages": "3 fan + 7 HP",
+      "Turbine Stages": "1 HP + 1 LP",
+      "Engine Dry Weight": "1,036 kg",
+      "Key Components": "F-16 derived FBW, EL/M-2032 radar (FA-50)",
+      "Airframe Material": "Aluminum alloy + carbon fiber composites"
+    },
+    "performance": {
+      "MTOW": "12,300 kg (27,100 lb)",
+      "T/W Ratio": "0.85 (clean)",
+      "Service Ceiling": "14,630 m (48,000 ft)",
+      "Runway Required": "500 m (1,640 ft)",
+      "Max Fuel": "2,490 kg internal",
+      "Climb Rate": "3,900 m/min",
+      "Approach Speed": "240 km/h (130 kt)",
+      "Wing Loading": "370 kg/m2"
+    }
+  },
+  "AH-64E Apache Guardian": {
+    "cabin": {
+      "Cockpit Type": "Tandem two-seat (CPG front, pilot rear)",
+      "HUD System": "IHADSS helmet-mounted monocle",
+      "HMDS": "Integrated Helmet & Display Sight",
+      "Ejection Seat": "N/A \u2014 crash-resistant seats",
+      "Cockpit Displays": "2 MFDs per cockpit (4 total)",
+      "Night Vision": "TADS/PNVS (FLIR + DTV)",
+      "Oxygen System": "N/A (low altitude ops)",
+      "Blind Spots": "Below + directly behind tail boom"
+    },
+    "airframe": {
+      "Engine Model": "GE T700-GE-701D",
+      "Engine Type": "Turboshaft",
+      "Power Output": "1,490 kW (2,000 shp) each",
+      "Compressor Stages": "5 axial + 1 centrifugal",
+      "Turbine Stages": "2 gas gen + 2 power",
+      "Engine Dry Weight": "204 kg each",
+      "Key Components": "Longbow FCR, 30mm M230 chain gun",
+      "Airframe Material": "Kevlar + boron + graphite composites"
+    },
+    "performance": {
+      "MTOW": "10,433 kg (23,000 lb)",
+      "T/W Ratio": "N/A (rotorcraft)",
+      "Service Ceiling": "6,400 m (21,000 ft)",
+      "Runway Required": "0 m (VTOL)",
+      "Max Fuel": "1,421 L",
+      "Climb Rate": "762 m/min",
+      "Approach Speed": "N/A (hover capable)",
+      "Max VNE": "293 km/h (158 kt)"
+    }
+  },
+  "UH-60M Black Hawk": {
+    "cabin": {
+      "Cargo Bay Length": "3.68 m (12.1 ft)",
+      "Cargo Bay Width": "2.21 m (7.25 ft)",
+      "Cargo Bay Height": "1.37 m (4.5 ft)",
+      "Seat Config": "11 troops + 3 crew",
+      "Loading System": "Side sliding doors + external hook",
+      "IFE System": "N/A \u2014 military",
+      "Blind Spots": "Below tail boom + behind empennage",
+      "Config Options": "Assault / medevac (4 litters) / VIP"
+    },
+    "airframe": {
+      "Engine Model": "GE T700-GE-701D",
+      "Engine Type": "Turboshaft",
+      "Power Output": "1,410 kW (1,890 shp) each",
+      "Compressor Stages": "5 axial + 1 centrifugal",
+      "Turbine Stages": "2 gas gen + 2 power",
+      "Engine Dry Weight": "204 kg each",
+      "Key Components": "Ballistic-tolerant fuel system, crashworthy seats",
+      "Airframe Material": "Aluminum + composite panels + Nomex"
+    },
+    "performance": {
+      "MTOW": "10,660 kg (23,500 lb)",
+      "T/W Ratio": "N/A (rotorcraft)",
+      "Service Ceiling": "5,790 m (19,000 ft)",
+      "Runway Required": "0 m (VTOL)",
+      "Max Fuel": "1,362 L (internal)",
+      "Climb Rate": "472 m/min",
+      "Approach Speed": "N/A (hover capable)",
+      "Max VNE": "294 km/h (159 kt)"
+    }
+  },
+  "Mi-24 Hind": {
+    "cabin": {
+      "Cargo Bay Length": "2.62 m (8.6 ft) troop cabin",
+      "Cargo Bay Width": "1.5 m (4.9 ft)",
+      "Seat Config": "8 troops in center cabin",
+      "Cockpit Type": "Tandem stepped (gunner/pilot)",
+      "Loading System": "Side doors for troops",
+      "IFE System": "N/A \u2014 military",
+      "Blind Spots": "Below and behind main rotor hub",
+      "Config Options": "Attack / transport / medevac"
+    },
+    "airframe": {
+      "Engine Model": "Isotov TV3-117VMA",
+      "Engine Type": "Turboshaft",
+      "Power Output": "1,640 kW (2,200 shp) each",
+      "Compressor Stages": "12-stage axial",
+      "Turbine Stages": "2 gas gen + 2 power",
+      "Engine Dry Weight": "285 kg each",
+      "Key Components": "Titanium rotor head, stub wings for weapons",
+      "Airframe Material": "Aluminum alloy + armored cockpit tub"
+    },
+    "performance": {
+      "MTOW": "12,000 kg (26,455 lb)",
+      "T/W Ratio": "N/A (rotorcraft)",
+      "Service Ceiling": "4,500 m (14,750 ft)",
+      "Runway Required": "0 m (VTOL) / short run preferred",
+      "Max Fuel": "1,500 L (internal)",
+      "Climb Rate": "750 m/min",
+      "Approach Speed": "N/A (hover capable)",
+      "Max VNE": "335 km/h (181 kt)"
+    }
+  },
+  "CH-47F Chinook": {
+    "cabin": {
+      "Cargo Bay Length": "9.20 m (30.2 ft)",
+      "Cargo Bay Width": "2.31 m (7.58 ft)",
+      "Cargo Bay Height": "1.98 m (6.5 ft)",
+      "Seat Config": "33-55 troops",
+      "Loading System": "Rear ramp + 3 external hooks",
+      "IFE System": "N/A \u2014 military",
+      "Blind Spots": "Between tandem rotor discs",
+      "Config Options": "Troop / cargo / sling load / medevac 24 litters"
+    },
+    "airframe": {
+      "Engine Model": "Honeywell T55-GA-714A",
+      "Engine Type": "Turboshaft",
+      "Power Output": "3,529 kW (4,733 shp) each",
+      "Compressor Stages": "14-stage axial + 1 centrifugal",
+      "Turbine Stages": "2 gas gen + 2 power",
+      "Engine Dry Weight": "379 kg each",
+      "Key Components": "Tandem rotor system, digital AFCS",
+      "Airframe Material": "Aluminum + fiberglass + Kevlar panels"
+    },
+    "performance": {
+      "MTOW": "22,680 kg (50,000 lb)",
+      "T/W Ratio": "N/A (rotorcraft)",
+      "Service Ceiling": "5,640 m (18,500 ft)",
+      "Runway Required": "0 m (VTOL)",
+      "Max Fuel": "3,899 L (internal)",
+      "Climb Rate": "561 m/min",
+      "Approach Speed": "N/A (hover capable)",
+      "Max VNE": "315 km/h (170 kt)"
+    }
+  },
+  "Airbus H145": {
+    "cabin": {
+      "Cabin Length": "3.60 m (11.8 ft)",
+      "Cabin Width": "1.58 m (5.2 ft)",
+      "Cabin Height": "1.30 m (4.3 ft)",
+      "Seat Config": "Up to 10 passengers",
+      "Loading System": "Sliding doors + rear clamshell",
+      "IFE System": "N/A \u2014 utility helicopter",
+      "Blind Spots": "Below tail boom / Fenestron area",
+      "Config Options": "EMS / police / corporate / training"
+    },
+    "airframe": {
+      "Engine Model": "Safran Arriel 2E",
+      "Engine Type": "Turboshaft (FADEC)",
+      "Power Output": "574 kW (770 shp) each",
+      "Compressor Stages": "1 axial + 1 centrifugal",
+      "Turbine Stages": "1 gas gen + 1 power",
+      "Engine Dry Weight": "112 kg each",
+      "Key Components": "Fenestron shrouded tail rotor, Helionix avionics",
+      "Airframe Material": "Composite + aluminum fuselage"
+    },
+    "performance": {
+      "MTOW": "3,800 kg (8,377 lb)",
+      "T/W Ratio": "N/A (rotorcraft)",
+      "Service Ceiling": "5,485 m (18,000 ft)",
+      "Runway Required": "0 m (VTOL)",
+      "Max Fuel": "879 L",
+      "Climb Rate": "488 m/min",
+      "Approach Speed": "N/A (hover capable)",
+      "Max VNE": "267 km/h (144 kt)"
+    }
+  },
+  "Canadair CL-415 SuperScooper": {
+    "cabin": {
+      "Cargo Bay Type": "Water tank system",
+      "Tank Capacity": "6,137 L (1,621 US gal)",
+      "Cockpit Type": "Side-by-side two-seat",
+      "Scoop Probes": "2 retractable hull probes",
+      "Loading System": "Water scoop from lakes/ocean",
+      "IFE System": "N/A \u2014 firefighting aircraft",
+      "Blind Spots": "Below hull + aft fuselage",
+      "Config Options": "Firefighting / SAR / maritime patrol"
+    },
+    "airframe": {
+      "Engine Model": "Pratt & Whitney Canada PW123AF",
+      "Engine Type": "Turboprop",
+      "Power Output": "1,775 kW (2,380 shp) each",
+      "Propeller": "Hamilton Std 14SF-23 4-blade",
+      "Turbine Stages": "2 centrifugal + 1 power",
+      "Engine Dry Weight": "465 kg each",
+      "Key Components": "Retractable scoop probes, corrosion-resistant hull",
+      "Airframe Material": "Aluminum alloy (marine-grade anticorrosion)"
+    },
+    "performance": {
+      "MTOW": "19,890 kg (43,850 lb)",
+      "T/W Ratio": "0.24",
+      "Service Ceiling": "4,480 m (14,700 ft)",
+      "Runway Required": "800 m water (2,625 ft)",
+      "Max Fuel": "5,680 L",
+      "Climb Rate": "408 m/min",
+      "Approach Speed": "155 km/h (84 kt)",
+      "Water Scoop Distance": "1,340 m at 130 km/h"
+    }
+  },
+  "ShinMaywa US-2": {
+    "cabin": {
+      "Cabin Type": "Rescue/utility cabin",
+      "Rescue Capacity": "20 survivors",
+      "Cockpit Type": "Side-by-side multi-crew (11 total)",
+      "Rescue Equipment": "Life rafts, hoist, medical bay",
+      "Loading System": "Side hatches + rear door",
+      "IFE System": "N/A \u2014 SAR aircraft",
+      "Blind Spots": "Below hull, engine nacelle zones",
+      "Config Options": "SAR / maritime patrol / transport"
+    },
+    "airframe": {
+      "Engine Model": "Rolls-Royce AE2100J",
+      "Engine Type": "Turboprop",
+      "Power Output": "3,424 kW (4,591 shp) each",
+      "Propeller": "Dowty R391 6-blade",
+      "Turbine Stages": "14-stage axial + 2 power",
+      "Engine Dry Weight": "745 kg each",
+      "Key Components": "BLC (Boundary Layer Control), spray suppressor",
+      "Airframe Material": "Aluminum alloy + corrosion-resistant coatings"
+    },
+    "performance": {
+      "MTOW": "47,700 kg (105,160 lb)",
+      "T/W Ratio": "0.29",
+      "Service Ceiling": "7,195 m (23,600 ft)",
+      "Runway Required": "490 m water (1,600 ft)",
+      "Max Fuel": "20,000 L",
+      "Climb Rate": "610 m/min",
+      "Approach Speed": "185 km/h (100 kt)",
+      "Min Water Takeoff Speed": "90 km/h (49 kt)"
+    }
+  },
+  "AVIC AG600 Kunlong": {
+    "cabin": {
+      "Cabin Type": "Firefighting / rescue cabin",
+      "Tank Capacity": "12,000 L (3,170 US gal)",
+      "Cockpit Type": "Side-by-side multi-crew",
+      "Rescue Capacity": "50 survivors",
+      "Loading System": "Water scoop + hull doors",
+      "IFE System": "N/A \u2014 firefighting/SAR",
+      "Blind Spots": "Below hull, engine nacelle areas",
+      "Config Options": "Firefighting / SAR / maritime patrol"
+    },
+    "airframe": {
+      "Engine Model": "WJ-6 (domestic turboprop)",
+      "Engine Type": "Turboprop",
+      "Power Output": "3,126 kW (4,192 shp) each",
+      "Propeller": "6-blade constant speed",
+      "Turbine Stages": "10-stage axial + 2 power",
+      "Engine Dry Weight": "1,050 kg each",
+      "Key Components": "T-tail, retractable landing gear, hull boat design",
+      "Airframe Material": "Aluminum alloy + composite fairings"
+    },
+    "performance": {
+      "MTOW": "60,000 kg (132,277 lb)",
+      "T/W Ratio": "0.21",
+      "Service Ceiling": "6,000 m (19,685 ft)",
+      "Runway Required": "1,500 m water",
+      "Max Fuel": "18,000 L",
+      "Climb Rate": "480 m/min",
+      "Approach Speed": "195 km/h (105 kt)",
+      "Water Scoop Distance": "1,500 m at 150 km/h"
+    }
+  },
+  "de Havilland DHC-6 Twin Otter (Floats)": {
+    "cabin": {
+      "Cabin Length": "5.94 m (19.5 ft)",
+      "Cabin Width": "1.60 m (5.25 ft)",
+      "Cabin Height": "1.50 m (4.9 ft)",
+      "Seat Config": "Up to 19 passengers",
+      "Loading System": "Large cargo door + nose baggage",
+      "IFE System": "N/A \u2014 bush plane",
+      "Blind Spots": "High wing blocks upward view",
+      "Config Options": "Wheels / skis / amphibious floats"
+    },
+    "airframe": {
+      "Engine Model": "Pratt & Whitney Canada PT6A-34",
+      "Engine Type": "Free turbine turboprop",
+      "Power Output": "462 kW (620 shp) each",
+      "Propeller": "Hartzell HC-B3TN 3-blade",
+      "Turbine Stages": "3 axial + 1 centrifugal CT + 1 PT",
+      "Engine Dry Weight": "153 kg each",
+      "Key Components": "Fixed leading-edge slats, double-slotted flaps",
+      "Airframe Material": "Aluminum alloy + fabric control surfaces"
+    },
+    "performance": {
+      "MTOW": "5,670 kg (12,500 lb)",
+      "T/W Ratio": "0.22",
+      "Service Ceiling": "7,620 m (25,000 ft)",
+      "Runway Required": "366 m (1,200 ft) land / 500 m water",
+      "Max Fuel": "1,136 L",
+      "Climb Rate": "490 m/min",
+      "Approach Speed": "130 km/h (70 kt)",
+      "Stall Speed": "100 km/h (54 kt)"
+    }
+  }
+};
+
+function openModal(planeName, tab) {
+  const data = detailData[planeName];
+  if (!data) {
+    document.getElementById('modalContent').innerHTML = '<p style="color:#8a9bb8;">Detailed data coming soon for ' + planeName + '</p>';
+    showModal();
+    return;
+  }
+
+  let tabData, tabTitle, tabIcon;
+  if (tab === 'cabin') {
+    tabData = data.cabin;
+    tabTitle = 'Cabin & Passenger Experience';
+    tabIcon = '🛩️';
+  } else if (tab === 'airframe') {
+    tabData = data.airframe;
+    tabTitle = 'Airframe History & Engine Details';
+    tabIcon = '⚙️';
+  } else {
+    tabData = data.performance;
+    tabTitle = 'Operational Performance & Load Specs';
+    tabIcon = '📊';
+  }
+
+  let gridHTML = Object.entries(tabData).map(([k,v]) => `
+    <div class="modal-item">
+      <div class="m-label">${k}</div>
+      <div class="m-value">${v}</div>
+    </div>
+  `).join('');
+
+  document.getElementById('modalContent').innerHTML = `
+    <div class="modal-title">${tabIcon} ${planeName}</div>
+    <div class="modal-subtitle">${tabTitle}</div>
+    <div class="modal-grid">${gridHTML}</div>
+  `;
+  showModal();
+}
+
+function showModal() {
+  const m = document.getElementById('infoModal');
+  m.style.display = 'flex';
+  setTimeout(() => m.classList.add('active'), 10);
+}
+
+document.getElementById('modalClose').addEventListener('click', () => {
+  const m = document.getElementById('infoModal');
+  m.classList.remove('active');
+  setTimeout(() => m.style.display = 'none', 300);
+});
+
+document.getElementById('infoModal').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) {
+    const m = document.getElementById('infoModal');
+    m.classList.remove('active');
+    setTimeout(() => m.style.display = 'none', 300);
+  }
+});
+
