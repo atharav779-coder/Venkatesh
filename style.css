@@ -130,12 +130,17 @@
     }
     .hero-badge::before { content: '✈'; font-size: 1rem; }
     .hero h1 {
-      font-family: 'Montserrat', sans-serif; font-size: clamp(2.5rem, 7vw, 6rem);
-      font-weight: 900; line-height: 1.1; margin-bottom: 1.2rem;
-      background: linear-gradient(135deg, #ffffff 0%, #4b5563 40%, #f97316 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      text-transform: uppercase; letter-spacing: 2px;
-      text-shadow: 0 10px 30px rgba(249,115,22,0.2);
+      font-family: 'Playfair Display', serif; 
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(3rem, 7vw, 6.5rem);
+      line-height: 1.1; 
+      margin-bottom: 1.2rem;
+      background: linear-gradient(135deg, #f97316, #ec4899);
+      -webkit-background-clip: text; 
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 1px;
     }
     .hero p {
       font-size: clamp(1rem, 2vw, 1.25rem); color: #8a9bb8;
@@ -439,19 +444,7 @@
     }
 
     
-    .hero-script {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-weight: 400;
-      display: block;
-      font-size: 0.7em;
-      letter-spacing: 1px;
-      background: linear-gradient(135deg, #f97316, #ec4899);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 0.2em;
-    }
+    
 
     /* ===== STATS BAR ===== */
     .stats-bar {
