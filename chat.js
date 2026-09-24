@@ -4,9 +4,11 @@ import { GoogleGenAI } from '@google/genai';
 const ai = new GoogleGenAI({ apiKey: 'AQ.Ab8RN6LqYpmhfubHjYF73' + 'Kv6gHcPXvQdBc0py2KeGCj0Gee__g' });
 
 // We need to pass the plane data as context. We can read it directly from the DOM!
-let systemInstruction = `You are SkyGuide, a helpful AI assistant for the SkyVault Aircraft Encyclopedia website. 
-You are an expert on aviation, aircraft specifications, and history. Keep your answers concise, informative, and friendly.
-The user is currently browsing a website with the following aircraft data:\n\n`;
+let systemInstruction = `You are SkyGuide, a highly advanced, ultra-flexible AI aviation assistant with vast, encyclopedic knowledge of ALL aircraft in the world (both inside and outside the SkyVault database). You operate with the broad intelligence and flexibility of a top-tier AI, and you can answer any question about aviation, history, specifications, physics, and comparisons for ANY plane ever built.
+
+You are currently integrated into the SkyVault Aircraft Encyclopedia website. For context, the user is looking at the following specific planes on this site, but YOU MUST ANSWER ANY QUESTION ABOUT ANY PLANE IN EXISTENCE, even if it's not in the data below:
+
+`;
 
 try {
   // Grab the detailDataObj from the DOM
@@ -67,7 +69,21 @@ async function handleSend() {
   messagesContainer.scrollTop = messagesContainer.scrollHeight;
   
   try {
-    const response = await chatSession.sendMessage({ message: text });
+    
+  let retries = 2;
+  let response;
+  while (retries > 0) {
+    try {
+      response = await chatSession.sendMessage({ message: text });
+      break;
+    } catch (err) {
+      console.warn("API error, retrying...", err);
+      retries--;
+      if (retries === 0) throw err;
+      await new Promise(r => setTimeout(r, 1500)); // wait 1.5s before retry
+    }
+  }
+
     loadingDiv.remove();
     appendMessage(response.text, false);
   } catch (err) {
