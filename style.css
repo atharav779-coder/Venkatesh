@@ -390,9 +390,11 @@
       font-family: 'Outfit', sans-serif; letter-spacing: 1px;
     }
     .back-desc {
-      font-size: .85rem; color: #8a9bb8; line-height: 1.6;
-      padding: 1rem; background: rgba(0,0,0,0.3); border-radius: 6px;
-      border-left: 3px solid rgba(249,115,22,0.5);
+      font-size: 0.95rem; color: #1e293b; line-height: 1.6; font-weight: 500;
+      padding: 1.2rem; background: rgba(255, 255, 255, 0.85); border-radius: 8px;
+      border-left: 4px solid #f97316;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      backdrop-filter: blur(10px);
       margin-top: auto; position: relative; z-index: 2;
     }
     
@@ -401,8 +403,8 @@
       font-family: 'Outfit', sans-serif; font-size: .8rem; font-weight: 700;
       text-transform: uppercase; letter-spacing: 2px; margin-bottom: .4rem;
     }
-    .pros-cons .pros h4 { color: #00ff88; }
-    .pros-cons .cons h4 { color: #ff4466; }
+    .pros-cons .pros h4 { color: #f97316; font-weight: 700; letter-spacing: 1px; }
+    .pros-cons .cons h4 { color: #ec4899; font-weight: 700; letter-spacing: 1px; }
     .pros-cons ul {
       list-style: none; padding: 0; margin: 0 0 .6rem 0;
     }
