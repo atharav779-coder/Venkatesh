@@ -24,6 +24,7 @@
       <a href="#private-jets">Private Jets</a>
       <a href="#cargo">Cargo</a>
       <a href="#military">Military</a>
+      <a href="#bombers">Bombers</a>
       <a href="#trainers">Trainers</a>
       <a href="#helicopters">Helicopters</a>
       <a href="#seaplanes">Seaplanes</a>
@@ -62,7 +63,8 @@
   <a href="#private-jets">Private Jets</a>
   <a href="#cargo">Cargo</a>
   <a href="#military">Military Transport</a>
-  <a href="#trainers">Trainers</a>
+  <a href="#bombers">Bombers</a>
+      <a href="#trainers">Trainers</a>
   <a href="#helicopters">Helicopters</a>
   <a href="#seaplanes">Seaplanes</a>
 </div>
@@ -117,6 +119,31 @@
     <div class="divider"></div>
   </div>
   <div class="card-grid" id="grid-cargo"></div>
+</section>
+
+
+<!-- ==================================================================
+     SECTION X - BOMBERS
+     ================================================================== -->
+<section class="section" id="bombers">
+  <div class="section-header reveal">
+    <div class="tag">Strategic Strike</div>
+    <h2>Bombers</h2>
+    <p>Strategic, supersonic, heavy, and historical bombers that shaped the course of warfare.</p>
+    <div class="divider"></div>
+  </div>
+  
+  <h3 class="sub-category-title">1. Strategic Stealth Bombers</h3>
+  <div class="card-grid" id="grid-bombers-stealth"></div>
+  
+  <h3 class="sub-category-title">2. Strategic Supersonic Bombers</h3>
+  <div class="card-grid" id="grid-bombers-supersonic"></div>
+  
+  <h3 class="sub-category-title">3. Strategic Heavy Bombers</h3>
+  <div class="card-grid" id="grid-bombers-heavy"></div>
+  
+  <h3 class="sub-category-title">4. Historical / World War II</h3>
+  <div class="card-grid" id="grid-bombers-historical"></div>
 </section>
 
 <!-- ==================================================================
@@ -1621,6 +1648,246 @@
       "Very capable multirole platform",
       "Additional variants and upgrades continue to define its role."
     ]
+  },
+  "B-2 Spirit": {
+    "description": "The iconic flying-wing stealth bomber. Capable of penetrating sophisticated anti-aircraft defenses to deploy conventional or nuclear weapons.",
+    "performance": {
+      "Max Speed": "Mach 0.95",
+      "Range": "11,100 km",
+      "Service Ceiling": "15,200 m",
+      "Engine Thrust": "4\u00d7 77 kN"
+    },
+    "history": "First flight was in 1989. Originates from United States \u2014 Northrop Grumman.",
+    "keyFeatures": [
+      "Exceptional stealth profile",
+      "Intercontinental range",
+      "Massive payload capability",
+      "Additional variants and upgrades continue to define its role."
+    ]
+  },
+  "B-21 Raider": {
+    "description": "Next-generation stealth bomber currently entering service. Designed to replace the B-1 and B-2 with unprecedented survivability and network integration.",
+    "performance": {
+      "Max Speed": "Subsonic",
+      "Range": "Classified",
+      "Service Ceiling": "15,000+ m",
+      "Engine Thrust": "Classified"
+    },
+    "history": "First flight was in 2023. Originates from United States \u2014 Northrop Grumman.",
+    "keyFeatures": [
+      "Next-gen broadband stealth",
+      "Optionally manned",
+      "Open systems architecture",
+      "Additional variants and upgrades continue to define its role."
+    ]
+  },
+  "B-1B Lancer": {
+    "description": "Variable-sweep wing supersonic heavy bomber. Known as the 'Bone', it carries the largest conventional payload of both guided and unguided weapons in the USAF inventory.",
+    "performance": {
+      "Max Speed": "Mach 1.25",
+      "Range": "9,400 km",
+      "Service Ceiling": "18,000 m",
+      "Engine Thrust": "4\u00d7 136.9 kN (A/B)"
+    },
+    "history": "First flight was in 1974. Originates from United States \u2014 Rockwell.",
+    "keyFeatures": [
+      "Massive payload capacity",
+      "Supersonic dash capability",
+      "Variable-geometry wings",
+      "Additional variants and upgrades continue to define its role."
+    ]
+  },
+  "Tu-160 Blackjack": {
+    "description": "The world's largest and fastest supersonic heavy bomber. A variable-sweep wing strategic bomber designed to deliver cruise missiles at high speeds.",
+    "performance": {
+      "Max Speed": "Mach 2.05",
+      "Range": "12,300 km",
+      "Service Ceiling": "16,000 m",
+      "Engine Thrust": "4\u00d7 245 kN (A/B)"
+    },
+    "history": "First flight was in 1981. Originates from Russia \u2014 Tupolev.",
+    "keyFeatures": [
+      "Fastest bomber in service",
+      "Massive cruise missile payload",
+      "Intercontinental unrefueled range",
+      "Additional variants and upgrades continue to define its role."
+    ]
+  },
+  "Tu-22M Backfire": {
+    "description": "Long-range supersonic maritime strike and regional bomber. Famous for its variable-sweep wings and designed primarily for anti-ship strikes.",
+    "performance": {
+      "Max Speed": "Mach 1.88",
+      "Range": "6,800 km",
+      "Service Ceiling": "13,300 m",
+      "Engine Thrust": "2\u00d7 245.2 kN (A/B)"
+    },
+    "history": "First flight was in 1969. Originates from Russia \u2014 Tupolev.",
+    "keyFeatures": [
+      "Excellent anti-ship capability",
+      "High supersonic speed",
+      "Heavy missile loadout",
+      "Additional variants and upgrades continue to define its role."
+    ]
+  },
+  "B-52H Stratofortress": {
+    "description": "Long-standing eight-engine heavy strategic bomber. The workhorse of the US bomber fleet, slated to serve into the 2050s with ongoing engine upgrades.",
+    "performance": {
+      "Max Speed": "1,046 km/h",
+      "Range": "14,200 km",
+      "Service Ceiling": "15,000 m",
+      "Engine Thrust": "8\u00d7 76 kN"
+    },
+    "history": "First flight was in 1952. Originates from United States \u2014 Boeing.",
+    "keyFeatures": [
+      "Unmatched longevity and reliability",
+      "Huge standoff weapons payload",
+      "Global strike capability",
+      "Additional variants and upgrades continue to define its role."
+    ]
+  },
+  "Tu-95 Bear": {
+    "description": "The famous long-range, contra-rotating turboprop strategic bomber. One of the loudest combat aircraft ever built, carrying massive cruise missiles.",
+    "performance": {
+      "Max Speed": "920 km/h",
+      "Range": "15,000 km",
+      "Service Ceiling": "13,716 m",
+      "Engine Thrust": "4\u00d7 11,000 kW turboprops"
+    },
+    "history": "First flight was in 1952. Originates from Russia \u2014 Tupolev.",
+    "keyFeatures": [
+      "Extreme unrefueled range",
+      "Efficient turboprop engines",
+      "Reliable cruise missile carrier",
+      "Additional variants and upgrades continue to define its role."
+    ]
+  },
+  "Xian H-6": {
+    "description": "Long-range strategic bomber platform (modernized into the H-6K/N variants). Originally based on the Tu-16, now upgraded for cruise missiles and anti-ship strikes.",
+    "performance": {
+      "Max Speed": "1,050 km/h",
+      "Range": "6,000 km",
+      "Service Ceiling": "12,800 m",
+      "Engine Thrust": "2\u00d7 93.2 kN"
+    },
+    "history": "First flight was in 1959. Originates from China \u2014 Xi'an Aircraft Industrial.",
+    "keyFeatures": [
+      "Modernized avionics (K/N variants)",
+      "Capable cruise missile carrier",
+      "Large operational fleet",
+      "Additional variants and upgrades continue to define its role."
+    ]
+  },
+  "B-17 Flying Fortress": {
+    "description": "The legendary four-engine heavy bomber of WWII. Famous for its daylight precision bombing campaigns over Europe and its rugged ability to sustain heavy damage.",
+    "performance": {
+      "Max Speed": "462 km/h",
+      "Range": "3,219 km",
+      "Service Ceiling": "10,850 m",
+      "Engine Thrust": "4\u00d7 1,200 hp radials"
+    },
+    "history": "First flight was in 1935. Originates from United States \u2014 Boeing.",
+    "keyFeatures": [
+      "Extremely rugged airframe",
+      "Heavy defensive armament",
+      "Iconic historical significance",
+      "Additional variants and upgrades continue to define its role."
+    ]
+  },
+  "B-29 Superfortress": {
+    "description": "The most advanced bomber of WWII, featuring a pressurized cabin and remote-controlled gun turrets. Best known for the atomic bombings of Japan.",
+    "performance": {
+      "Max Speed": "574 km/h",
+      "Range": "5,230 km",
+      "Service Ceiling": "9,710 m",
+      "Engine Thrust": "4\u00d7 2,200 hp radials"
+    },
+    "history": "First flight was in 1942. Originates from United States \u2014 Boeing.",
+    "keyFeatures": [
+      "Pressurized cabin for high altitude",
+      "Advanced fire-control system",
+      "Massive payload for its era",
+      "Additional variants and upgrades continue to define its role."
+    ]
+  },
+  "Avro Lancaster": {
+    "description": "The RAF's principal heavy bomber of WWII. Famous for night bombing raids over Germany and specialized missions like the 'Dambusters' raid.",
+    "performance": {
+      "Max Speed": "454 km/h",
+      "Range": "4,073 km",
+      "Service Ceiling": "6,500 m",
+      "Engine Thrust": "4\u00d7 1,280 hp V12s"
+    },
+    "history": "First flight was in 1941. Originates from United Kingdom \u2014 Avro.",
+    "keyFeatures": [
+      "Unobstructed bomb bay",
+      "Excellent payload-to-weight ratio",
+      "Stable flying characteristics",
+      "Additional variants and upgrades continue to define its role."
+    ]
+  },
+  "B-25 Mitchell": {
+    "description": "A versatile twin-engine medium bomber, immortalized by the Doolittle Raid. Served in every theater of WWII.",
+    "performance": {
+      "Max Speed": "438 km/h",
+      "Range": "2,170 km",
+      "Service Ceiling": "7,376 m",
+      "Engine Thrust": "2\u00d7 1,700 hp radials"
+    },
+    "history": "First flight was in 1940. Originates from United States \u2014 North American.",
+    "keyFeatures": [
+      "Rugged and reliable",
+      "Versatile across all theaters",
+      "Heavy forward firepower in some variants",
+      "Additional variants and upgrades continue to define its role."
+    ]
+  },
+  "Heinkel He 111": {
+    "description": "The primary medium bomber of the Luftwaffe during the early stages of WWII. Famous for its distinctive glasshouse nose.",
+    "performance": {
+      "Max Speed": "440 km/h",
+      "Range": "2,300 km",
+      "Service Ceiling": "6,500 m",
+      "Engine Thrust": "2\u00d7 1,340 hp V12s"
+    },
+    "history": "First flight was in 1935. Originates from Germany \u2014 Heinkel.",
+    "keyFeatures": [
+      "Excellent visibility for bombardier",
+      "Stable bombing platform",
+      "Rugged design",
+      "Additional variants and upgrades continue to define its role."
+    ]
+  },
+  "Junkers Ju 87 Stuka": {
+    "description": "The infamous dive bomber of the Blitzkrieg. Known for its inverted gull wings and the terrifying wail of its 'Jericho Trumpet' sirens.",
+    "performance": {
+      "Max Speed": "390 km/h",
+      "Range": "500 km",
+      "Service Ceiling": "7,300 m",
+      "Engine Thrust": "1\u00d7 1,184 hp V12"
+    },
+    "history": "First flight was in 1935. Originates from Germany \u2014 Junkers.",
+    "keyFeatures": [
+      "Incredible dive-bombing precision",
+      "Psychological warfare (sirens)",
+      "Sturdy construction",
+      "Additional variants and upgrades continue to define its role."
+    ]
+  },
+  "Fairey Swordfish": {
+    "description": "A biplane torpedo bomber famously nicknamed the 'Stringbag'. Despite being obsolete at the start of WWII, it achieved spectacular successes, including crippling the Bismarck.",
+    "performance": {
+      "Max Speed": "230 km/h",
+      "Range": "846 km",
+      "Service Ceiling": "3,260 m",
+      "Engine Thrust": "1\u00d7 690 hp radial"
+    },
+    "history": "First flight was in 1934. Originates from United Kingdom \u2014 Fairey Aviation.",
+    "keyFeatures": [
+      "Incredible low-speed handling",
+      "Rugged and reliable",
+      "Could take off from small carrier decks",
+      "Additional variants and upgrades continue to define its role."
+    ]
   }
 }
 </script>
@@ -1932,6 +2199,179 @@ commercial: [
     cons: ["Delta wing bleeds energy in sustained turns", "Production ended in 2007", "Aging avionics compared to Rafale"]
   }
 ],
+"bombers-stealth": [
+  {
+    name: "B-2 Spirit",
+    origin: "United States — Northrop Grumman",
+    category: "Bomber",
+    img: "images/b-2.jpg",
+    stats: {"Max Speed": "Mach 0.95", "Range": "11,100 km", "Payload": "18,000 kg", "Type": "Stealth Bomber"},
+    specs: {"Wingspan": "52.4 m", "Length": "21.0 m", "Height": "5.18 m", "MTOW": "152,200 kg", "Ceiling": "15,200 m", "First Flight": "1989", "Crew": "2", "Thrust": "4\u00d7 77 kN"},
+    desc: "The iconic flying-wing stealth bomber. Capable of penetrating sophisticated anti-aircraft defenses to deploy conventional or nuclear weapons.",
+    pros: ["Exceptional stealth profile", "Intercontinental range", "Massive payload capability"],
+    cons: ["Extremely high unit cost", "Specialized maintenance required", "Slow subsonic speed"]
+  },
+  {
+    name: "B-21 Raider",
+    origin: "United States — Northrop Grumman",
+    category: "Bomber",
+    img: "images/b-21.jpg",
+    stats: {"Max Speed": "Subsonic", "Range": "Classified", "Payload": "Classified", "Type": "Stealth Bomber"},
+    specs: {"Wingspan": "Classified", "Length": "Classified", "Height": "Classified", "MTOW": "Classified", "Ceiling": "15,000+ m", "First Flight": "2023", "Crew": "2 or unmanned", "Thrust": "Classified"},
+    desc: "Next-generation stealth bomber currently entering service. Designed to replace the B-1 and B-2 with unprecedented survivability and network integration.",
+    pros: ["Next-gen broadband stealth", "Optionally manned", "Open systems architecture"],
+    cons: ["Classified capabilities", "Currently in early testing phase", "High program cost"]
+  }
+],
+"bombers-supersonic": [
+  {
+    name: "B-1B Lancer",
+    origin: "United States — Rockwell",
+    category: "Bomber",
+    img: "images/b-1b.jpg",
+    stats: {"Max Speed": "Mach 1.25", "Range": "9,400 km", "Payload": "34,000 kg", "Type": "Supersonic Bomber"},
+    specs: {"Wingspan": "41.8 m", "Length": "44.5 m", "Height": "10.4 m", "MTOW": "216,400 kg", "Ceiling": "18,000 m", "First Flight": "1974", "Crew": "4", "Thrust": "4\u00d7 136.9 kN (A/B)"},
+    desc: "Variable-sweep wing supersonic heavy bomber. Known as the 'Bone', it carries the largest conventional payload of both guided and unguided weapons in the USAF inventory.",
+    pros: ["Massive payload capacity", "Supersonic dash capability", "Variable-geometry wings"],
+    cons: ["High maintenance hours per flight hour", "Nuclear capability removed", "Nearing retirement"]
+  },
+  {
+    name: "Tu-160 Blackjack",
+    origin: "Russia — Tupolev",
+    category: "Bomber",
+    img: "images/tu-160.jpg",
+    stats: {"Max Speed": "Mach 2.05", "Range": "12,300 km", "Payload": "45,000 kg", "Type": "Supersonic Bomber"},
+    specs: {"Wingspan": "55.7 m", "Length": "54.1 m", "Height": "13.1 m", "MTOW": "275,000 kg", "Ceiling": "16,000 m", "First Flight": "1981", "Crew": "4", "Thrust": "4\u00d7 245 kN (A/B)"},
+    desc: "The world's largest and fastest supersonic heavy bomber. A variable-sweep wing strategic bomber designed to deliver cruise missiles at high speeds.",
+    pros: ["Fastest bomber in service", "Massive cruise missile payload", "Intercontinental unrefueled range"],
+    cons: ["Very large radar signature", "Complex and expensive to operate", "Small fleet size"]
+  },
+  {
+    name: "Tu-22M Backfire",
+    origin: "Russia — Tupolev",
+    category: "Bomber",
+    img: "images/tu-22m.jpg",
+    stats: {"Max Speed": "Mach 1.88", "Range": "6,800 km", "Payload": "24,000 kg", "Type": "Supersonic Bomber"},
+    specs: {"Wingspan": "34.28 m", "Length": "42.4 m", "Height": "11.05 m", "MTOW": "126,400 kg", "Ceiling": "13,300 m", "First Flight": "1969", "Crew": "4", "Thrust": "2\u00d7 245.2 kN (A/B)"},
+    desc: "Long-range supersonic maritime strike and regional bomber. Famous for its variable-sweep wings and designed primarily for anti-ship strikes.",
+    pros: ["Excellent anti-ship capability", "High supersonic speed", "Heavy missile loadout"],
+    cons: ["Shorter range than strategic bombers", "Aging airframes", "No stealth features"]
+  }
+],
+"bombers-heavy": [
+  {
+    name: "B-52H Stratofortress",
+    origin: "United States — Boeing",
+    category: "Bomber",
+    img: "images/b-52.jpg",
+    stats: {"Max Speed": "1,046 km/h", "Range": "14,200 km", "Payload": "31,500 kg", "Type": "Heavy Bomber"},
+    specs: {"Wingspan": "56.4 m", "Length": "48.5 m", "Height": "12.4 m", "MTOW": "220,000 kg", "Ceiling": "15,000 m", "First Flight": "1952", "Crew": "5", "Thrust": "8\u00d7 76 kN"},
+    desc: "Long-standing eight-engine heavy strategic bomber. The workhorse of the US bomber fleet, slated to serve into the 2050s with ongoing engine upgrades.",
+    pros: ["Unmatched longevity and reliability", "Huge standoff weapons payload", "Global strike capability"],
+    cons: ["Slow and non-stealthy", "Requires massive runway", "Vulnerable without air superiority"]
+  },
+  {
+    name: "Tu-95 Bear",
+    origin: "Russia — Tupolev",
+    category: "Bomber",
+    img: "images/tu-95.jpg",
+    stats: {"Max Speed": "920 km/h", "Range": "15,000 km", "Payload": "15,000 kg", "Type": "Heavy Bomber"},
+    specs: {"Wingspan": "50.0 m", "Length": "46.2 m", "Height": "12.12 m", "MTOW": "188,000 kg", "Ceiling": "13,716 m", "First Flight": "1952", "Crew": "6-7", "Thrust": "4\u00d7 11,000 kW turboprops"},
+    desc: "The famous long-range, contra-rotating turboprop strategic bomber. One of the loudest combat aircraft ever built, carrying massive cruise missiles.",
+    pros: ["Extreme unrefueled range", "Efficient turboprop engines", "Reliable cruise missile carrier"],
+    cons: ["Incredibly loud", "Large radar cross section", "Very old airframe design"]
+  },
+  {
+    name: "Xian H-6",
+    origin: "China — Xi'an Aircraft Industrial",
+    category: "Bomber",
+    img: "images/xian-h6.jpg",
+    stats: {"Max Speed": "1,050 km/h", "Range": "6,000 km", "Payload": "12,000 kg", "Type": "Heavy Bomber"},
+    specs: {"Wingspan": "33.0 m", "Length": "34.8 m", "Height": "10.36 m", "MTOW": "95,000 kg", "Ceiling": "12,800 m", "First Flight": "1959", "Crew": "4", "Thrust": "2\u00d7 93.2 kN"},
+    desc: "Long-range strategic bomber platform (modernized into the H-6K/N variants). Originally based on the Tu-16, now upgraded for cruise missiles and anti-ship strikes.",
+    pros: ["Modernized avionics (K/N variants)", "Capable cruise missile carrier", "Large operational fleet"],
+    cons: ["Based on 1950s aerodynamic design", "Shorter range than US/Russian counterparts", "Limited payload capacity"]
+  }
+],
+"bombers-historical": [
+  {
+    name: "B-17 Flying Fortress",
+    origin: "United States — Boeing",
+    category: "Bomber",
+    img: "images/b-17.jpg",
+    stats: {"Max Speed": "462 km/h", "Range": "3,219 km", "Payload": "3,600 kg", "Type": "WWII Heavy Bomber"},
+    specs: {"Wingspan": "31.62 m", "Length": "22.66 m", "Height": "5.82 m", "MTOW": "29,700 kg", "Ceiling": "10,850 m", "First Flight": "1935", "Crew": "10", "Thrust": "4\u00d7 1,200 hp radials"},
+    desc: "The legendary four-engine heavy bomber of WWII. Famous for its daylight precision bombing campaigns over Europe and its rugged ability to sustain heavy damage.",
+    pros: ["Extremely rugged airframe", "Heavy defensive armament", "Iconic historical significance"],
+    cons: ["Obsolete by modern standards", "Slow cruising speed", "Vulnerable to modern AAA/SAMs"]
+  },
+  {
+    name: "B-29 Superfortress",
+    origin: "United States — Boeing",
+    category: "Bomber",
+    img: "images/b-29.jpg",
+    stats: {"Max Speed": "574 km/h", "Range": "5,230 km", "Payload": "9,000 kg", "Type": "WWII Heavy Bomber"},
+    specs: {"Wingspan": "43.05 m", "Length": "30.18 m", "Height": "8.45 m", "MTOW": "60,560 kg", "Ceiling": "9,710 m", "First Flight": "1942", "Crew": "11", "Thrust": "4\u00d7 2,200 hp radials"},
+    desc: "The most advanced bomber of WWII, featuring a pressurized cabin and remote-controlled gun turrets. Best known for the atomic bombings of Japan.",
+    pros: ["Pressurized cabin for high altitude", "Advanced fire-control system", "Massive payload for its era"],
+    cons: ["Engine fire issues (early models)", "Expensive development", "Obsolete"]
+  },
+  {
+    name: "Avro Lancaster",
+    origin: "United Kingdom — Avro",
+    category: "Bomber",
+    img: "images/lancaster.jpg",
+    stats: {"Max Speed": "454 km/h", "Range": "4,073 km", "Payload": "6,350 kg", "Type": "WWII Heavy Bomber"},
+    specs: {"Wingspan": "31.09 m", "Length": "21.11 m", "Height": "6.25 m", "MTOW": "30,844 kg", "Ceiling": "6,500 m", "First Flight": "1941", "Crew": "7", "Thrust": "4\u00d7 1,280 hp V12s"},
+    desc: "The RAF's principal heavy bomber of WWII. Famous for night bombing raids over Germany and specialized missions like the 'Dambusters' raid.",
+    pros: ["Unobstructed bomb bay", "Excellent payload-to-weight ratio", "Stable flying characteristics"],
+    cons: ["Lightly defended underneath", "Lower altitude than US bombers", "Obsolete"]
+  },
+  {
+    name: "B-25 Mitchell",
+    origin: "United States — North American",
+    category: "Bomber",
+    img: "images/b-25.jpg",
+    stats: {"Max Speed": "438 km/h", "Range": "2,170 km", "Payload": "1,360 kg", "Type": "WWII Medium Bomber"},
+    specs: {"Wingspan": "20.6 m", "Length": "16.1 m", "Height": "4.98 m", "MTOW": "15,876 kg", "Ceiling": "7,376 m", "First Flight": "1940", "Crew": "5", "Thrust": "2\u00d7 1,700 hp radials"},
+    desc: "A versatile twin-engine medium bomber, immortalized by the Doolittle Raid. Served in every theater of WWII.",
+    pros: ["Rugged and reliable", "Versatile across all theaters", "Heavy forward firepower in some variants"],
+    cons: ["Loud cabin", "Limited payload", "Obsolete"]
+  },
+  {
+    name: "Heinkel He 111",
+    origin: "Germany — Heinkel",
+    category: "Bomber",
+    img: "images/he-111.jpg",
+    stats: {"Max Speed": "440 km/h", "Range": "2,300 km", "Payload": "2,000 kg", "Type": "WWII Medium Bomber"},
+    specs: {"Wingspan": "22.6 m", "Length": "16.4 m", "Height": "4.0 m", "MTOW": "14,000 kg", "Ceiling": "6,500 m", "First Flight": "1935", "Crew": "5", "Thrust": "2\u00d7 1,340 hp V12s"},
+    desc: "The primary medium bomber of the Luftwaffe during the early stages of WWII. Famous for its distinctive glasshouse nose.",
+    pros: ["Excellent visibility for bombardier", "Stable bombing platform", "Rugged design"],
+    cons: ["Poor defensive armament", "Slow speed", "Obsolete"]
+  },
+  {
+    name: "Junkers Ju 87 Stuka",
+    origin: "Germany — Junkers",
+    category: "Bomber",
+    img: "images/ju-87.jpg",
+    stats: {"Max Speed": "390 km/h", "Range": "500 km", "Payload": "1,800 kg", "Type": "WWII Dive Bomber"},
+    specs: {"Wingspan": "13.8 m", "Length": "11.1 m", "Height": "3.9 m", "MTOW": "6,600 kg", "Ceiling": "7,300 m", "First Flight": "1935", "Crew": "2", "Thrust": "1\u00d7 1,184 hp V12"},
+    desc: "The infamous dive bomber of the Blitzkrieg. Known for its inverted gull wings and the terrifying wail of its 'Jericho Trumpet' sirens.",
+    pros: ["Incredible dive-bombing precision", "Psychological warfare (sirens)", "Sturdy construction"],
+    cons: ["Very slow and vulnerable", "Obsolete by mid-war",   },
+  {
+    name: "Fairey Swordfish",
+    origin: "United Kingdom — Fairey Aviation",
+    category: "Bomber",
+    img: "images/swordfish.jpg",
+    stats: {"Max Speed": "230 km/h", "Range": "846 km", "Payload": "730 kg", "Type": "WWII Torpedo Bomber"},
+    specs: {"Wingspan": "13.87 m", "Length": "10.87 m", "Height": "3.76 m", "MTOW": "3,410 kg", "Ceiling": "3,260 m", "First Flight": "1934", "Crew": "3", "Thrust": "1\u00d7 690 hp radial"},
+    desc: "A biplane torpedo bomber famously nicknamed the 'Stringbag'. Despite being obsolete at the start of WWII, it achieved spectacular successes, including crippling the Bismarck.",
+    pros: ["Incredible low-speed handling", "Rugged and reliable", "Could take off from small carrier decks"],
+    cons: ["Comically slow", "Unarmored and highly vulnerable", "Obsolete by WWII"]
+  }
+],
+
 
 // ---- PRIVATE / BUSINESS JETS ----
 "private-jets": [

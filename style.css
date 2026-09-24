@@ -686,3 +686,6 @@
     right: -1rem; /* Adjust for padding if needed */
   }
 }
+
+
+.sub-category-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: #111; margin: 3rem auto 1.5rem; text-align: center; font-weight: 700; width: 100%; max-width: 1200px; padding: 0 1.5rem; border-bottom: 2px solid rgba(0,0,0,0.05); padding-bottom: 0.5rem; }
