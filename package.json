@@ -1,0 +1,30 @@
+{
+  "name": "planes-website",
+  "version": "1.0.0",
+  "description": "An elegant, interactive aircraft encyclopedia featuring detailed 3D flip flashcards and specifications for over 40 aircraft across 8 categories:",
+  "main": "test.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atharav779-coder/Venkatesh.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/atharav779-coder/Venkatesh/issues"
+  },
+  "homepage": "https://github.com/atharav779-coder/Venkatesh#readme",
+  "devDependencies": {
+    "autoprefixer": "^10.6.1",
+    "postcss": "^8.5.28",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.3.1"
+  }
+}
