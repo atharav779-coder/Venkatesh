@@ -103,13 +103,7 @@ loader.load('/models/jet_engine/scene.gltf', (gltf) => {
     hoverGroup.add(model);
 
     // Part 2: Anime.js Continuous Vector Motion (Hovering)
-    animate(hoverGroup.position, {
-        y: '+=0.6',
-        duration: 2000,
-        direction: 'alternate',
-        loop: true,
-        ease: 'easeInOutSine'
-    });
+    
 
     animate(hoverGroup.rotation, {
         x: '+=0.05',
