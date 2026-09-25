@@ -59,13 +59,13 @@ const loader = new GLTFLoader();
 loader.load('/models/jet_engine/scene.gltf', (gltf) => {
     const model = gltf.scene;
     
-    // Scale slightly smaller as requested (10 instead of 14)
+    // Scale slightly smaller as requested (11)
     const box = new THREE.Box3().setFromObject(model);
     const center = box.getCenter(new THREE.Vector3());
     const size = box.getSize(new THREE.Vector3());
     const maxDim = Math.max(size.x, size.y, size.z);
     
-    const scale = 11 / maxDim; // Decreased size a bit
+    const scale = 11 / maxDim; 
     model.scale.setScalar(scale);
     model.position.sub(center.multiplyScalar(scale)); 
     
@@ -90,8 +90,9 @@ loader.load('/models/jet_engine/scene.gltf', (gltf) => {
     hoverGroup.add(model);
 
     // --- PRECISE BLADE TARGETING ---
-    // The previous algorithm selected the thin front cowl.
-    // The true rotating assembly (shaft + blades) is the one that spans deep into the engine.
+    // Attempt 1 hit the front lip (Z ~ 9).
+    // Attempt 2 hit the cone (Z ~ 66).
+    // The actual blades must be Object_1 (Z ~ 75.4)
     window.engineBlade = null;
     model.traverse((child) => {
         if (child.isMesh) {
@@ -99,17 +100,31 @@ loader.load('/models/jet_engine/scene.gltf', (gltf) => {
             const mSize = new THREE.Vector3();
             child.geometry.boundingBox.getSize(mSize);
             
-            // The shaft+blades assembly has a Z-length of roughly 66.8 
-            // and X/Y radius of roughly 28.8.
-            // We find the mesh with Z > 60 and Z < 70
-            if (mSize.z > 60 && mSize.z < 70 && mSize.x > 25 && mSize.x < 35) {
+            // Target Object_1 explicitly based on its unique Z size of 75.4
+            if (mSize.z > 70 && mSize.z < 80) {
                 window.engineBlade = child;
             }
         }
     });
 
-    // We know the engine is aligned along the Z axis from our previous analysis
     window.thrustAxis = 'z';
+
+    // --- GSAP SCROLL CHOREOGRAPHY ---
+    // The whole engine rotates slowly from left to right as you scroll down
+    const tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: "body",
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 1.5
+        }
+    });
+
+    tl.to(scrollGroup.rotation, {
+        y: Math.PI * 2, // Full rotation showing all sides
+        ease: "none"
+    }, 0);
+
 }, undefined, (error) => {
     console.error('Error loading GLTF:', error);
 });
@@ -126,7 +141,7 @@ window.addEventListener('resize', () => {
 function renderLoop() {
     requestAnimationFrame(renderLoop);
     
-    // Rotate ONLY the specific internal blade mesh, keeping the engine idle
+    // Rotate ONLY the specific internal blade mesh, keeping the engine and cone idle
     if (window.engineBlade) {
         window.engineBlade.rotation[window.thrustAxis] += 0.4; // Very fast spin
     }
