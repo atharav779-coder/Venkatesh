@@ -85,8 +85,8 @@ loader.load('/models/jet_engine/scene.gltf', (gltf) => {
     });
 
     // Idle static angle so we can see inside the engine beautifully
-    hoverGroup.rotation.y = Math.PI / 4;  // 45 degrees
-    hoverGroup.rotation.x = Math.PI / 12; // Slight tilt down
+    hoverGroup.rotation.y = Math.PI / 2; // Face directly at the user (or 0, depending on model)
+    hoverGroup.rotation.x = 0; // Perfectly level pitch
     hoverGroup.add(model);
 
     // --- GSAP SCROLL CHOREOGRAPHY ---
