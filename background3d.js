@@ -121,19 +121,13 @@ loader.load('/models/jet_engine/scene.gltf', (gltf) => {
         }
     });
 
-    // Sequence 1: Dive Bomb (Rotate 90 degrees down)
+    // Elegant 360-degree rotation across all 10 pages
+    // We do a full Math.PI * 2 (360 degrees) rotation on Y, plus a gentle X tilt
     tl.to(scrollGroup.rotation, {
-        z: -Math.PI / 2, // 90 degree dive
-        y: Math.PI / 4,
-        ease: "power2.inOut"
+        y: Math.PI * 2, // Full 360 degree spin showing every side
+        x: Math.PI / 8, // Gentle tilt up/down to see the contours
+        ease: "none"    // Keeps the scroll lock perfectly linear
     }, 0);
-
-    // Sequence 2: Fly off screen at the very bottom
-    tl.to(scrollGroup.position, {
-        y: -15, // Drop down off screen
-        x: -5,
-        ease: "power3.in"
-    }, 0.5); // Starts halfway through the scroll
 
 }, undefined, (error) => {
     console.error('Error loading GLTF:', error);
