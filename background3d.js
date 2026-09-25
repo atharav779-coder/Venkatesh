@@ -3,6 +3,8 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { animate } from 'animejs';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -19,6 +21,12 @@ const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 container.appendChild(renderer.domElement);
+
+// Photorealistic Studio Environment for ultra-realistic metal reflections
+const pmremGenerator = new THREE.PMREMGenerator( renderer );
+pmremGenerator.compileEquirectangularShader();
+scene.environment = pmremGenerator.fromScene( new RoomEnvironment(), 0.04 ).texture;
+
 
 // 2. Realism Upgrade: Lighting
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
@@ -68,7 +76,7 @@ loader.load('/models/jet_engine/scene.gltf', (gltf) => {
     const size = box.getSize(new THREE.Vector3());
     const maxDim = Math.max(size.x, size.y, size.z);
     
-    const scale = 5 / maxDim; // Normalize size
+    const scale = 9 / maxDim; // Significantly larger scale // Normalize size
     model.scale.setScalar(scale);
     model.position.sub(center.multiplyScalar(scale)); // Center it exactly
     
@@ -78,11 +86,12 @@ loader.load('/models/jet_engine/scene.gltf', (gltf) => {
             const oldMat = child.material;
             // Upgrade to a premium glossy/metal material
             child.material = new THREE.MeshPhysicalMaterial({
-                color: oldMat.color || 0xdddddd,
-                metalness: 0.8,
-                roughness: 0.2,
-                clearcoat: 1.0,
+                color: oldMat.color || 0xcccccc,
+                metalness: 1.0,           // 100% real metal
+                roughness: 0.15,          // Highly polished but realistic
+                clearcoat: 1.0,           // Extra layer of shine
                 clearcoatRoughness: 0.1,
+                envMapIntensity: 2.0,     // React strongly to the realistic studio lighting we added
                 side: THREE.DoubleSide
             });
         }
