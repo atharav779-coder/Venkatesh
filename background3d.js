@@ -51,7 +51,7 @@ const updateAssemblyPosition = () => {
     if (window.innerWidth < 768) {
         scrollGroup.position.set(0, 2, 0); 
     } else {
-        scrollGroup.position.set(3, 0, 0); 
+        scrollGroup.position.set(0, 0, 0); 
     }
 };
 updateAssemblyPosition();
@@ -89,8 +89,8 @@ loader.load('/models/jet_engine/scene.gltf', (gltf) => {
     });
 
     // Angle it dynamically to look cool
-    hoverGroup.rotation.y = -Math.PI / 6;
-    hoverGroup.rotation.x = Math.PI / 12;
+    hoverGroup.rotation.y = Math.PI / 2; // Face the intake forward
+    hoverGroup.rotation.x = 0; // Level it out
     hoverGroup.add(model);
 
     // Part 2: Anime.js Continuous Vector Motion (Hovering)
