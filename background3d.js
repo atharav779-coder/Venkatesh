@@ -76,7 +76,7 @@ loader.load('/models/jet_engine/scene.gltf', (gltf) => {
     const size = box.getSize(new THREE.Vector3());
     const maxDim = Math.max(size.x, size.y, size.z);
     
-    const scale = 9 / maxDim; // Significantly larger scale // Normalize size
+    const scale = 14 / maxDim; // MASSIVE scale
     model.scale.setScalar(scale);
     model.position.sub(center.multiplyScalar(scale)); // Center it exactly
     
@@ -101,6 +101,48 @@ loader.load('/models/jet_engine/scene.gltf', (gltf) => {
     hoverGroup.rotation.y = Math.PI / 2; // Face the intake forward
     hoverGroup.rotation.x = 0; // Level it out
     hoverGroup.add(model);
+    // --- BLADE ROTATION LOGIC ---
+    const allMeshes = [];
+    model.traverse((child) => {
+        if (child.isMesh) {
+            allMeshes.push(child);
+        }
+    });
+
+    // Find the largest mesh by bounding box volume (this is the outer casing)
+    let largestMesh = null;
+    let maxVolume = 0;
+    
+    allMeshes.forEach(mesh => {
+        mesh.geometry.computeBoundingBox();
+        const bbox = mesh.geometry.boundingBox;
+        const size = new THREE.Vector3();
+        bbox.getSize(size);
+        const volume = size.x * size.y * size.z;
+        if (volume > maxVolume) {
+            maxVolume = volume;
+            largestMesh = mesh;
+        }
+    });
+
+    // All meshes EXCEPT the largest one are internal parts (blades, shaft, cones).
+    // We will save them to rotate in the render loop.
+    window.engineBlades = allMeshes.filter(mesh => mesh !== largestMesh);
+    
+    // Determine the primary thrust axis (the longest dimension of the casing)
+    largestMesh.geometry.computeBoundingBox();
+    const casingSize = new THREE.Vector3();
+    largestMesh.geometry.boundingBox.getSize(casingSize);
+    
+    if (casingSize.z >= casingSize.x && casingSize.z >= casingSize.y) {
+        window.thrustAxis = 'z';
+    } else if (casingSize.y >= casingSize.x && casingSize.y >= casingSize.z) {
+        window.thrustAxis = 'y';
+    } else {
+        window.thrustAxis = 'x';
+    }
+    // ----------------------------
+
 
     // Part 2: Anime.js Continuous Vector Motion (Hovering)
     
@@ -147,6 +189,15 @@ window.addEventListener('resize', () => {
 // The High-Performance Loop
 function renderLoop() {
     requestAnimationFrame(renderLoop);
+    
+    // Rotate the internal blades!
+    if (window.engineBlades) {
+        window.engineBlades.forEach(blade => {
+            // Spin really fast to look like a running jet engine
+            blade.rotation[window.thrustAxis] += 0.2; 
+        });
+    }
     renderer.render(scene, camera);
+
 }
 renderLoop();
