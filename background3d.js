@@ -1,6 +1,10 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 // Clean up
 const container = document.getElementById('bg-canvas-container');
@@ -152,6 +156,23 @@ loader.load('/models/jet_engine/scene.gltf', (gltf) => {
     if (bestBlade) {
         window.engineBlade = bestBlade;
     }
+
+    // --- GSAP SCROLL CHOREOGRAPHY ---
+    // The whole engine rotates slowly from left to right as you scroll down
+    const tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: "body",
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 1.5
+        }
+    });
+
+    tl.to(scrollGroup.rotation, {
+        y: Math.PI * 2, // Full rotation showing all sides
+        ease: "none"
+    }, 0);
+
 
 }, undefined, (error) => {
     console.error('Error loading GLTF:', error);
