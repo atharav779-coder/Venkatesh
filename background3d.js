@@ -1,12 +1,6 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { animate } from 'animejs';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-
-
-gsap.registerPlugin(ScrollTrigger);
 
 // Clean up
 const container = document.getElementById('bg-canvas-container');
@@ -22,11 +16,10 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 container.appendChild(renderer.domElement);
 
-// Photorealistic Studio Environment for ultra-realistic metal reflections
+// Photorealistic Studio Environment
 const pmremGenerator = new THREE.PMREMGenerator( renderer );
 pmremGenerator.compileEquirectangularShader();
 scene.environment = pmremGenerator.fromScene( new RoomEnvironment(), 0.04 ).texture;
-
 
 // 2. Realism Upgrade: Lighting
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
@@ -36,31 +29,23 @@ const directionalLight = new THREE.DirectionalLight(0xffffff, 2.5);
 directionalLight.position.set(5, 10, 7);
 scene.add(directionalLight);
 
-// Glowing neon rim light (Cyan/Blue)
 const rimLight = new THREE.PointLight(0x00f0ff, 100, 50);
 rimLight.position.set(-5, 0, -5);
 scene.add(rimLight);
 
-// Warm orange engine/thruster light
 const engineLight = new THREE.PointLight(0xf97316, 100, 50);
 engineLight.position.set(5, -5, 5);
 scene.add(engineLight);
 
-// Animation Hierarchy Setup
-// We use nested groups to prevent Anime.js and GSAP from fighting over the same properties!
-const scrollGroup = new THREE.Group(); // GSAP controls this (Scroll)
+const scrollGroup = new THREE.Group(); 
 scene.add(scrollGroup);
 
-const hoverGroup = new THREE.Group(); // Anime.js controls this (Hovering)
+const hoverGroup = new THREE.Group(); 
 scrollGroup.add(hoverGroup);
 
-// Position based on screen size
+// Position centered
 const updateAssemblyPosition = () => {
-    if (window.innerWidth < 768) {
-        scrollGroup.position.set(0, 2, 0); 
-    } else {
-        scrollGroup.position.set(0, 0, 0); 
-    }
+    scrollGroup.position.set(0, 0, 0); 
 };
 updateAssemblyPosition();
 
@@ -70,38 +55,37 @@ const loader = new GLTFLoader();
 loader.load('/models/jet_engine/scene.gltf', (gltf) => {
     const model = gltf.scene;
     
-    // Automatically center and scale the loaded model so it perfectly fits the screen
+    // Scale slightly smaller as requested (10 instead of 14)
     const box = new THREE.Box3().setFromObject(model);
     const center = box.getCenter(new THREE.Vector3());
     const size = box.getSize(new THREE.Vector3());
     const maxDim = Math.max(size.x, size.y, size.z);
     
-    const scale = 14 / maxDim; // MASSIVE scale
+    const scale = 11 / maxDim; // Decreased size a bit
     model.scale.setScalar(scale);
-    model.position.sub(center.multiplyScalar(scale)); // Center it exactly
+    model.position.sub(center.multiplyScalar(scale)); 
     
-    // Realism Upgrade: Advanced Materials
     model.traverse((child) => {
         if (child.isMesh) {
             const oldMat = child.material;
-            // Upgrade to a premium glossy/metal material
             child.material = new THREE.MeshPhysicalMaterial({
                 color: oldMat.color || 0xcccccc,
-                metalness: 1.0,           // 100% real metal
-                roughness: 0.15,          // Highly polished but realistic
-                clearcoat: 1.0,           // Extra layer of shine
+                metalness: 1.0,           
+                roughness: 0.15,          
+                clearcoat: 1.0,           
                 clearcoatRoughness: 0.1,
-                envMapIntensity: 2.0,     // React strongly to the realistic studio lighting we added
+                envMapIntensity: 2.0,     
                 side: THREE.DoubleSide
             });
         }
     });
 
-    // Angle it dynamically to look cool
-    hoverGroup.rotation.y = Math.PI / 2; // Face the intake forward
-    hoverGroup.rotation.x = 0; // Level it out
+    // Idle static angle so we can see inside the engine beautifully
+    hoverGroup.rotation.y = Math.PI / 4;  // 45 degrees
+    hoverGroup.rotation.x = Math.PI / 12; // Slight tilt down
     hoverGroup.add(model);
-    // --- BLADE ROTATION LOGIC ---
+
+    // --- SMART BLADE DETECTION LOGIC ---
     const allMeshes = [];
     model.traverse((child) => {
         if (child.isMesh) {
@@ -109,76 +93,71 @@ loader.load('/models/jet_engine/scene.gltf', (gltf) => {
         }
     });
 
-    // Find the largest mesh by bounding box volume (this is the outer casing)
     let largestMesh = null;
     let maxVolume = 0;
     
+    // Find the outer casing (largest volume)
     allMeshes.forEach(mesh => {
         mesh.geometry.computeBoundingBox();
         const bbox = mesh.geometry.boundingBox;
-        const size = new THREE.Vector3();
-        bbox.getSize(size);
-        const volume = size.x * size.y * size.z;
+        const meshSize = new THREE.Vector3();
+        bbox.getSize(meshSize);
+        const volume = meshSize.x * meshSize.y * meshSize.z;
         if (volume > maxVolume) {
             maxVolume = volume;
             largestMesh = mesh;
         }
     });
 
-    // All meshes EXCEPT the largest one are internal parts (blades, shaft, cones).
-    // We will save them to rotate in the render loop.
-    window.engineBlades = allMeshes.filter(mesh => mesh !== largestMesh);
-    
-    // Determine the primary thrust axis (the longest dimension of the casing)
-    largestMesh.geometry.computeBoundingBox();
+    // Detect thrust axis based on the casing's longest dimension
     const casingSize = new THREE.Vector3();
     largestMesh.geometry.boundingBox.getSize(casingSize);
-    
-    if (casingSize.z >= casingSize.x && casingSize.z >= casingSize.y) {
-        window.thrustAxis = 'z';
-    } else if (casingSize.y >= casingSize.x && casingSize.y >= casingSize.z) {
-        window.thrustAxis = 'y';
-    } else {
-        window.thrustAxis = 'x';
-    }
-    // ----------------------------
+    let thrustAxis = 'z';
+    if (casingSize.x >= casingSize.y && casingSize.x >= casingSize.z) thrustAxis = 'x';
+    if (casingSize.y >= casingSize.x && casingSize.y >= casingSize.z) thrustAxis = 'y';
+    window.thrustAxis = thrustAxis;
 
+    // Detect the blades: they are usually thin disks.
+    // We calculate the ratio of thickness (along thrust axis) to radius (average of other two axes).
+    // The mesh with the lowest ratio is the most "disk-like" and is almost certainly the fan blade.
+    let bestBlade = null;
+    let lowestRatio = 9999;
 
-    // Part 2: Anime.js Continuous Vector Motion (Hovering)
-    
-
-    animate(hoverGroup.rotation, {
-        x: '+=0.05',
-        z: '+=0.02',
-        duration: 3000,
-        direction: 'alternate',
-        loop: true,
-        ease: 'easeInOutSine'
-    });
-
-    // Part 3: GSAP Scroll Choreography
-    const tl = gsap.timeline({
-        scrollTrigger: {
-            trigger: "body",
-            start: "top top",
-            end: "bottom bottom",
-            scrub: 1.5 // Smooth interpolation
+    allMeshes.forEach(mesh => {
+        if (mesh === largestMesh) return; // Skip casing
+        
+        const mSize = new THREE.Vector3();
+        mesh.geometry.boundingBox.getSize(mSize);
+        
+        let thickness, radius;
+        if (thrustAxis === 'z') {
+            thickness = mSize.z;
+            radius = (mSize.x + mSize.y) / 2;
+        } else if (thrustAxis === 'y') {
+            thickness = mSize.y;
+            radius = (mSize.x + mSize.z) / 2;
+        } else {
+            thickness = mSize.x;
+            radius = (mSize.y + mSize.z) / 2;
+        }
+        
+        const ratio = thickness / radius;
+        if (ratio < lowestRatio) {
+            lowestRatio = ratio;
+            bestBlade = mesh;
         }
     });
 
-    // Elegant 360-degree rotation across all 10 pages
-    // We do a full Math.PI * 2 (360 degrees) rotation on Y, plus a gentle X tilt
-    tl.to(scrollGroup.rotation, {
-        y: Math.PI * 2, // Full 360 degree spin showing every side
-        x: Math.PI / 8, // Gentle tilt up/down to see the contours
-        ease: "none"    // Keeps the scroll lock perfectly linear
-    }, 0);
+    // Save only the exact blade mesh for rotation
+    if (bestBlade) {
+        window.engineBlade = bestBlade;
+    }
 
 }, undefined, (error) => {
     console.error('Error loading GLTF:', error);
 });
 
-// Handle resizing dynamically
+// Handle resizing
 window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
@@ -190,14 +169,11 @@ window.addEventListener('resize', () => {
 function renderLoop() {
     requestAnimationFrame(renderLoop);
     
-    // Rotate the internal blades!
-    if (window.engineBlades) {
-        window.engineBlades.forEach(blade => {
-            // Spin really fast to look like a running jet engine
-            blade.rotation[window.thrustAxis] += 0.2; 
-        });
+    // Rotate ONLY the specific internal blade mesh, keeping the engine idle
+    if (window.engineBlade) {
+        window.engineBlade.rotation[window.thrustAxis] += 0.4; // Very fast spin
     }
+    
     renderer.render(scene, camera);
-
 }
 renderLoop();
