@@ -89,91 +89,27 @@ loader.load('/models/jet_engine/scene.gltf', (gltf) => {
     hoverGroup.rotation.x = Math.PI / 12; // Slight tilt down
     hoverGroup.add(model);
 
-    // --- SMART BLADE DETECTION LOGIC ---
-    const allMeshes = [];
+    // --- PRECISE BLADE TARGETING ---
+    // The previous algorithm selected the thin front cowl.
+    // The true rotating assembly (shaft + blades) is the one that spans deep into the engine.
+    window.engineBlade = null;
     model.traverse((child) => {
         if (child.isMesh) {
-            allMeshes.push(child);
+            child.geometry.computeBoundingBox();
+            const mSize = new THREE.Vector3();
+            child.geometry.boundingBox.getSize(mSize);
+            
+            // The shaft+blades assembly has a Z-length of roughly 66.8 
+            // and X/Y radius of roughly 28.8.
+            // We find the mesh with Z > 60 and Z < 70
+            if (mSize.z > 60 && mSize.z < 70 && mSize.x > 25 && mSize.x < 35) {
+                window.engineBlade = child;
+            }
         }
     });
 
-    let largestMesh = null;
-    let maxVolume = 0;
-    
-    // Find the outer casing (largest volume)
-    allMeshes.forEach(mesh => {
-        mesh.geometry.computeBoundingBox();
-        const bbox = mesh.geometry.boundingBox;
-        const meshSize = new THREE.Vector3();
-        bbox.getSize(meshSize);
-        const volume = meshSize.x * meshSize.y * meshSize.z;
-        if (volume > maxVolume) {
-            maxVolume = volume;
-            largestMesh = mesh;
-        }
-    });
-
-    // Detect thrust axis based on the casing's longest dimension
-    const casingSize = new THREE.Vector3();
-    largestMesh.geometry.boundingBox.getSize(casingSize);
-    let thrustAxis = 'z';
-    if (casingSize.x >= casingSize.y && casingSize.x >= casingSize.z) thrustAxis = 'x';
-    if (casingSize.y >= casingSize.x && casingSize.y >= casingSize.z) thrustAxis = 'y';
-    window.thrustAxis = thrustAxis;
-
-    // Detect the blades: they are usually thin disks.
-    // We calculate the ratio of thickness (along thrust axis) to radius (average of other two axes).
-    // The mesh with the lowest ratio is the most "disk-like" and is almost certainly the fan blade.
-    let bestBlade = null;
-    let lowestRatio = 9999;
-
-    allMeshes.forEach(mesh => {
-        if (mesh === largestMesh) return; // Skip casing
-        
-        const mSize = new THREE.Vector3();
-        mesh.geometry.boundingBox.getSize(mSize);
-        
-        let thickness, radius;
-        if (thrustAxis === 'z') {
-            thickness = mSize.z;
-            radius = (mSize.x + mSize.y) / 2;
-        } else if (thrustAxis === 'y') {
-            thickness = mSize.y;
-            radius = (mSize.x + mSize.z) / 2;
-        } else {
-            thickness = mSize.x;
-            radius = (mSize.y + mSize.z) / 2;
-        }
-        
-        const ratio = thickness / radius;
-        if (ratio < lowestRatio) {
-            lowestRatio = ratio;
-            bestBlade = mesh;
-        }
-    });
-
-    // Save only the exact blade mesh for rotation
-    if (bestBlade) {
-        window.engineBlade = bestBlade;
-    }
-
-    // --- GSAP SCROLL CHOREOGRAPHY ---
-    // The whole engine rotates slowly from left to right as you scroll down
-    const tl = gsap.timeline({
-        scrollTrigger: {
-            trigger: "body",
-            start: "top top",
-            end: "bottom bottom",
-            scrub: 1.5
-        }
-    });
-
-    tl.to(scrollGroup.rotation, {
-        y: Math.PI * 2, // Full rotation showing all sides
-        ease: "none"
-    }, 0);
-
-
+    // We know the engine is aligned along the Z axis from our previous analysis
+    window.thrustAxis = 'z';
 }, undefined, (error) => {
     console.error('Error loading GLTF:', error);
 });
