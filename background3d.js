@@ -89,26 +89,6 @@ loader.load('/models/jet_engine/scene.gltf', (gltf) => {
     hoverGroup.rotation.x = Math.PI / 12; // Slight tilt down
     hoverGroup.add(model);
 
-    // --- PRECISE BLADE TARGETING ---
-    // Attempt 1 hit the front lip (Z ~ 9).
-    // Attempt 2 hit the cone (Z ~ 66).
-    // The actual blades must be Object_1 (Z ~ 75.4)
-    window.engineBlade = null;
-    model.traverse((child) => {
-        if (child.isMesh) {
-            child.geometry.computeBoundingBox();
-            const mSize = new THREE.Vector3();
-            child.geometry.boundingBox.getSize(mSize);
-            
-            // Target Object_1 explicitly based on its unique Z size of 75.4
-            if (mSize.z > 70 && mSize.z < 80) {
-                window.engineBlade = child;
-            }
-        }
-    });
-
-    window.thrustAxis = 'z';
-
     // --- GSAP SCROLL CHOREOGRAPHY ---
     // The whole engine rotates slowly from left to right as you scroll down
     const tl = gsap.timeline({
@@ -140,11 +120,6 @@ window.addEventListener('resize', () => {
 // The High-Performance Loop
 function renderLoop() {
     requestAnimationFrame(renderLoop);
-    
-    // Rotate ONLY the specific internal blade mesh, keeping the engine and cone idle
-    if (window.engineBlade) {
-        window.engineBlade.rotation[window.thrustAxis] += 0.4; // Very fast spin
-    }
     
     renderer.render(scene, camera);
 }
