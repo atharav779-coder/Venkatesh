@@ -2039,6 +2039,8 @@
 }
 </script>
 <script>
+const detailData = JSON.parse(document.getElementById('detailDataObj').textContent);
+
 // ============ AIRCRAFT DATA ============
 const aircraft = {
 
@@ -3025,7 +3027,7 @@ document.querySelectorAll('.nav-links a').forEach(a => {
 
 
 // ============ DETAIL DATA ============
-const detailData = JSON.parse(document.getElementById('detailDataObj').textContent);
+
 
 function getDetailHTML(planeName, tab) {
   const data = detailData[planeName];
