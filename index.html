@@ -2979,14 +2979,63 @@ window.addEventListener('scroll', () => {
   document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 30);
 });
 
-// ============ ACTIVE CATEGORY NAV ============
-const catLinks = document.querySelectorAll('.cat-nav a');
-const sections = [...catLinks].map(a => document.querySelector(a.getAttribute('href')));
-window.addEventListener('scroll', () => {
-  let current = '';
-  sections.forEach(sec => {
-    if (sec && sec.getBoundingClientRect().top <= 180) current = sec.id;
+// ============ VIEW SWITCHER LOGIC ============
+const categoryLinks = document.querySelectorAll('.nav-links a, .cat-nav a');
+const allSections = document.querySelectorAll('.section');
+
+function switchView(targetId) {
+  // Hide all sections completely
+  allSections.forEach(sec => {
+    sec.style.display = 'none';
   });
+  
+  // Show only the target section
+  const targetSection = document.getElementById(targetId);
+  if (targetSection) {
+    targetSection.style.display = 'block';
+  }
+
+  // Update active styling on navigation buttons
+  categoryLinks.forEach(link => {
+    // Some links might not have an href, so guard it
+    const href = link.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      const linkTarget = href.substring(1);
+      if (linkTarget === targetId) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    }
+  });
+
+  // Smoothly scroll to the top of the content (just below the navbar)
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+  
+  // Dispatch resize event so GSAP ScrollTrigger recalculates the new page height
+  window.dispatchEvent(new Event('resize'));
+}
+
+// Attach click listeners to all category links
+categoryLinks.forEach(link => {
+  link.addEventListener('click', (event) => {
+    const href = link.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      event.preventDefault();
+      const targetId = href.substring(1); 
+      switchView(targetId);
+    }
+  });
+});
+
+// Default state: Show Commercial section when the page loads
+// We don't use DOMContentLoaded because the script is at the bottom of the body
+// so the DOM is already loaded. We just call it directly.
+switchView('commercial');
+
   catLinks.forEach(a => {
     a.classList.toggle('active', a.getAttribute('href') === `#${current}`);
   });
