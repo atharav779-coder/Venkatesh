@@ -3057,30 +3057,26 @@ function getDetailHTML(planeName, tab) {
   if (Array.isArray(tabData)) {
       let listHTML = tabData.map(item => `<li style="margin-bottom:8px;">${item}</li>`).join('');
       return `
-        <div class="flip-content-dynamic">
-          <h4>${tabTitle}</h4>
-          <ul style="text-align:left; color:#ccc; font-size:0.85rem; padding-left:1.2rem; margin-top:1rem;">
-            ${listHTML}
-          </ul>
-        </div>
+        <div class="dynamic-back-title">${tabTitle}</div>
+        <ul style="text-align:left; color:#ccc; font-size:0.85rem; padding-left:1.2rem; margin-top:1rem;">
+          ${listHTML}
+        </ul>
+        <div class="flip-back-hint" style="margin-top: 1.5rem;">Click to flip back</div>
       `;
   }
 
   // Handle if tabData is an object
   let gridHTML = Object.entries(tabData || {}).map(([k,v]) => `
     <div class="dynamic-item">
-      <div class="dyn-label">${k}</div>
-      <div class="dyn-value" style="font-size:0.85rem; line-height:1.4;">${v}</div>
+      <div class="d-label">${k}</div>
+      <div class="d-value" style="font-size:0.85rem; line-height:1.4;">${v}</div>
     </div>
   `).join('');
 
   return `
-    <div class="flip-content-dynamic">
-      <h4>${tabTitle}</h4>
-      <div class="dynamic-grid">
-        ${gridHTML}
-      </div>
-    </div>
+    <div class="dynamic-back-title">${tabTitle}</div>
+    <div class="dynamic-grid">${gridHTML}</div>
+    <div class="flip-back-hint" style="margin-top: 1.5rem;">Click to flip back</div>
   `;
 }
 </script>
