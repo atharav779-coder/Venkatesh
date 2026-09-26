@@ -2920,9 +2920,9 @@ function createCard(plane) {
           <div class="origin">${plane.origin}</div>
           <div class="card-stats">${statsHTML}</div>
           
-          <div class="card-buttons">
-            <button class="info-btn" data-tab="cabin">Cabin</button>
-            <button class="info-btn" data-tab="airframe">Airframe</button>
+                    <div class="card-buttons">
+            <button class="info-btn" data-tab="cabin">${(detailData[plane.name] && !detailData[plane.name].cabin && detailData[plane.name].keyFeatures) ? "Features" : "Cabin"}</button>
+            <button class="info-btn" data-tab="airframe">${(detailData[plane.name] && !detailData[plane.name].airframe) ? "History" : "Airframe"}</button>
             <button class="info-btn" data-tab="performance">Performance</button>
           </div>
         </div>
@@ -3032,21 +3032,55 @@ function getDetailHTML(planeName, tab) {
   if (!data) return `<p>Data coming soon</p>`;
   
   let tabData, tabTitle;
-  if (tab === 'cabin') { tabData = data.cabin; tabTitle = 'Cabin & Pax Experience'; }
-  else if (tab === 'airframe') { tabData = data.airframe; tabTitle = 'Airframe & Engine'; }
-  else { tabData = data.performance; tabTitle = 'Performance & Load'; }
+  if (tab === 'cabin') { 
+      tabData = data.cabin || data.keyFeatures || {'Info': 'No cabin data'}; 
+      tabTitle = data.cabin ? 'Cabin & Pax Experience' : (data.keyFeatures ? 'Key Features' : 'Details'); 
+  }
+  else if (tab === 'airframe') { 
+      if (data.airframe) {
+          tabData = data.airframe;
+          tabTitle = 'Airframe & Engine';
+      } else {
+          // Fallback to history and description
+          tabData = {};
+          if (data.history) tabData['History'] = Array.isArray(data.history) ? data.history.join('<br>') : data.history;
+          if (data.description) tabData['Overview'] = data.description;
+          tabTitle = 'History & Overview';
+      }
+  }
+  else { 
+      tabData = data.performance || {'Info': 'No performance data'}; 
+      tabTitle = 'Performance & Load'; 
+  }
 
-  let gridHTML = Object.entries(tabData).map(([k,v]) => `
+  // Handle if tabData is an array directly (like keyFeatures)
+  if (Array.isArray(tabData)) {
+      let listHTML = tabData.map(item => `<li style="margin-bottom:8px;">${item}</li>`).join('');
+      return `
+        <div class="flip-content-dynamic">
+          <h4>${tabTitle}</h4>
+          <ul style="text-align:left; color:#ccc; font-size:0.85rem; padding-left:1.2rem; margin-top:1rem;">
+            ${listHTML}
+          </ul>
+        </div>
+      `;
+  }
+
+  // Handle if tabData is an object
+  let gridHTML = Object.entries(tabData || {}).map(([k,v]) => `
     <div class="dynamic-item">
-      <div class="d-label">${k}</div>
-      <div class="d-value">${v}</div>
+      <div class="dyn-label">${k}</div>
+      <div class="dyn-value" style="font-size:0.85rem; line-height:1.4;">${v}</div>
     </div>
   `).join('');
 
   return `
-    <div class="dynamic-back-title">${tabTitle}</div>
-    <div class="dynamic-grid">${gridHTML}</div>
-    <div class="flip-back-hint" style="margin-top: 1.5rem;">Click to flip back</div>
+    <div class="flip-content-dynamic">
+      <h4>${tabTitle}</h4>
+      <div class="dynamic-grid">
+        ${gridHTML}
+      </div>
+    </div>
   `;
 }
 </script>
