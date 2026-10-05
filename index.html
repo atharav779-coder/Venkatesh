@@ -1058,7 +1058,6 @@
       "Disc Loading": "129 kg/m2"
     }
   },
-
   "Aero L-39 Albatros": {
     "cabin": {
       "Cockpit Type": "Tandem two-seat",
@@ -2035,6 +2034,126 @@
       "Could take off from small carrier decks",
       "Additional variants and upgrades continue to define its role."
     ]
+  },
+  "Boeing 737 MAX": {
+    "keyFeatures": [
+      "Highly fuel efficient",
+      "Commonality with older 737s",
+      "Modern Sky Interior"
+    ],
+    "description": "The 737 MAX is the fourth generation of the Boeing 737, featuring larger, more efficient CFM LEAP-1B engines and advanced winglets.",
+    "history": "The Boeing 737 MAX is a prominent commercial aircraft manufactured in United States. It first flew in 2016.",
+    "performance": {
+      "Max Speed": "839 km/h",
+      "Range": "6,570 km",
+      "Ceiling": "12,500 m",
+      "MTOW": "82,190 kg"
+    }
+  },
+  "Airbus A330neo": {
+    "keyFeatures": [
+      "Cost-effective for airlines",
+      "Quiet and comfortable cabin",
+      "Excellent range for medium-to-long haul"
+    ],
+    "description": "The A330neo is a wide-body airliner developed by Airbus from the original A330. It uses larger, more efficient Rolls-Royce Trent 7000 engines.",
+    "history": "The Airbus A330neo is a prominent commercial aircraft manufactured in Europe. It first flew in 2017.",
+    "performance": {
+      "Max Speed": "860 km/h",
+      "Range": "13,334 km",
+      "Ceiling": "12,634 m",
+      "MTOW": "251,000 kg"
+    }
+  },
+  "McDonnell Douglas DC-10": {
+    "keyFeatures": [
+      "Iconic trijet design",
+      "Large passenger capacity",
+      "Versatile payload capability"
+    ],
+    "description": "A legendary trijet wide-body airliner. It was heavily used in the 1970s and 80s before mostly being converted to freighters.",
+    "history": "The McDonnell Douglas DC-10 is a prominent commercial aircraft manufactured in United States. It first flew in 1970.",
+    "performance": {
+      "Max Speed": "908 km/h",
+      "Range": "9,600 km",
+      "Ceiling": "12,800 m",
+      "MTOW": "259,450 kg"
+    }
+  },
+  "Antonov An-124 Ruslan": {
+    "keyFeatures": [
+      "Massive payload capacity",
+      "Drive-through loading (nose and tail)",
+      "Can operate from unpaved runways"
+    ],
+    "description": "A heavy strategic military transport aircraft, often used for outsized civilian cargo. It remains the world's largest production transport airplane.",
+    "history": "The Antonov An-124 Ruslan is a prominent cargo aircraft manufactured in Soviet Union / Ukraine. It first flew in 1982.",
+    "performance": {
+      "Max Speed": "865 km/h",
+      "Range": "5,200 km (with payload)",
+      "Ceiling": "11,600 m",
+      "MTOW": "402,000 kg"
+    }
+  },
+  "Boeing 767-300F": {
+    "keyFeatures": [
+      "Very reliable",
+      "Efficient for medium-haul cargo",
+      "Excellent dispatch reliability"
+    ],
+    "description": "A very popular medium wide-body freighter heavily utilized by parcel delivery companies like FedEx, UPS, and DHL.",
+    "history": "The Boeing 767-300F is a prominent cargo aircraft manufactured in United States. It first flew in 1995 (Freighter).",
+    "performance": {
+      "Max Speed": "850 km/h",
+      "Range": "6,025 km",
+      "Ceiling": "13,100 m",
+      "MTOW": "186,880 kg"
+    }
+  },
+  "Ilyushin Il-76": {
+    "keyFeatures": [
+      "Rugged and durable",
+      "Excellent short/rough field performance",
+      "Highly versatile for military/civilian use"
+    ],
+    "description": "A multi-purpose four-engine strategic airlifter designed to deliver heavy machinery to remote, poorly serviced areas.",
+    "history": "The Ilyushin Il-76 is a prominent military transport aircraft manufactured in Soviet Union / Russia. It first flew in 1971.",
+    "performance": {
+      "Max Speed": "900 km/h",
+      "Range": "4,400 km",
+      "Ceiling": "13,000 m",
+      "MTOW": "195,000 kg"
+    }
+  },
+  "Kawasaki C-2": {
+    "keyFeatures": [
+      "High cruising speed",
+      "Modern glass cockpit",
+      "Excellent short-takeoff performance"
+    ],
+    "description": "A modern, mid-size twin-turbofan military transport aircraft developed for the Japan Air Self-Defense Force (JASDF).",
+    "history": "The Kawasaki C-2 is a prominent military transport aircraft manufactured in Japan. It first flew in 2010.",
+    "performance": {
+      "Max Speed": "917 km/h",
+      "Range": "7,600 km",
+      "Ceiling": "12,200 m",
+      "MTOW": "141,400 kg"
+    }
+  },
+  "Embraer C-390 Millennium": {
+    "keyFeatures": [
+      "Faster than turboprops (C-130)",
+      "Fly-by-wire technology",
+      "Versatile multi-mission capability"
+    ],
+    "description": "A medium-size, twin-engine jet-powered military transport designed to compete with the legendary C-130 Hercules.",
+    "history": "The Embraer C-390 Millennium is a prominent military transport aircraft manufactured in Brazil. It first flew in 2015.",
+    "performance": {
+      "Max Speed": "988 km/h",
+      "Range": "5,820 km",
+      "Ceiling": "11,000 m",
+      "MTOW": "86,999 kg"
+    }
   }
 }
 </script>
@@ -2046,6 +2165,39 @@ const aircraft = {
 
 // ---- COMMERCIAL ----
 commercial: [
+  {
+    name: "Boeing 737 MAX",
+    origin: "United States - Boeing",
+    category: "Commercial",
+    img: "https://upload.wikimedia.org/wikipedia/commons/3/32/Alaska_737_Max_9.jpg",
+    stats: { "Max Speed": "839 km/h", "Range": "6,570 km", "Passengers": "210", "Engines": "2x LEAP-1B" },
+    specs: { "Wingspan": "35.92 m", "Length": "39.47 m", "Height": "12.3 m", "MTOW": "82,190 kg", "Ceiling": "12,500 m", "First Flight": "2016", "Crew": "2 pilots", "Thrust": "2x 130 kN" },
+    desc: "The 737 MAX is the fourth generation of the Boeing 737, featuring larger, more efficient CFM LEAP-1B engines and advanced winglets.",
+    pros: ["Highly fuel efficient", "Commonality with older 737s", "Modern Sky Interior"],
+    cons: ["Troubled safety history initially", "Narrow-body limits cargo", "Cramped high-density seating"]
+  },
+  {
+    name: "Airbus A330neo",
+    origin: "Europe - Airbus",
+    category: "Commercial",
+    img: "https://upload.wikimedia.org/wikipedia/commons/c/c0/Airbus_A330neo_F-WTTN_37.jpg",
+    stats: { "Max Speed": "860 km/h", "Range": "13,334 km", "Passengers": "287", "Engines": "2x Trent 7000" },
+    specs: { "Wingspan": "64.0 m", "Length": "58.82 m", "Height": "17.39 m", "MTOW": "251,000 kg", "Ceiling": "12,634 m", "First Flight": "2017", "Crew": "2 pilots", "Thrust": "2x 316 kN" },
+    desc: "The A330neo is a wide-body airliner developed by Airbus from the original A330. It uses larger, more efficient Rolls-Royce Trent 7000 engines.",
+    pros: ["Cost-effective for airlines", "Quiet and comfortable cabin", "Excellent range for medium-to-long haul"],
+    cons: ["Not as fast as the 787", "Older underlying airframe design", "Slower cruising speed"]
+  },
+  {
+    name: "McDonnell Douglas DC-10",
+    origin: "United States - McDonnell Douglas",
+    category: "Commercial",
+    img: "https://upload.wikimedia.org/wikipedia/commons/d/d9/Continental_Airlines_DC-10.jpg",
+    stats: { "Max Speed": "908 km/h", "Range": "9,600 km", "Passengers": "380", "Engines": "3x CF6" },
+    specs: { "Wingspan": "50.4 m", "Length": "55.5 m", "Height": "17.7 m", "MTOW": "259,450 kg", "Ceiling": "12,800 m", "First Flight": "1970", "Crew": "3 (incl. flight engineer)", "Thrust": "3x 226 kN" },
+    desc: "A legendary trijet wide-body airliner. It was heavily used in the 1970s and 80s before mostly being converted to freighters.",
+    pros: ["Iconic trijet design", "Large passenger capacity", "Versatile payload capability"],
+    cons: ["Requires flight engineer", "Outdated avionics", "High fuel consumption by modern standards"]
+  },
   {
     name: "Boeing 747-8",
     origin: "United States — Boeing",
@@ -2574,6 +2726,28 @@ commercial: [
 // ---- CARGO ----
 cargo: [
   {
+    name: "Antonov An-124 Ruslan",
+    origin: "Soviet Union / Ukraine - Antonov",
+    category: "Cargo",
+    img: "https://upload.wikimedia.org/wikipedia/commons/b/b6/%D0%90%D0%BD%D1%82%D0%BE%D0%BD%D0%BE%D0%B2_%D0%90%D0%BD-124_9773054055093%2C_%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0_-_%D0%94%D0%BE%D0%BC%D0%BE%D0%B4%D0%B5%D0%B4%D0%BE%D0%B2%D0%BE_RP2297.jpg",
+    stats: { "Max Speed": "865 km/h", "Range": "5,200 km (with payload)", "Payload": "150,000 kg", "Engines": "4x D-18T" },
+    specs: { "Wingspan": "73.3 m", "Length": "68.96 m", "Height": "20.78 m", "MTOW": "402,000 kg", "Ceiling": "11,600 m", "First Flight": "1982", "Crew": "4 to 6", "Thrust": "4x 229.5 kN" },
+    desc: "A heavy strategic military transport aircraft, often used for outsized civilian cargo. It remains the world's largest production transport airplane.",
+    pros: ["Massive payload capacity", "Drive-through loading (nose and tail)", "Can operate from unpaved runways"],
+    cons: ["High maintenance cost", "Aging fleet", "Complex loading procedures"]
+  },
+  {
+    name: "Boeing 767-300F",
+    origin: "United States - Boeing",
+    category: "Cargo",
+    img: "https://upload.wikimedia.org/wikipedia/commons/4/43/Delta_Air_Lines_B767-332_N130DL.jpg",
+    stats: { "Max Speed": "850 km/h", "Range": "6,025 km", "Payload": "52,700 kg", "Engines": "2x GE CF6 / PW4000" },
+    specs: { "Wingspan": "47.57 m", "Length": "54.94 m", "Height": "15.85 m", "MTOW": "186,880 kg", "Ceiling": "13,100 m", "First Flight": "1995 (Freighter)", "Crew": "2 pilots", "Thrust": "2x 268 kN" },
+    desc: "A very popular medium wide-body freighter heavily utilized by parcel delivery companies like FedEx, UPS, and DHL.",
+    pros: ["Very reliable", "Efficient for medium-haul cargo", "Excellent dispatch reliability"],
+    cons: ["Smaller volume than 777F", "Older flight deck design", "Limited heavy-lift capability"]
+  },
+  {
     name: "Antonov An-225 Mriya",
     origin: "Ukraine — Antonov",
     category: "Cargo",
@@ -2621,6 +2795,39 @@ cargo: [
 
 // ---- MILITARY TRANSPORT ----
 military: [
+  {
+    name: "Ilyushin Il-76",
+    origin: "Soviet Union / Russia - Ilyushin",
+    category: "Military Transport",
+    img: "https://upload.wikimedia.org/wikipedia/commons/5/5a/Il-76MD-90A_RF-78653.jpg",
+    stats: { "Max Speed": "900 km/h", "Range": "4,400 km", "Payload": "50,000 kg", "Engines": "4x D-30KP" },
+    specs: { "Wingspan": "50.5 m", "Length": "46.59 m", "Height": "14.76 m", "MTOW": "195,000 kg", "Ceiling": "13,000 m", "First Flight": "1971", "Crew": "5", "Thrust": "4x 117.7 kN" },
+    desc: "A multi-purpose four-engine strategic airlifter designed to deliver heavy machinery to remote, poorly serviced areas.",
+    pros: ["Rugged and durable", "Excellent short/rough field performance", "Highly versatile for military/civilian use"],
+    cons: ["Loud and inefficient older engines", "Requires large flight crew", "Outdated avionics on older models"]
+  },
+  {
+    name: "Kawasaki C-2",
+    origin: "Japan - Kawasaki Aerospace",
+    category: "Military Transport",
+    img: "https://upload.wikimedia.org/wikipedia/commons/4/47/JASDF_C-2_fly_over_at_Miho_Air_Base.jpg",
+    stats: { "Max Speed": "917 km/h", "Range": "7,600 km", "Payload": "37,600 kg", "Engines": "2x GE CF6" },
+    specs: { "Wingspan": "44.4 m", "Length": "43.9 m", "Height": "14.2 m", "MTOW": "141,400 kg", "Ceiling": "12,200 m", "First Flight": "2010", "Crew": "3", "Thrust": "2x 266 kN" },
+    desc: "A modern, mid-size twin-turbofan military transport aircraft developed for the Japan Air Self-Defense Force (JASDF).",
+    pros: ["High cruising speed", "Modern glass cockpit", "Excellent short-takeoff performance"],
+    cons: ["High development cost", "Lower payload than C-17", "Limited export success"]
+  },
+  {
+    name: "Embraer C-390 Millennium",
+    origin: "Brazil - Embraer",
+    category: "Military Transport",
+    img: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Embraer_KC-390%2C_Paris_Air_Show_2019%2C_Le_Bourget_%28SIAE0824%29.jpg",
+    stats: { "Max Speed": "988 km/h", "Range": "5,820 km", "Payload": "26,000 kg", "Engines": "2x IAE V2500" },
+    specs: { "Wingspan": "35.05 m", "Length": "35.20 m", "Height": "11.84 m", "MTOW": "86,999 kg", "Ceiling": "11,000 m", "First Flight": "2015", "Crew": "2", "Thrust": "2x 139.4 kN" },
+    desc: "A medium-size, twin-engine jet-powered military transport designed to compete with the legendary C-130 Hercules.",
+    pros: ["Faster than turboprops (C-130)", "Fly-by-wire technology", "Versatile multi-mission capability"],
+    cons: ["Unproven over long lifespan", "Smaller payload than strategic airlifters", "Cannot match C-130's extreme dirt strip capability"]
+  },
   {
     name: "Boeing C-17 Globemaster III",
     origin: "United States — Boeing",
