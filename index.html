@@ -1,5 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<!-- 
+========================================================================================
+   [ START ]: HTML HEAD & METADATA
+   [ DESC ]: Contains title, fonts, external CSS, and meta tags.
+========================================================================================
+-->
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,7 +14,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;900&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./style.css" />
 </head>
+<!-- 
+========================================================================================
+   [ END ]: HTML HEAD & METADATA
+========================================================================================
+-->
+
 <body>
+<!-- 
+========================================================================================
+   [ START ]: HTML LAYOUT & UI
+   [ DESC ]: Contains the visual layout: Navbar, Hero section, and Category Grids.
+========================================================================================
+-->
+
 
 <!-- Background layers -->
 <div id="bg-canvas-container"></div>
@@ -199,6 +219,12 @@
   <div class="card-grid" id="grid-seaplanes"></div>
 </section>
 
+
+<!-- 
+========================================================================================
+   [ END ]: HTML LAYOUT & UI
+========================================================================================
+-->
 <!-- ===== FOOTER ===== -->
 <footer>
   <div class="logo-foot">SKYVAULT</div>
@@ -208,6 +234,13 @@
 <!-- ============================================================
      JAVASCRIPT — DATA + RENDERING
      ============================================================ -->
+
+<!-- 
+========================================================================================
+   [ START ]: JSON DATABASE
+   [ DESC ]: Massive JSON object containing deep details (Cabin, Airframe, History) for Flashcards.
+========================================================================================
+-->
 <script type="application/json" id="detailDataObj">
 {
   "Boeing 747-8": {
@@ -2156,9 +2189,23 @@
     }
   }
 }
+
 </script>
+<!-- 
+========================================================================================
+   [ END ]: JSON DATABASE
+========================================================================================
+-->
+
 <script>
 const detailData = JSON.parse(document.getElementById('detailDataObj').textContent);
+/* 
+========================================================================================
+   [ START ]: JAVASCRIPT AIRCRAFT ARRAYS
+   [ DESC ]: Contains the frontend arrays for each category (Commercial, Fighter Jets, etc.) that populate the grid cards.
+========================================================================================
+*/
+
 
 // ============ AIRCRAFT DATA ============
 const aircraft = {
@@ -3086,6 +3133,19 @@ seaplanes: [
 ]
 };
 
+
+/* 
+========================================================================================
+   [ END ]: JAVASCRIPT AIRCRAFT ARRAYS
+========================================================================================
+*/
+
+/* 
+========================================================================================
+   [ START ]: JAVASCRIPT CORE LOGIC
+   [ DESC ]: Contains the rendering logic (createCard), scroll observers, search functions, and UI interaction.
+========================================================================================
+*/
 // ============ RENDER CARDS ============
 function createCard(plane) {
   const statsHTML = Object.entries(plane.stats).map(([k,v]) =>
@@ -3290,6 +3350,13 @@ function getDetailHTML(planeName, tab) {
     <div class="flip-back-hint" style="margin-top: 1.5rem;">Click to flip back</div>
   `;
 }
+
+/* 
+========================================================================================
+   [ END ]: JAVASCRIPT CORE LOGIC
+========================================================================================
+*/
+
 </script>
 
 
@@ -3299,6 +3366,13 @@ function getDetailHTML(planeName, tab) {
 
 
 
+
+<!-- 
+========================================================================================
+   [ START ]: EXTERNAL SCRIPTS
+   [ DESC ]: Contains the SkyGuide AI widget and external 3D/Chat module links.
+========================================================================================
+-->
 <!-- ===== SKYGUIDE AI WIDGET ===== -->
 <div id="ai-widget-container">
   <button id="ai-toggle-btn">
