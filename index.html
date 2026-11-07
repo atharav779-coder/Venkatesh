@@ -3275,10 +3275,70 @@ function createCard(plane) {
   return fc;
 }
 
-// Populate all grids
+// Populate all grids with Carousel Mode & Expand-to-Grid Toggle
 Object.entries(aircraft).forEach(([key, planes]) => {
   const grid = document.getElementById(`grid-${key}`);
-  if (grid) planes.forEach(p => grid.appendChild(createCard(p)));
+  if (!grid) return;
+
+  // 1. Populate cards
+  planes.forEach(p => grid.appendChild(createCard(p)));
+
+  // 2. Default to Carousel mode
+  grid.classList.add('carousel-mode');
+
+  // 3. Create category toolbar
+  const toolbar = document.createElement('div');
+  toolbar.className = 'category-toolbar';
+  toolbar.innerHTML = `
+    <span class="carousel-count-badge">${planes.length} Aircraft</span>
+    <div class="carousel-actions">
+      <button class="carousel-arrow-btn prev-btn" aria-label="Previous aircraft" title="Scroll left">‹</button>
+      <button class="carousel-arrow-btn next-btn" aria-label="Next aircraft" title="Scroll right">›</button>
+      <button class="view-toggle-btn" aria-label="Toggle view">
+        <span class="btn-icon">⊞</span> <span class="btn-text">View All as Grid</span>
+      </button>
+    </div>
+  `;
+
+  // Insert toolbar right before the grid
+  grid.parentNode.insertBefore(toolbar, grid);
+
+  // Arrow navigation
+  const prevBtn = toolbar.querySelector('.prev-btn');
+  const nextBtn = toolbar.querySelector('.next-btn');
+  const toggleBtn = toolbar.querySelector('.view-toggle-btn');
+  const btnIcon = toolbar.querySelector('.btn-icon');
+  const btnText = toolbar.querySelector('.btn-text');
+
+  prevBtn.addEventListener('click', () => {
+    grid.scrollBy({ left: -370, behavior: 'smooth' });
+  });
+
+  nextBtn.addEventListener('click', () => {
+    grid.scrollBy({ left: 370, behavior: 'smooth' });
+  });
+
+  // Toggle Grid / Carousel view
+  toggleBtn.addEventListener('click', () => {
+    const isCarousel = grid.classList.contains('carousel-mode');
+    if (isCarousel) {
+      grid.classList.remove('carousel-mode');
+      grid.classList.add('grid-mode');
+      toggleBtn.classList.add('is-grid');
+      btnIcon.textContent = '↔';
+      btnText.textContent = 'Carousel View';
+      prevBtn.style.display = 'none';
+      nextBtn.style.display = 'none';
+    } else {
+      grid.classList.remove('grid-mode');
+      grid.classList.add('carousel-mode');
+      toggleBtn.classList.remove('is-grid');
+      btnIcon.textContent = '⊞';
+      btnText.textContent = 'View All as Grid';
+      prevBtn.style.display = '';
+      nextBtn.style.display = '';
+    }
+  });
 });
 
 // ============ SCROLL REVEAL ============
@@ -3309,14 +3369,24 @@ window.addEventListener('scroll', () => {
 // ============ SEARCH FUNCTIONALITY ============
 const searchInput = document.getElementById('searchInput');
 searchInput.addEventListener('input', (e) => {
-  const term = e.target.value.toLowerCase();
+  const term = e.target.value.toLowerCase().trim();
   const allCards = document.querySelectorAll('.flashcard');
   const sections = document.querySelectorAll('.section');
+  const allGrids = document.querySelectorAll('.card-grid');
   
+  // Switch to grid layout when searching so matching planes are laid out cleanly
+  allGrids.forEach(g => {
+    if (term.length > 0) {
+      g.classList.add('search-active');
+    } else {
+      g.classList.remove('search-active');
+    }
+  });
+
   allCards.forEach(card => {
     const text = card.innerText.toLowerCase();
     if (text.includes(term)) {
-      card.style.display = 'block';
+      card.style.display = '';
     } else {
       card.style.display = 'none';
     }
