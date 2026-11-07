@@ -21,6 +21,7 @@
 -->
 
 <body>
+  <div id="scrollProgressBar"></div>
 <!-- 
 ========================================================================================
    [ START ]: HTML LAYOUT & UI
@@ -3183,6 +3184,9 @@ function createCard(plane) {
         <div class="card-img-wrap">
           <img src="${plane.img}" alt="${plane.name}" loading="lazy" />
           <span class="card-category">${plane.category}</span>
+          <div class="card-top-actions">
+            <button class="compare-pill-btn" data-plane="${plane.name}">⚖ Compare</button>
+          </div>
         </div>
         <div class="card-body">
           <h3>${plane.name}</h3>
@@ -3203,6 +3207,15 @@ function createCard(plane) {
 
   const backEl = fc.querySelector('.flashcard-back');
   
+  // Handle compare button click
+  const cmpBtn = fc.querySelector('.compare-pill-btn');
+  if (cmpBtn) {
+    cmpBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleCompare(plane);
+    });
+  }
+
   // Handle clicks on the buttons
   const btns = fc.querySelectorAll('.info-btn');
   btns.forEach(btn => {
@@ -3351,6 +3364,151 @@ function getDetailHTML(planeName, tab) {
   `;
 }
 
+
+// ============ AIRCRAFT COMPARISON & INTERACTIVE HUD ============
+let compareList = [];
+
+function toggleCompare(plane) {
+  const idx = compareList.findIndex(p => p.name === plane.name);
+  if (idx > -1) {
+    compareList.splice(idx, 1);
+  } else {
+    if (compareList.length >= 2) {
+      compareList.shift();
+    }
+    compareList.push(plane);
+  }
+  updateCompareTray();
+  updateCompareButtons();
+}
+
+function updateCompareButtons() {
+  document.querySelectorAll('.compare-pill-btn').forEach(btn => {
+    const pName = btn.getAttribute('data-plane');
+    const isSelected = compareList.some(p => p.name === pName);
+    btn.classList.toggle('active', isSelected);
+    btn.innerHTML = isSelected ? '✓ Selected' : '⚖ Compare';
+  });
+}
+
+function updateCompareTray() {
+  const tray = document.getElementById('compareTray');
+  const slot1 = document.getElementById('traySlot1');
+  const slot2 = document.getElementById('traySlot2');
+  const launchBtn = document.getElementById('launchCompareBtn');
+  if (!tray || !slot1 || !slot2 || !launchBtn) return;
+
+  if (compareList.length === 0) {
+    tray.classList.add('hidden');
+    return;
+  }
+
+  tray.classList.remove('hidden');
+
+  if (compareList[0]) {
+    slot1.textContent = compareList[0].name;
+    slot1.classList.add('filled');
+  } else {
+    slot1.innerHTML = '<span class="slot-empty">+ Plane 1</span>';
+    slot1.classList.remove('filled');
+  }
+
+  if (compareList[1]) {
+    slot2.textContent = compareList[1].name;
+    slot2.classList.add('filled');
+  } else {
+    slot2.innerHTML = '<span class="slot-empty">+ Plane 2</span>';
+    slot2.classList.remove('filled');
+  }
+
+  launchBtn.disabled = compareList.length < 2;
+}
+
+function openCompareModal() {
+  if (compareList.length < 2) return;
+  const [p1, p2] = compareList;
+  const body = document.getElementById('compareBody');
+  if (!body) return;
+
+  const allKeys = new Set([
+    ...Object.keys(p1.stats || {}),
+    ...Object.keys(p2.stats || {}),
+    ...Object.keys(p1.specs || {}),
+    ...Object.keys(p2.specs || {})
+  ]);
+
+  let rowsHTML = '';
+  allKeys.forEach(k => {
+    const v1 = (p1.stats && p1.stats[k]) || (p1.specs && p1.specs[k]) || '—';
+    const v2 = (p2.stats && p2.stats[k]) || (p2.specs && p2.specs[k]) || '—';
+    rowsHTML += `
+      <div class="compare-stat-row">
+        <span class="compare-stat-val" style="color:#c2410c;">${v1}</span>
+        <span class="compare-stat-name">${k}</span>
+        <span class="compare-stat-val" style="text-align: right; color:#0f52ba;">${v2}</span>
+      </div>
+    `;
+  });
+
+  body.innerHTML = `
+    <div class="compare-grid">
+      <div class="compare-card-col">
+        <div class="compare-img-box"><img src="${p1.img}" alt="${p1.name}" /></div>
+        <div class="compare-card-title">${p1.name}</div>
+        <div class="compare-card-origin">${p1.origin}</div>
+        <p style="font-size:0.85rem; color:#64748b; line-height:1.5;">${p1.desc || ''}</p>
+      </div>
+      <div class="compare-card-col">
+        <div class="compare-img-box"><img src="${p2.img}" alt="${p2.name}" /></div>
+        <div class="compare-card-title">${p2.name}</div>
+        <div class="compare-card-origin">${p2.origin}</div>
+        <p style="font-size:0.85rem; color:#64748b; line-height:1.5;">${p2.desc || ''}</p>
+      </div>
+    </div>
+    <div style="margin-top: 1.5rem; background: rgba(249, 115, 22, 0.04); border: 1px solid rgba(249, 115, 22, 0.15); border-radius: 16px; padding: 1.2rem;">
+      <div style="display:flex; justify-content:space-between; margin-bottom:0.8rem; font-family:'Outfit',sans-serif; font-weight:800; font-size:0.85rem; text-transform:uppercase; letter-spacing:1px;">
+        <span style="color:#c2410c;">◀ ${p1.name}</span>
+        <span style="color:#64748b;">Telemetry Comparison</span>
+        <span style="color:#0f52ba;">${p2.name} ▶</span>
+      </div>
+      ${rowsHTML}
+    </div>
+  `;
+
+  document.getElementById('compareModal').classList.remove('hidden');
+}
+
+document.getElementById('launchCompareBtn')?.addEventListener('click', openCompareModal);
+document.getElementById('clearCompareBtn')?.addEventListener('click', () => {
+  compareList = [];
+  updateCompareTray();
+  updateCompareButtons();
+});
+document.getElementById('compareCloseBtn')?.addEventListener('click', () => {
+  document.getElementById('compareModal').classList.add('hidden');
+});
+document.getElementById('compareOverlay')?.addEventListener('click', () => {
+  document.getElementById('compareModal').classList.add('hidden');
+});
+
+// ============ SCROLL PROGRESS & BACK TO TOP ============
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  const pBar = document.getElementById('scrollProgressBar');
+  if (pBar) pBar.style.width = progress + '%';
+
+  const btt = document.getElementById('backToTopBtn');
+  if (btt) {
+    btt.classList.toggle('visible', scrollTop > 350);
+  }
+});
+
+document.getElementById('backToTopBtn')?.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
 /* 
 ========================================================================================
    [ END ]: JAVASCRIPT CORE LOGIC
@@ -3373,6 +3531,40 @@ function getDetailHTML(planeName, tab) {
    [ DESC ]: Contains the SkyGuide AI widget and external 3D/Chat module links.
 ========================================================================================
 -->
+
+  <!-- Floating Back to Top Button -->
+  <button id="backToTopBtn" aria-label="Back to Top" class="back-to-top-btn" title="Back to Top">↑</button>
+
+  <!-- Floating Aircraft Comparison Tray -->
+  <div id="compareTray" class="compare-tray hidden">
+    <div class="compare-tray-inner">
+      <div class="tray-slots">
+        <div class="tray-slot" id="traySlot1"><span class="slot-empty">+ Plane 1</span></div>
+        <span class="tray-vs">VS</span>
+        <div class="tray-slot" id="traySlot2"><span class="slot-empty">+ Plane 2</span></div>
+      </div>
+      <div class="tray-actions">
+        <button id="launchCompareBtn" class="launch-compare-btn" disabled>Compare</button>
+        <button id="clearCompareBtn" class="clear-compare-btn" title="Clear selection">✕</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Aircraft Comparison Modal -->
+  <div id="compareModal" class="compare-modal hidden">
+    <div class="compare-overlay" id="compareOverlay"></div>
+    <div class="compare-content">
+      <div class="compare-header">
+        <div>
+          <div class="compare-badge">✦ Tactical Spec Analysis ✦</div>
+          <h2>Aircraft Comparison</h2>
+        </div>
+        <button class="compare-close-btn" id="compareCloseBtn">✕</button>
+      </div>
+      <div class="compare-body" id="compareBody"></div>
+    </div>
+  </div>
+
 <!-- ===== SKYGUIDE AI WIDGET ===== -->
 <div id="ai-widget-container">
   <button id="ai-toggle-btn">
