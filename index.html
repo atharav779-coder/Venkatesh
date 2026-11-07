@@ -226,6 +226,39 @@
    [ END ]: HTML LAYOUT & UI
 ========================================================================================
 -->
+  <!-- Floating Back to Top Button -->
+  <button id="backToTopBtn" aria-label="Back to Top" class="back-to-top-btn" title="Back to Top">↑</button>
+
+  <!-- Floating Aircraft Comparison Tray -->
+  <div id="compareTray" class="compare-tray hidden">
+    <div class="compare-tray-inner">
+      <div class="tray-slots">
+        <div class="tray-slot" id="traySlot1"><span class="slot-empty">+ Plane 1</span></div>
+        <span class="tray-vs">VS</span>
+        <div class="tray-slot" id="traySlot2"><span class="slot-empty">+ Plane 2</span></div>
+      </div>
+      <div class="tray-actions">
+        <button id="launchCompareBtn" class="launch-compare-btn" disabled>Compare</button>
+        <button id="clearCompareBtn" class="clear-compare-btn" title="Clear selection">✕</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Aircraft Comparison Modal -->
+  <div id="compareModal" class="compare-modal hidden">
+    <div class="compare-overlay" id="compareOverlay"></div>
+    <div class="compare-content">
+      <div class="compare-header">
+        <div>
+          <div class="compare-badge">✦ Tactical Spec Analysis ✦</div>
+          <h2>Aircraft Comparison</h2>
+        </div>
+        <button class="compare-close-btn" id="compareCloseBtn">✕</button>
+      </div>
+      <div class="compare-body" id="compareBody"></div>
+    </div>
+  </div>
+
 <!-- ===== FOOTER ===== -->
 <footer>
   <div class="logo-foot">SKYVAULT</div>
@@ -3478,20 +3511,52 @@ function openCompareModal() {
   document.getElementById('compareModal').classList.remove('hidden');
 }
 
-document.getElementById('launchCompareBtn')?.addEventListener('click', openCompareModal);
-document.getElementById('clearCompareBtn')?.addEventListener('click', () => {
-  compareList = [];
-  updateCompareTray();
-  updateCompareButtons();
-});
-document.getElementById('compareCloseBtn')?.addEventListener('click', () => {
-  document.getElementById('compareModal').classList.add('hidden');
-});
-document.getElementById('compareOverlay')?.addEventListener('click', () => {
-  document.getElementById('compareModal').classList.add('hidden');
+// Event delegation for all Compare & Navigation Actions (guaranteed to fire)
+document.addEventListener('click', (e) => {
+  // Launch compare modal
+  const launchBtn = e.target.closest('#launchCompareBtn');
+  if (launchBtn) {
+    e.preventDefault();
+    if (!launchBtn.disabled && compareList.length >= 2) {
+      openCompareModal();
+    }
+    return;
+  }
+
+  // Clear compare selection
+  if (e.target.closest('#clearCompareBtn')) {
+    e.preventDefault();
+    compareList = [];
+    updateCompareTray();
+    updateCompareButtons();
+    return;
+  }
+
+  // Close compare modal
+  if (e.target.closest('#compareCloseBtn') || e.target.closest('#compareOverlay')) {
+    e.preventDefault();
+    const modal = document.getElementById('compareModal');
+    if (modal) modal.classList.add('hidden');
+    return;
+  }
+
+  // Back to top
+  if (e.target.closest('#backToTopBtn')) {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return;
+  }
 });
 
-// ============ SCROLL PROGRESS & BACK TO TOP ============
+// Close modal on Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    const modal = document.getElementById('compareModal');
+    if (modal) modal.classList.add('hidden');
+  }
+});
+
+// ============ SCROLL PROGRESS & BACK TO TOP VISIBILITY ============
 window.addEventListener('scroll', () => {
   const scrollTop = window.scrollY;
   const docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -3503,10 +3568,6 @@ window.addEventListener('scroll', () => {
   if (btt) {
     btt.classList.toggle('visible', scrollTop > 350);
   }
-});
-
-document.getElementById('backToTopBtn')?.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
 /* 
@@ -3532,38 +3593,7 @@ document.getElementById('backToTopBtn')?.addEventListener('click', () => {
 ========================================================================================
 -->
 
-  <!-- Floating Back to Top Button -->
-  <button id="backToTopBtn" aria-label="Back to Top" class="back-to-top-btn" title="Back to Top">↑</button>
 
-  <!-- Floating Aircraft Comparison Tray -->
-  <div id="compareTray" class="compare-tray hidden">
-    <div class="compare-tray-inner">
-      <div class="tray-slots">
-        <div class="tray-slot" id="traySlot1"><span class="slot-empty">+ Plane 1</span></div>
-        <span class="tray-vs">VS</span>
-        <div class="tray-slot" id="traySlot2"><span class="slot-empty">+ Plane 2</span></div>
-      </div>
-      <div class="tray-actions">
-        <button id="launchCompareBtn" class="launch-compare-btn" disabled>Compare</button>
-        <button id="clearCompareBtn" class="clear-compare-btn" title="Clear selection">✕</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Aircraft Comparison Modal -->
-  <div id="compareModal" class="compare-modal hidden">
-    <div class="compare-overlay" id="compareOverlay"></div>
-    <div class="compare-content">
-      <div class="compare-header">
-        <div>
-          <div class="compare-badge">✦ Tactical Spec Analysis ✦</div>
-          <h2>Aircraft Comparison</h2>
-        </div>
-        <button class="compare-close-btn" id="compareCloseBtn">✕</button>
-      </div>
-      <div class="compare-body" id="compareBody"></div>
-    </div>
-  </div>
 
 <!-- ===== SKYGUIDE AI WIDGET ===== -->
 <div id="ai-widget-container">

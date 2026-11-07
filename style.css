@@ -817,12 +817,13 @@
 
 /* Compare Modal */
 .compare-modal {
-  position: fixed; inset: 0; z-index: 2000;
+  position: fixed; inset: 0; z-index: 100000;
   display: flex; align-items: center; justify-content: center;
   padding: 1.5rem;
   transition: opacity 0.3s ease;
 }
 .compare-modal.hidden {
+  display: none !important;
   opacity: 0; pointer-events: none;
 }
 .compare-overlay {
