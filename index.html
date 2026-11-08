@@ -3200,13 +3200,16 @@ function createCard(plane) {
 
   const defaultBackHTML = `
     <div class="back-header">
-      <h3>${plane.name}</h3>
-      <div class="subtitle">${plane.origin}</div>
+      <div class="back-title-wrap">
+        <h3>${plane.name}</h3>
+        <div class="subtitle">${plane.origin}</div>
+      </div>
+      <span class="back-hud-tag">AVIONICS SPEC</span>
     </div>
     <div class="spec-grid">${specsHTML}</div>
     <div class="back-desc">${plane.desc}</div>
     ${prosConsHTML}
-    <div class="flip-back-hint">Click to flip back</div>
+    <div class="flip-back-hint">Click anywhere to flip back ↺</div>
   `;
 
   const fc = document.createElement('div');
@@ -3214,6 +3217,7 @@ function createCard(plane) {
   fc.innerHTML = `
     <div class="flashcard-inner">
       <div class="flashcard-front">
+        <div class="card-glare"></div>
         <div class="card-img-wrap">
           <img src="${plane.img}" alt="${plane.name}" loading="lazy" />
           <span class="card-category">${plane.category}</span>
@@ -3226,7 +3230,7 @@ function createCard(plane) {
           <div class="origin">${plane.origin}</div>
           <div class="card-stats">${statsHTML}</div>
           
-                    <div class="card-buttons">
+          <div class="card-buttons">
             <button class="info-btn" data-tab="cabin">${(detailData[plane.name] && !detailData[plane.name].cabin && detailData[plane.name].keyFeatures) ? "Features" : "Cabin"}</button>
             <button class="info-btn" data-tab="airframe">${(detailData[plane.name] && !detailData[plane.name].airframe) ? "History" : "Airframe"}</button>
             <button class="info-btn" data-tab="performance">Performance</button>
@@ -3239,6 +3243,8 @@ function createCard(plane) {
     </div>`;
 
   const backEl = fc.querySelector('.flashcard-back');
+  const inner = fc.querySelector('.flashcard-inner');
+  const glare = fc.querySelector('.card-glare');
   
   // Handle compare button click
   const cmpBtn = fc.querySelector('.compare-pill-btn');
@@ -3249,7 +3255,37 @@ function createCard(plane) {
     });
   }
 
-  // Handle clicks on the buttons
+  // 3D Holographic Card Tilt with Specular Glare (for desktop mouse users)
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    fc.addEventListener('mousemove', (e) => {
+      if (fc.classList.contains('flipped')) return;
+      const rect = fc.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const cx = rect.width / 2;
+      const cy = rect.height / 2;
+      const rotX = ((y - cy) / cy) * -6.5; // subtle 6.5 degree max
+      const rotY = ((x - cx) / cx) * 6.5;
+
+      if (inner) {
+        inner.style.transform = `perspective(1000px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) scale3d(1.02, 1.02, 1.02)`;
+      }
+      if (glare) {
+        glare.style.opacity = '0.7';
+        glare.style.background = `radial-gradient(circle at ${(x / rect.width * 100).toFixed(1)}% ${(y / rect.height * 100).toFixed(1)}%, rgba(255,255,255,0.45) 0%, transparent 65%)`;
+      }
+    });
+
+    fc.addEventListener('mouseleave', () => {
+      if (fc.classList.contains('flipped')) return;
+      if (inner) {
+        inner.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+      }
+      if (glare) glare.style.opacity = '0';
+    });
+  }
+
+  // Handle clicks on info tabs
   const btns = fc.querySelectorAll('.info-btn');
   btns.forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -3257,18 +3293,23 @@ function createCard(plane) {
       const tab = btn.getAttribute('data-tab');
       backEl.innerHTML = getDetailHTML(plane.name, tab);
       fc.classList.add('flipped');
+      if (glare) glare.style.opacity = '0';
+      if (inner) inner.style.transform = 'rotateY(180deg)';
     });
   });
 
   // Handle general click to flip back to front, or front to default back
   fc.addEventListener('click', () => {
+    if (glare) glare.style.opacity = '0';
+
     if (fc.classList.contains('flipped')) {
       fc.classList.remove('flipped');
-      // Reset back to default after animation
+      if (inner) inner.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
       setTimeout(() => { backEl.innerHTML = defaultBackHTML; }, 400);
     } else {
       backEl.innerHTML = defaultBackHTML;
       fc.classList.add('flipped');
+      if (inner) inner.style.transform = 'rotateY(180deg)';
     }
   });
 

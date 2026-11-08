@@ -8,7 +8,11 @@
     html { scroll-behavior: smooth; scroll-padding-top: 80px; }
     body {
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 50%, #e5e7eb 100%);
+      background: 
+        radial-gradient(circle at 12% 18%, rgba(249, 115, 22, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 88% 82%, rgba(2, 132, 199, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.88) 0%, transparent 100%),
+        linear-gradient(135deg, #ffffff 0%, #f8fafc 45%, #f1f5f9 100%);
       color: #1f2937;
       overflow-x: hidden;
       line-height: 1.6;
@@ -238,23 +242,43 @@
     
     /* Dynamic back content */
     .dynamic-back-title {
-      font-family: 'Montserrat', sans-serif; font-size: 1.1rem; font-weight: 800;
-      color: #e65c00; text-transform: uppercase; letter-spacing: 1px;
-      margin-bottom: 1rem; border-bottom: 1px solid rgba(249,115,22,0.2); padding-bottom: 0.5rem;
+      font-family: 'Montserrat', sans-serif; font-size: 1.15rem; font-weight: 800;
+      color: #0f172a; text-transform: uppercase; letter-spacing: 1.2px;
+      margin-bottom: 1rem; padding-bottom: 0.6rem;
+      border-bottom: 1px solid rgba(249, 115, 22, 0.25);
+      display: flex; align-items: center; justify-content: space-between;
+      position: relative; z-index: 2;
+    }
+    .dynamic-back-title::after {
+      content: 'SYSTEM TELEMETRY';
+      font-family: 'Outfit', sans-serif; font-size: 0.62rem; font-weight: 800;
+      color: #0284c7; background: rgba(2, 132, 199, 0.08); border: 1px solid rgba(2, 132, 199, 0.25);
+      padding: 0.2rem 0.5rem; border-radius: 4px; letter-spacing: 1px;
     }
     .dynamic-grid {
-      display: grid; grid-template-columns: 1fr; gap: 0.8rem;
+      display: grid; grid-template-columns: 1fr; gap: 0.75rem;
+      position: relative; z-index: 2;
     }
     .dynamic-item {
-      background: rgba(255,255,255,0.6); padding: 0.6rem; border-radius: 4px;
-      border-left: 2px solid #f97316;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.94) 0%, rgba(254, 247, 240, 0.9) 60%, rgba(240, 249, 255, 0.8) 100%);
+      padding: 0.7rem 0.9rem; border-radius: 8px;
+      border: 1px solid rgba(249, 115, 22, 0.18);
+      border-left: 3px solid #f97316;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.02);
+      transition: all 0.25s ease;
+    }
+    .dynamic-item:hover {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(249, 115, 22, 0.1));
+      border-color: #f97316;
+      transform: translateX(2px);
+      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.12);
     }
     .dynamic-item .d-label {
-      font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: #64748b;
-      text-transform: uppercase; font-weight: 700; margin-bottom: 2px;
+      font-family: 'Outfit', sans-serif; font-size: 0.68rem; color: #c2410c;
+      text-transform: uppercase; font-weight: 800; letter-spacing: 1.2px; margin-bottom: 3px;
     }
     .dynamic-item .d-value {
-      font-family: 'Outfit', sans-serif; font-size: 0.9rem; color: #1e1b2e; font-weight: 600;
+      font-family: 'Outfit', sans-serif; font-size: 0.88rem; color: #0f172a; font-weight: 600; line-height: 1.5;
     }
 
 
@@ -271,12 +295,26 @@
       position: absolute; inset: 0;
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
-      border-radius: 16px; overflow: hidden;
-      background: rgba(255, 255, 255, 0.55);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.6);
-      box-shadow: 0 8px 32px rgba(236, 72, 153, 0.06);
+      border-radius: 18px; overflow: hidden;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .flashcard:hover .flashcard-front {
+      border-color: rgba(249, 115, 22, 0.45);
+      box-shadow: 0 16px 40px rgba(249, 115, 22, 0.12), 0 0 15px rgba(249, 115, 22, 0.08);
+    }
+    .card-glare {
+      position: absolute; inset: 0;
+      border-radius: 18px;
+      pointer-events: none;
+      z-index: 15;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      mix-blend-mode: overlay;
     }
 
     /* FRONT */
@@ -340,85 +378,156 @@
     }
     .flip-hint::after { content: '→'; font-size: 1rem; }
 
-    /* BACK */
+    /* BACK - ELEVATED LUXURY TEXTURE & BLENDED COLORS */
     .flashcard-back {
       transform: rotateY(180deg);
-      background: linear-gradient(160deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9));
+      background: 
+        radial-gradient(circle at 10% 15%, rgba(254, 243, 199, 0.45) 0%, transparent 45%),
+        radial-gradient(circle at 90% 85%, rgba(224, 242, 254, 0.5) 0%, transparent 50%),
+        linear-gradient(155deg, rgba(255, 255, 255, 0.98) 0%, rgba(253, 250, 247, 0.96) 50%, rgba(248, 250, 255, 0.97) 100%);
       padding: 1.8rem;
       display: flex; flex-direction: column;
       overflow-y: auto;
-      border: 1px solid rgba(249,115,22,0.3);
-      box-shadow: inset 0 0 40px rgba(249,115,22,0.05);
+      border: 1px solid rgba(249, 115, 22, 0.35);
+      box-shadow: inset 0 0 50px rgba(249, 115, 22, 0.03), 0 14px 40px rgba(15, 23, 42, 0.07);
+      position: relative;
     }
+    /* Elegant top aerodynamic accent ribbon */
+    .flashcard-back::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3.5px;
+      background: linear-gradient(90deg, #f97316 0%, #38bdf8 50%, #ea580c 100%);
+      z-index: 3;
+    }
+    /* Fine aviation telemetry grid watermark */
     .flashcard-back::before {
       content: ''; position: absolute; top: 0; left: 0; right: 0; height: 100%;
       pointer-events: none; z-index: 0;
-      background-image: radial-gradient(rgba(249,115,22,0.15) 1px, transparent 1px);
-      background-size: 20px 20px; opacity: 0.3;
+      background-image: 
+        radial-gradient(rgba(249, 115, 22, 0.14) 1px, transparent 1px),
+        radial-gradient(rgba(2, 132, 199, 0.09) 1px, transparent 1px),
+        linear-gradient(rgba(249, 115, 22, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(2, 132, 199, 0.02) 1px, transparent 1px);
+      background-size: 24px 24px, 48px 48px, 48px 48px, 48px 48px;
+      opacity: 0.75;
     }
-    .flashcard-back::-webkit-scrollbar { width: 4px; }
-    .flashcard-back::-webkit-scrollbar-thumb { background: rgba(249,115,22,.4); border-radius: 10px; }
+    .flashcard-back::-webkit-scrollbar { width: 5px; }
+    .flashcard-back::-webkit-scrollbar-thumb { background: rgba(249, 115, 22, 0.45); border-radius: 10px; }
     
-    .back-header { border-bottom: 1px solid rgba(249,115,22,0.2); padding-bottom: 0.8rem; margin-bottom: 1.2rem; }
+    .back-header {
+      position: relative; z-index: 2;
+      border-bottom: 1px solid rgba(249, 115, 22, 0.22);
+      padding-bottom: 0.85rem; margin-bottom: 1.2rem;
+      display: flex; justify-content: space-between; align-items: flex-start; gap: 0.8rem;
+    }
+    .back-title-wrap { flex: 1; }
     .flashcard-back h3 {
-      font-family: 'Montserrat', sans-serif; font-size: 1.15rem; font-weight: 800;
-      color: #1e1b2e; margin-bottom: .2rem; text-transform: uppercase; letter-spacing: 1px;
+      font-family: 'Montserrat', sans-serif; font-size: 1.22rem; font-weight: 800;
+      color: #0f172a; margin-bottom: .25rem; text-transform: uppercase; letter-spacing: 1px;
     }
     .flashcard-back .subtitle {
-      font-size: .75rem; color: #e65c00;
-      font-family: 'Outfit', sans-serif; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;
+      font-size: .75rem; color: #c2410c;
+      font-family: 'Outfit', sans-serif; text-transform: uppercase; letter-spacing: 2px; font-weight: 700;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .flashcard-back .subtitle::before {
+      content: '✦'; font-size: 0.7rem; color: #f97316;
+    }
+    .back-hud-tag {
+      font-family: 'Outfit', sans-serif; font-size: 0.65rem; font-weight: 800;
+      color: #0284c7; background: linear-gradient(135deg, rgba(2, 132, 199, 0.09), rgba(56, 189, 248, 0.04));
+      border: 1px solid rgba(2, 132, 199, 0.3);
+      padding: 0.28rem 0.65rem; border-radius: 6px; text-transform: uppercase; letter-spacing: 1.2px;
+      white-space: nowrap;
+      box-shadow: 0 2px 6px rgba(2, 132, 199, 0.08);
     }
     
     .spec-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: .6rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: .7rem;
       margin-bottom: 1.2rem; position: relative; z-index: 2;
     }
     .spec-item {
-      background: rgba(249,115,22,.05);
-      border: 1px solid rgba(249,115,22,.1);
-      border-radius: 4px; padding: .6rem .8rem;
-      transition: background 0.3s;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.94) 0%, rgba(254, 247, 240, 0.9) 60%, rgba(240, 249, 255, 0.8) 100%);
+      border: 1px solid rgba(249, 115, 22, 0.2);
+      border-left: 3px solid #f97316;
+      border-radius: 8px; padding: .68rem .85rem;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.025);
     }
-    .spec-item:hover { background: rgba(249,115,22,.1); }
+    .spec-item:hover {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(249, 115, 22, 0.12));
+      border-color: #ea580c;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(249, 115, 22, 0.16);
+    }
     .spec-item .spec-label {
-      font-size: .65rem; color: #e65c00; text-transform: uppercase;
-      letter-spacing: 1.5px; font-weight: 700;
+      font-size: .65rem; color: #c2410c; text-transform: uppercase;
+      letter-spacing: 1.6px; font-weight: 800;
       font-family: 'Outfit', sans-serif;
     }
     .spec-item .spec-val {
-      font-size: .85rem; font-weight: 600; color: #1e1b2e; margin-top: 3px;
-      font-family: 'Outfit', sans-serif; letter-spacing: 1px;
+      font-size: .88rem; font-weight: 700; color: #0f172a; margin-top: 3px;
+      font-family: 'Outfit', sans-serif; letter-spacing: 0.5px;
     }
+    
     .back-desc {
-      font-size: 0.95rem; color: #1e293b; line-height: 1.6; font-weight: 500;
-      padding: 1.2rem; background: rgba(255, 255, 255, 0.85); border-radius: 8px;
-      border-left: 4px solid #f97316;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      font-size: 0.92rem; color: #1e293b; line-height: 1.62; font-weight: 500;
+      padding: 1.15rem;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(254, 250, 246, 0.94) 50%, rgba(240, 249, 255, 0.9) 100%);
+      border: 1px solid rgba(249, 115, 22, 0.18);
+      border-left: 4px solid #ea580c;
+      border-radius: 10px;
+      box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
       backdrop-filter: blur(10px);
       margin-top: auto; position: relative; z-index: 2;
     }
     
-    .pros-cons { position: relative; z-index: 2; margin-top: 0.8rem; }
-    .pros-cons h4 {
-      font-family: 'Outfit', sans-serif; font-size: .8rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 2px; margin-bottom: .4rem;
+    .pros-cons { 
+      position: relative; z-index: 2; margin-top: 0.9rem;
+      display: flex; flex-direction: column; gap: 0.65rem;
     }
-    .pros-cons .pros h4 { color: #f97316; font-weight: 700; letter-spacing: 1px; }
-    .pros-cons .cons h4 { color: #ec4899; font-weight: 700; letter-spacing: 1px; }
+    .pros-cons .pros {
+      background: linear-gradient(135deg, rgba(240, 253, 244, 0.85) 0%, rgba(220, 252, 231, 0.45) 100%);
+      border: 1px solid rgba(34, 197, 94, 0.25);
+      border-left: 3px solid #10b981;
+      border-radius: 8px; padding: 0.65rem 0.85rem;
+    }
+    .pros-cons .cons {
+      background: linear-gradient(135deg, rgba(255, 241, 242, 0.85) 0%, rgba(255, 228, 230, 0.45) 100%);
+      border: 1px solid rgba(244, 63, 94, 0.25);
+      border-left: 3px solid #f43f5e;
+      border-radius: 8px; padding: 0.65rem 0.85rem;
+    }
+    .pros-cons h4 {
+      font-family: 'Outfit', sans-serif; font-size: .75rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: .35rem;
+    }
+    .pros-cons .pros h4 { color: #047857; }
+    .pros-cons .cons h4 { color: #be123c; }
     .pros-cons ul {
-      list-style: none; padding: 0; margin: 0 0 .6rem 0;
+      list-style: none; padding: 0; margin: 0;
     }
     .pros-cons li {
-      font-size: .78rem; color: #8a9bb8; padding: .2rem 0 .2rem 1rem;
-      position: relative; line-height: 1.4;
+      font-size: .8rem; color: #1e293b; padding: .18rem 0 .18rem 1.2rem;
+      position: relative; line-height: 1.45; font-weight: 500;
     }
-    .pros li::before { content: '✓'; position: absolute; left: 0; color: #00ff88; font-weight: 700; }
-    .cons li::before { content: '✗'; position: absolute; left: 0; color: #ff4466; font-weight: 700; }
+    .pros li::before { content: '✓'; position: absolute; left: 0; color: #10b981; font-weight: 800; font-size: 0.85rem; }
+    .cons li::before { content: '✗'; position: absolute; left: 0; color: #f43f5e; font-weight: 800; font-size: 0.85rem; }
 
     .flip-back-hint {
-      text-align: center; margin-top: 1rem;
-      font-size: .7rem; color: #e65c00; opacity: 0.6;
-      font-family: 'Outfit', sans-serif; letter-spacing: 2px; text-transform: uppercase;
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      margin: 1.1rem auto 0; padding: 0.4rem 1.1rem;
+      background: linear-gradient(135deg, rgba(249, 115, 22, 0.08), rgba(2, 132, 199, 0.08));
+      border: 1px dashed rgba(249, 115, 22, 0.4);
+      border-radius: 20px;
+      font-size: .72rem; color: #ea580c; font-weight: 700;
+      font-family: 'Outfit', sans-serif; letter-spacing: 1.5px; text-transform: uppercase;
+      cursor: pointer; transition: all 0.25s ease;
+      position: relative; z-index: 2;
+    }
+    .flip-back-hint:hover {
+      background: rgba(249, 115, 22, 0.15);
+      border-color: #ea580c;
+      transform: translateY(-1px);
     }
 
     /* ===== PROGRESS BAR ===== */
