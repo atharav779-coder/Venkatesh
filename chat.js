@@ -15,15 +15,27 @@ async function initChat() {
   if (chatSession) return;
   try {
     chatSession = await ai.chats.create({
-      model: 'gemini-flash-lite-latest',
+      model: 'gemini-2.0-flash',
       config: {
         systemInstruction: systemInstruction,
         temperature: 0.7,
-        maxOutputTokens: 500,
+        maxOutputTokens: 600,
       }
     });
   } catch (err) {
-    console.error("Failed to initialize chat session", err);
+    console.warn("Retrying chat init with fallback model gemini-1.5-flash", err);
+    try {
+      chatSession = await ai.chats.create({
+        model: 'gemini-1.5-flash',
+        config: {
+          systemInstruction: systemInstruction,
+          temperature: 0.7,
+          maxOutputTokens: 600,
+        }
+      });
+    } catch (e2) {
+      console.error("Failed to initialize chat session", e2);
+    }
   }
 }
 

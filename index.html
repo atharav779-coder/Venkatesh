@@ -3180,8 +3180,89 @@ seaplanes: [
    [ DESC ]: Contains the rendering logic (createCard), scroll observers, search functions, and UI interaction.
 ========================================================================================
 */
+const modelMapping = {
+  "Boeing 737 MAX": "boeing_737_max_8_akasa.glb",
+  "Airbus A330neo": "airbus_a330_900neo.glb",
+  "McDonnell Douglas DC-10": "mcdonnell_douglas_dc10_fedex.glb",
+  "Boeing 787 Dreamliner": "boeing_787_9_dreamliner.glb",
+  "Airbus A350 XWB": "airbus_a350_900_xwb.glb",
+  "Boeing 777X": "boeing_777_9x_flagship.glb",
+  "Boeing 747-8": "boeing_747_8_lufthansa.glb",
+  "Airbus A380": "airbus_a380_800_emirates.glb",
+  "Airbus A320neo": "airbus_a320neo_indigo.glb",
+  "Embraer E195-E2": "embraer_e195_e2_klm.glb",
+  "F-22 Raptor": "f22_raptor.glb",
+  "F-35 Lightning II": "f35_lightning_ii.glb",
+  "Eurofighter Typhoon": "eurofighter_typhoon.glb",
+  "Dassault Rafale": "dassault_rafale.glb",
+  "F-15E Strike Eagle": "f15_eagle.glb",
+  "F-16 Fighting Falcon": "general_dynamics_f16_falcon.glb",
+  "F/A-18E/F Super Hornet": "fa18_super_hornet.glb",
+  "F-14 Tomcat": "grumman_f14_tomcat.glb",
+  "MiG-21 Fishbed": "mikoyan_mig21_fishbed.glb",
+  "MiG-29 Fulcrum": "mikoyan_mig29_fulcrum.glb",
+  "MiG-31 Foxhound": "mikoyan_mig31_foxhound.glb",
+  "Su-27 Flanker": "sukhoi_su27_flanker.glb",
+  "Su-35S Flanker-E": "sukhoi_su35s_flanker_e.glb",
+  "Saab JAS 39 Gripen": "saab_jas39_gripen.glb",
+  "Dassault Mirage 2000": "dassault_mirage_2000.glb",
+  "B-2 Spirit": "b2_spirit.glb",
+  "B-21 Raider": "b21_raider.glb",
+  "B-1B Lancer": "b1b_lancer.glb",
+  "B-52H Stratofortress": "b52_stratofortress.glb",
+  "Tu-160 Blackjack": "tu160_blackjack.glb",
+  "Tu-22M Backfire": "tu22m_backfire.glb",
+  "Tu-95 Bear": "tu95_bear.glb",
+  "Xian H-6": "xian_h6.glb",
+  "B-17 Flying Fortress": "b17_flying_fortress.glb",
+  "B-29 Superfortress": "b29_superfortress.glb",
+  "Avro Lancaster": "avro_lancaster.glb",
+  "B-25 Mitchell": "b25_mitchell.glb",
+  "Heinkel He 111": "heinkel_he111.glb",
+  "Junkers Ju 87 Stuka": "junkers_ju87_stuka.glb",
+  "Lockheed C-130J Super Hercules": "c130_hercules.glb",
+  "Boeing C-17 Globemaster III": "c17_globemaster.glb",
+  "Lockheed C-5M Super Galaxy": "c5_galaxy.glb",
+  "Airbus A400M Atlas": "a400m_atlas.glb",
+  "Ilyushin Il-76": "il76_candid.glb",
+  "Kawasaki C-2": "kawasaki_c2.glb",
+  "Embraer C-390 Millennium": "embraer_c390.glb",
+  "Antonov An-124 Ruslan": "an124_ruslan.glb",
+  "Antonov An-225 Mriya": "an225_mriya.glb",
+  "Gulfstream G700": "gulfstream_g700.glb",
+  "Bombardier Global 7500": "bombardier_global_7500.glb",
+  "Dassault Falcon 10X": "dassault_falcon_10x.glb",
+  "Cessna Citation Longitude": "cessna_citation_longitude.glb",
+  "Airbus BelugaXL": "airbus_beluga.glb",
+  "Boeing 747-8 Freighter": "boeing_747_8_freighter.glb",
+  "Boeing 767-300F": "boeing_767_300f.glb",
+  "Aero L-39 Albatros": "aero_l39.glb",
+  "Boeing T-7A Red Hawk": "boeing_t7a_redhawk.glb",
+  "Leonardo M-346 Master": "leonardo_m346.glb",
+  "Yakovlev Yak-130": "yak_130.glb",
+  "Hongdu JL-8": "hongdu_jl8.glb",
+  "BAE Hawk T.2": "bae_hawk_t2.glb",
+  "Beechcraft T-6 Texan II": "beechcraft_t6_texan.glb",
+  "Pilatus PC-21": "pilatus_pc21.glb",
+  "KAI T-50 Golden Eagle": "kai_t50_goldeneagle.glb",
+  "AH-64E Apache Guardian": "ah64_apache.glb",
+  "UH-60M Black Hawk": "uh60_blackhawk.glb",
+  "CH-47F Chinook": "ch47_chinook.glb",
+  "Mi-24 Hind": "mi24_hind.glb",
+  "Airbus H145": "airbus_h145.glb",
+  "Bell Boeing V-22 Osprey": "v22_osprey.glb",
+  "Canadair CL-415 SuperScooper": "cl415_superscooper.glb",
+  "ShinMaywa US-2": "shinmaywa_us2.glb",
+  "AVIC AG600 Kunlong": "avic_ag600_kunlong.glb",
+  "de Havilland DHC-6 Twin Otter (Floats)": "dhc6_twin_otter.glb",
+  "Fairey Swordfish": "fairey_swordfish.glb"
+};
+
 // ============ RENDER CARDS ============
 function createCard(plane) {
+  const modelFile = modelMapping[plane.name];
+  const hasModel = Boolean(modelFile);
+
   const statsHTML = Object.entries(plane.stats).map(([k,v]) =>
     `<div class="stat"><span class="stat-label">${k}</span><span class="stat-value">${v}</span></div>`
   ).join('');
@@ -3212,6 +3293,9 @@ function createCard(plane) {
     <div class="flip-back-hint">Click anywhere to flip back ↺</div>
   `;
 
+  const modelPillHTML = hasModel ? `<button class="card-3d-badge-btn" data-model="${modelFile}" title="Inspect in 3D">✦ 3D</button>` : '';
+  const modelBtnHTML = hasModel ? `<button class="info-btn btn-3d-model" data-model="${modelFile}"><span class="btn-3d-glow">✦</span> 3D Model</button>` : '';
+
   const fc = document.createElement('div');
   fc.className = 'flashcard reveal';
   fc.innerHTML = `
@@ -3222,6 +3306,7 @@ function createCard(plane) {
           <img src="${plane.img}" alt="${plane.name}" loading="lazy" />
           <span class="card-category">${plane.category}</span>
           <div class="card-top-actions">
+            ${modelPillHTML}
             <button class="compare-pill-btn" data-plane="${plane.name}">⚖ Compare</button>
           </div>
         </div>
@@ -3230,10 +3315,11 @@ function createCard(plane) {
           <div class="origin">${plane.origin}</div>
           <div class="card-stats">${statsHTML}</div>
           
-          <div class="card-buttons">
+          <div class="card-buttons ${hasModel ? 'has-3d' : ''}">
             <button class="info-btn" data-tab="cabin">${(detailData[plane.name] && !detailData[plane.name].cabin && detailData[plane.name].keyFeatures) ? "Features" : "Cabin"}</button>
             <button class="info-btn" data-tab="airframe">${(detailData[plane.name] && !detailData[plane.name].airframe) ? "History" : "Airframe"}</button>
             <button class="info-btn" data-tab="performance">Performance</button>
+            ${modelBtnHTML}
           </div>
         </div>
       </div>
@@ -3253,6 +3339,29 @@ function createCard(plane) {
       e.stopPropagation();
       toggleCompare(plane);
     });
+  }
+
+  // Handle 3D model button clicks
+  if (hasModel) {
+    const btn3d = fc.querySelector('.btn-3d-model');
+    if (btn3d) {
+      btn3d.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (window.openModelViewer) {
+          window.openModelViewer(plane.name, modelFile, plane);
+        }
+      });
+    }
+
+    const badge3d = fc.querySelector('.card-3d-badge-btn');
+    if (badge3d) {
+      badge3d.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (window.openModelViewer) {
+          window.openModelViewer(plane.name, modelFile, plane);
+        }
+      });
+    }
   }
 
   // 3D Holographic Card Tilt with Specular Glare (for desktop mouse users)
@@ -3285,8 +3394,8 @@ function createCard(plane) {
     });
   }
 
-  // Handle clicks on info tabs
-  const btns = fc.querySelectorAll('.info-btn');
+  // Handle clicks on info tabs (only tabs with data-tab, not the 3D button)
+  const btns = fc.querySelectorAll('.info-btn[data-tab]');
   btns.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation(); // prevent default flip
@@ -3732,6 +3841,7 @@ window.addEventListener('scroll', () => {
 
 <script type="module" src="./chat.js"></script>
 <script type="module" src="./background3d.js"></script>
+<script type="module" src="./modelViewer.js"></script>
 </body>
 
 </html>
