@@ -2,3 +2,4 @@ node_modules/
 dist/
 *.py
 screenshot.png
+.chrome_temp/
