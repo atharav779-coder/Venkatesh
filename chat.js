@@ -118,6 +118,15 @@ toggleBtn.addEventListener('click', () => {
   }
 });
 
+const navAiBtn = document.getElementById('navAiTrigger');
+if (navAiBtn) {
+  navAiBtn.addEventListener('click', () => {
+    chatWindow.classList.remove('hidden');
+    if (!chatSession) initChat();
+    inputField.focus();
+  });
+}
+
 closeBtn.addEventListener('click', () => {
   chatWindow.classList.add('hidden');
 });

@@ -354,4 +354,24 @@ if (typeof window !== 'undefined') {
   document.addEventListener('DOMContentLoaded', () => {
     initModelViewer();
   });
+
+  // Bulletproof document-level click delegation for 3D buttons
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.btn-3d-model, .card-3d-badge-btn');
+    if (btn) {
+      e.stopPropagation();
+      e.preventDefault();
+      const modelFile = btn.getAttribute('data-model');
+      const card = btn.closest('.flashcard');
+      const planeName = card?.querySelector('h3')?.textContent?.trim() || 'Aircraft 3D';
+      const planeCategory = card?.querySelector('.card-category')?.textContent?.trim() || '';
+      const planeOrigin = card?.querySelector('.origin')?.textContent?.trim() || '';
+      if (modelFile) {
+        openModelViewer(planeName, modelFile, {
+          category: planeCategory,
+          origin: planeOrigin
+        });
+      }
+    }
+  });
 }
